@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "729687741402",
+    "project_id": "quizkidz-3fb2f",
+    "storage_bucket": "quizkidz-3fb2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729687741402:android:eff450ef552f5a4b3466e3",
+        "android_client_info": {
+          "package_name": "com.example.quizkidz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729687741402-vuq9rg6c24j8unj43249rtgf48k3lgol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1e7CzuixCmJDwfR6SxCcDZP-KxzfDoU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729687741402-vuq9rg6c24j8unj43249rtgf48k3lgol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "729687741402-3ira772fct6hln61p34rhmgmafb6b9mv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.quizkidz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
