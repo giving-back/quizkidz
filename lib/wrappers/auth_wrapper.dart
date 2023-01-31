@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
-import 'package:quizkidz/screen/home/home_screen.dart';
-import 'package:quizkidz/screen/login/login_screen.dart';
+import 'package:quizkidz/screen/login_screen.dart';
+import 'package:quizkidz/wrappers/user_wrapper.dart';
 
-class Wrapper extends ConsumerWidget {
-  const Wrapper({super.key});
+class AuthWrapper extends ConsumerWidget {
+  const AuthWrapper({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,17 +15,14 @@ class Wrapper extends ConsumerWidget {
 
     return user.when(
       data: (userData) {
-        bool isLoggedIn = userData != null;
-
-        if (!isLoggedIn) {
+        if (userData == null) {
           return const LoginScreen();
+        } else {
+          return UserWrapper(uid: userData.uid);
         }
-        return const HomeScreen();
       },
       loading: () => const LoadingSpinner(),
-      error: (e, stack) {
-        return const LoginScreen();
-      },
+      error: (_, __) => const LoginScreen(),
     );
   }
 }
