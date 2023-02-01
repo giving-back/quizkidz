@@ -18,7 +18,7 @@ class AuthWrapper extends ConsumerWidget {
         if (userData == null) {
           return const LoginScreen();
         } else {
-          return UserWrapper(uid: userData.uid);
+          return UserWrapper(user: userData);
         }
       },
       loading: () => const LoadingSpinner(),
