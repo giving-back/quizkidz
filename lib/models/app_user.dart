@@ -1,15 +1,20 @@
-class AppUser {
-  final String uid;
-  final String? email;
-  final String? authDisplayName;
-  final String? authPhotoURL;
-  String? appDisplayName;
-  String? appAvatar;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  AppUser({
-    required this.uid,
-    required this.email,
-    required this.authDisplayName,
-    required this.authPhotoURL,
-  });
+part 'app_user.freezed.dart';
+part 'app_user.g.dart';
+
+@unfreezed
+class AppUser with _$AppUser {
+  factory AppUser({
+    required final String uid,
+    required final String? email,
+    required final String? authDisplayName,
+    required final String? authPhotoURL,
+    @Default('') String? appDisplayName,
+    @Default('') String? appAvatar,
+    @Default(1) int? appAvatarColor,
+  }) = _AppUser;
+
+  factory AppUser.fromJson(Map<String, Object?> json) =>
+      _$AppUserFromJson(json);
 }

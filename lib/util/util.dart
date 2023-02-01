@@ -5,21 +5,21 @@ const kUserError = 'Something has gone wrong. Please try again.';
 const kGoogleAuthImage = 'lib/images/auth/google.png';
 const kAppleAuthImage = 'lib/images/auth/apple.png';
 
-const kBlueColor = Color(0xFF88B5FE);
-const kWhiteColor = Color(0xFFEFF0F7);
+const kBlueColor = 0xFF88B5FE;
+const kWhiteColor = 0xFFEFF0F7;
 
-const kAvatarBlue = Color(0xFF88B5FE);
-const kAvatarDarkBlue = Color(0xFF396FED);
-const kAvatarGreen = Color(0xFF7CE6E6);
-const kAvatarDarkGreen = Color(0xFF00BBC4);
-const kAvatarOrange = Color(0xFFFF9F00);
-const kAvatarDarkOrange = Color(0xFFFF7D25);
-const kAvatarExtraDarkOrange = Color(0xFFF16625);
-const kAvatarBrown = Color(0xFF7F341F);
+const kAvatarBlue = 0xFF88B5FE;
+const kAvatarDarkBlue = 0xFF396FED;
+const kAvatarGreen = 0xFF7CE6E6;
+const kAvatarDarkGreen = 0xFF00BBC4;
+const kAvatarOrange = 0xFFFF9F00;
+const kAvatarDarkOrange = 0xFFFF7D25;
+const kAvatarExtraDarkOrange = 0xFFF16625;
+const kAvatarBrown = 0xFF7F341F;
 
 class Avatar {
   final String image;
-  final Color color;
+  final int color;
 
   Avatar({
     required this.image,
