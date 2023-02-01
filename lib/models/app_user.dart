@@ -1,17 +1,20 @@
-import 'package:quizkidz/util/util.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class AppUser {
-  final String uid;
-  final String? email;
-  final String? authDisplayName;
-  final String? authPhotoURL;
-  String? appDisplayName;
-  Avatar? appAvatar;
+part 'app_user.freezed.dart';
+part 'app_user.g.dart';
 
-  AppUser({
-    required this.uid,
-    required this.email,
-    required this.authDisplayName,
-    required this.authPhotoURL,
-  });
+@unfreezed
+class AppUser with _$AppUser {
+  factory AppUser({
+    required final String uid,
+    required final String? email,
+    required final String? authDisplayName,
+    required final String? authPhotoURL,
+    @Default('') String? appDisplayName,
+    @Default('') String? appAvatar,
+    @Default(1) int? appAvatarColor,
+  }) = _AppUser;
+
+  factory AppUser.fromJson(Map<String, Object?> json) =>
+      _$AppUserFromJson(json);
 }

@@ -12,7 +12,7 @@ class NewUserAvatarScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      color: kBlueColor,
+      color: const Color(kBlueColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -26,7 +26,7 @@ class NewUserAvatarScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: const BoxDecoration(
-                  color: kWhiteColor,
+                  color: Color(kWhiteColor),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(40.0),
                     bottomRight: Radius.circular(40.0),
@@ -62,7 +62,10 @@ class NewUserAvatarScreen extends ConsumerWidget {
                               padding: const EdgeInsets.all(2.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  user.appAvatar = kAvatarImages[index];
+                                  user.appAvatar = kAvatarImages[index].image;
+                                  user.appAvatarColor =
+                                      kAvatarImages[index].color;
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -75,7 +78,8 @@ class NewUserAvatarScreen extends ConsumerWidget {
                                 },
                                 child: CircleAvatar(
                                   radius: 35,
-                                  backgroundColor: kAvatarImages[index].color,
+                                  backgroundColor:
+                                      Color(kAvatarImages[index].color),
                                   backgroundImage: AssetImage(
                                     kAvatarImages[index].image,
                                   ),

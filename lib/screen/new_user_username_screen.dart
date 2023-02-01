@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/common_app_bar.dart';
+import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/models/app_user.dart';
+import 'package:quizkidz/providers/user_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class NewUserUsernameScreen extends ConsumerWidget {
@@ -11,6 +13,7 @@ class NewUserUsernameScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userCollection = ref.watch(usersCollectionProvider);
     final userNameController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
@@ -19,7 +22,7 @@ class NewUserUsernameScreen extends ConsumerWidget {
       body: Form(
         key: formKey,
         child: Container(
-          color: kBlueColor,
+          color: const Color(kBlueColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -33,7 +36,7 @@ class NewUserUsernameScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: kWhiteColor,
+                      color: Color(kWhiteColor),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(40.0),
                         bottomRight: Radius.circular(40.0),
@@ -50,9 +53,9 @@ class NewUserUsernameScreen extends ConsumerWidget {
                           ListTile(
                             leading: CircleAvatar(
                               radius: 35,
-                              backgroundColor: user.appAvatar!.color,
+                              backgroundColor: Color(user.appAvatarColor!),
                               backgroundImage: AssetImage(
-                                user.appAvatar!.image,
+                                user.appAvatar!,
                               ),
                             ),
                             title: TextFormField(
@@ -77,14 +80,27 @@ class NewUserUsernameScreen extends ConsumerWidget {
                                 child: const Text(
                                   'Lets Go!',
                                   style: TextStyle(
-                                    color: kBlueColor,
+                                    color: Color(kBlueColor),
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
-                                    print(userNameController.text);
+                                    user.appDisplayName =
+                                        userNameController.text;
+                                    userCollection.addNewAppUser(user).then(
+                                          (value) => value.match(
+                                            (error) =>
+                                                ScaffoldMessenger.of(context)
+                                                  ..hideCurrentSnackBar()
+                                                  ..showSnackBar(
+                                                    CustomSnackAlert
+                                                        .showErrorSnackBar(),
+                                                  ),
+                                            (r) {},
+                                          ),
+                                        );
                                   }
                                 },
                               ),
