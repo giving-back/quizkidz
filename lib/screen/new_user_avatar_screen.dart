@@ -62,7 +62,7 @@ class NewUserAvatarScreen extends ConsumerWidget {
                               padding: const EdgeInsets.all(2.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  user.appAvatar = kAvatarImages[index].image;
+                                  user.appAvatar = kAvatarImages[index];
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
