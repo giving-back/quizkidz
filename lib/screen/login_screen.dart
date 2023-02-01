@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/gesture_icon.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
+import 'package:quizkidz/util/util.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -48,11 +49,11 @@ class LoginScreen extends ConsumerWidget {
                                     (r) {},
                                   ),
                                 ),
-                        imagePath: 'lib/images/google.png',
+                        imagePath: kGoogleAuthImage,
                       ),
                       GestureIcon(
                         onTap: () {},
-                        imagePath: 'lib/images/apple.png',
+                        imagePath: kAppleAuthImage,
                       ),
                     ],
                   ),
