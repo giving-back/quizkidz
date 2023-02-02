@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/common_app_bar.dart';
-import 'package:quizkidz/util/util.dart';
 import 'package:quizkidz/wrappers/auth_wrapper.dart';
 import 'firebase_options.dart';
 import 'dart:io' show Platform;
