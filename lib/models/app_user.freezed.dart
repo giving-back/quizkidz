@@ -24,12 +24,14 @@ mixin _$AppUser {
   String? get email => throw _privateConstructorUsedError;
   String? get authDisplayName => throw _privateConstructorUsedError;
   String? get authPhotoURL => throw _privateConstructorUsedError;
-  String? get appDisplayName => throw _privateConstructorUsedError;
-  set appDisplayName(String? value) => throw _privateConstructorUsedError;
-  String? get appAvatar => throw _privateConstructorUsedError;
-  set appAvatar(String? value) => throw _privateConstructorUsedError;
-  int? get appAvatarColor => throw _privateConstructorUsedError;
-  set appAvatarColor(int? value) => throw _privateConstructorUsedError;
+  bool get firstTimeUser => throw _privateConstructorUsedError;
+  set firstTimeUser(bool value) => throw _privateConstructorUsedError;
+  String get appDisplayName => throw _privateConstructorUsedError;
+  set appDisplayName(String value) => throw _privateConstructorUsedError;
+  String get appAvatar => throw _privateConstructorUsedError;
+  set appAvatar(String value) => throw _privateConstructorUsedError;
+  int get appAvatarColor => throw _privateConstructorUsedError;
+  set appAvatarColor(int value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,9 +48,10 @@ abstract class $AppUserCopyWith<$Res> {
       String? email,
       String? authDisplayName,
       String? authPhotoURL,
-      String? appDisplayName,
-      String? appAvatar,
-      int? appAvatarColor});
+      bool firstTimeUser,
+      String appDisplayName,
+      String appAvatar,
+      int appAvatarColor});
 }
 
 /// @nodoc
@@ -68,9 +71,10 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
     Object? email = freezed,
     Object? authDisplayName = freezed,
     Object? authPhotoURL = freezed,
-    Object? appDisplayName = freezed,
-    Object? appAvatar = freezed,
-    Object? appAvatarColor = freezed,
+    Object? firstTimeUser = null,
+    Object? appDisplayName = null,
+    Object? appAvatar = null,
+    Object? appAvatarColor = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -89,18 +93,22 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
           ? _value.authPhotoURL
           : authPhotoURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      appDisplayName: freezed == appDisplayName
+      firstTimeUser: null == firstTimeUser
+          ? _value.firstTimeUser
+          : firstTimeUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      appDisplayName: null == appDisplayName
           ? _value.appDisplayName
           : appDisplayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      appAvatar: freezed == appAvatar
+              as String,
+      appAvatar: null == appAvatar
           ? _value.appAvatar
           : appAvatar // ignore: cast_nullable_to_non_nullable
-              as String?,
-      appAvatarColor: freezed == appAvatarColor
+              as String,
+      appAvatarColor: null == appAvatarColor
           ? _value.appAvatarColor
           : appAvatarColor // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ) as $Val);
   }
 }
@@ -117,9 +125,10 @@ abstract class _$$_AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
       String? email,
       String? authDisplayName,
       String? authPhotoURL,
-      String? appDisplayName,
-      String? appAvatar,
-      int? appAvatarColor});
+      bool firstTimeUser,
+      String appDisplayName,
+      String appAvatar,
+      int appAvatarColor});
 }
 
 /// @nodoc
@@ -136,9 +145,10 @@ class __$$_AppUserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? authDisplayName = freezed,
     Object? authPhotoURL = freezed,
-    Object? appDisplayName = freezed,
-    Object? appAvatar = freezed,
-    Object? appAvatarColor = freezed,
+    Object? firstTimeUser = null,
+    Object? appDisplayName = null,
+    Object? appAvatar = null,
+    Object? appAvatarColor = null,
   }) {
     return _then(_$_AppUser(
       uid: null == uid
@@ -157,18 +167,22 @@ class __$$_AppUserCopyWithImpl<$Res>
           ? _value.authPhotoURL
           : authPhotoURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      appDisplayName: freezed == appDisplayName
+      firstTimeUser: null == firstTimeUser
+          ? _value.firstTimeUser
+          : firstTimeUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      appDisplayName: null == appDisplayName
           ? _value.appDisplayName
           : appDisplayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      appAvatar: freezed == appAvatar
+              as String,
+      appAvatar: null == appAvatar
           ? _value.appAvatar
           : appAvatar // ignore: cast_nullable_to_non_nullable
-              as String?,
-      appAvatarColor: freezed == appAvatarColor
+              as String,
+      appAvatarColor: null == appAvatarColor
           ? _value.appAvatarColor
           : appAvatarColor // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -181,6 +195,7 @@ class _$_AppUser implements _AppUser {
       required this.email,
       required this.authDisplayName,
       required this.authPhotoURL,
+      this.firstTimeUser = true,
       this.appDisplayName = '',
       this.appAvatar = '',
       this.appAvatarColor = 1});
@@ -198,17 +213,20 @@ class _$_AppUser implements _AppUser {
   final String? authPhotoURL;
   @override
   @JsonKey()
-  String? appDisplayName;
+  bool firstTimeUser;
   @override
   @JsonKey()
-  String? appAvatar;
+  String appDisplayName;
   @override
   @JsonKey()
-  int? appAvatarColor;
+  String appAvatar;
+  @override
+  @JsonKey()
+  int appAvatarColor;
 
   @override
   String toString() {
-    return 'AppUser(uid: $uid, email: $email, authDisplayName: $authDisplayName, authPhotoURL: $authPhotoURL, appDisplayName: $appDisplayName, appAvatar: $appAvatar, appAvatarColor: $appAvatarColor)';
+    return 'AppUser(uid: $uid, email: $email, authDisplayName: $authDisplayName, authPhotoURL: $authPhotoURL, firstTimeUser: $firstTimeUser, appDisplayName: $appDisplayName, appAvatar: $appAvatar, appAvatarColor: $appAvatarColor)';
   }
 
   @JsonKey(ignore: true)
@@ -231,9 +249,10 @@ abstract class _AppUser implements AppUser {
       required final String? email,
       required final String? authDisplayName,
       required final String? authPhotoURL,
-      String? appDisplayName,
-      String? appAvatar,
-      int? appAvatarColor}) = _$_AppUser;
+      bool firstTimeUser,
+      String appDisplayName,
+      String appAvatar,
+      int appAvatarColor}) = _$_AppUser;
 
   factory _AppUser.fromJson(Map<String, dynamic> json) = _$_AppUser.fromJson;
 
@@ -246,14 +265,17 @@ abstract class _AppUser implements AppUser {
   @override
   String? get authPhotoURL;
   @override
-  String? get appDisplayName;
-  set appDisplayName(String? value);
+  bool get firstTimeUser;
+  set firstTimeUser(bool value);
   @override
-  String? get appAvatar;
-  set appAvatar(String? value);
+  String get appDisplayName;
+  set appDisplayName(String value);
   @override
-  int? get appAvatarColor;
-  set appAvatarColor(int? value);
+  String get appAvatar;
+  set appAvatar(String value);
+  @override
+  int get appAvatarColor;
+  set appAvatarColor(int value);
   @override
   @JsonKey(ignore: true)
   _$$_AppUserCopyWith<_$_AppUser> get copyWith =>

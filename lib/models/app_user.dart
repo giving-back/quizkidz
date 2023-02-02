@@ -10,9 +10,10 @@ class AppUser with _$AppUser {
     required final String? email,
     required final String? authDisplayName,
     required final String? authPhotoURL,
-    @Default('') String? appDisplayName,
-    @Default('') String? appAvatar,
-    @Default(1) int? appAvatarColor,
+    @Default(true) bool firstTimeUser,
+    @Default('') String appDisplayName,
+    @Default('') String appAvatar,
+    @Default(1) int appAvatarColor,
   }) = _AppUser;
 
   factory AppUser.fromJson(Map<String, Object?> json) =>
