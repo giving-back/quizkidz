@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,24 +7,60 @@ import 'package:quizkidz/util/util.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;
-  AuthService(this._firebaseAuth);
+  final FirebaseFirestore _firebaseFirestore;
+  final String usersCollection = 'users';
 
-  AppUser? _appUserFromFirebase(User? user) {
+  AuthService(
+    this._firebaseAuth,
+    this._firebaseFirestore,
+  );
+
+  Future<AppUser?> _appUserFromFirebase(User? user) async {
     if (user == null) {
       return null;
     }
 
-    return AppUser(
-      uid: user.uid,
-      email: user.email,
-      authDisplayName: user.displayName,
-      authPhotoURL: user.photoURL,
+    return await appUserById(user.uid) ??
+        AppUser(
+          uid: user.uid,
+          email: user.email,
+          authDisplayName: user.displayName,
+          authPhotoURL: user.photoURL,
+        );
+  }
+
+  AppUser? _appUserFromFirestore(DocumentSnapshot snapshot) {
+    if (!snapshot.exists) {
+      return null;
+    }
+    return AppUser.fromJson(
+      snapshot.data()! as Map<String, dynamic>,
     );
   }
 
   Stream<AppUser?> get user {
     return _firebaseAuth.authStateChanges().asyncMap(_appUserFromFirebase);
   }
+
+  Future<AppUser?> appUserById(String uid) async {
+    return _appUserFromFirestore(
+        await _firebaseFirestore.collection(usersCollection).doc(uid).get());
+  }
+
+  Stream<AppUser?> appUserStreamById(String uid) => _firebaseFirestore
+      .collection(usersCollection)
+      .doc(uid)
+      .snapshots()
+      .map(_appUserFromFirestore);
+
+  Future<Either<Exception, void>> addNewAppUser(AppUser appUser) async =>
+      TaskEither.tryCatch(
+        () => _firebaseFirestore
+            .collection(usersCollection)
+            .doc(appUser.uid)
+            .set(appUser.toJson()),
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
 
   Future<Either<Exception, void>> signInWithGoogle() async =>
       TaskEither.tryCatch(

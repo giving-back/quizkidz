@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/common_app_bar.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/models/app_user.dart';
-import 'package:quizkidz/providers/user_provider.dart';
+import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class NewUserUsernameScreen extends ConsumerWidget {
@@ -13,7 +13,7 @@ class NewUserUsernameScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userCollection = ref.watch(usersCollectionProvider);
+    final authServices = ref.watch(authServicesProvider);
     final userNameController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
@@ -89,7 +89,8 @@ class NewUserUsernameScreen extends ConsumerWidget {
                                   if (formKey.currentState!.validate()) {
                                     user.appDisplayName =
                                         userNameController.text;
-                                    userCollection.addNewAppUser(user).then(
+                                    user.firstTimeUser = false;
+                                    authServices.addNewAppUser(user).then(
                                           (value) => value.match(
                                             (error) =>
                                                 ScaffoldMessenger.of(context)
@@ -98,7 +99,7 @@ class NewUserUsernameScreen extends ConsumerWidget {
                                                     CustomSnackAlert
                                                         .showErrorSnackBar(),
                                                   ),
-                                            (r) {},
+                                            (r) => Navigator.pop(context),
                                           ),
                                         );
                                   }
