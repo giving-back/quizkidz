@@ -15,6 +15,8 @@ _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
       appDisplayName: json['appDisplayName'] as String? ?? '',
       appAvatar: json['appAvatar'] as String? ?? '',
       appAvatarColor: json['appAvatarColor'] as int? ?? 1,
+      quizWins: json['quizWins'] as int? ?? 0,
+      questionsAnswered: json['questionsAnswered'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
@@ -27,4 +29,6 @@ Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
       'appDisplayName': instance.appDisplayName,
       'appAvatar': instance.appAvatar,
       'appAvatarColor': instance.appAvatarColor,
+      'quizWins': instance.quizWins,
+      'questionsAnswered': instance.questionsAnswered,
     };

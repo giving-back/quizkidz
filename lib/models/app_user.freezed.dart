@@ -32,6 +32,10 @@ mixin _$AppUser {
   set appAvatar(String value) => throw _privateConstructorUsedError;
   int get appAvatarColor => throw _privateConstructorUsedError;
   set appAvatarColor(int value) => throw _privateConstructorUsedError;
+  int get quizWins => throw _privateConstructorUsedError;
+  set quizWins(int value) => throw _privateConstructorUsedError;
+  int get questionsAnswered => throw _privateConstructorUsedError;
+  set questionsAnswered(int value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +55,9 @@ abstract class $AppUserCopyWith<$Res> {
       bool firstTimeUser,
       String appDisplayName,
       String appAvatar,
-      int appAvatarColor});
+      int appAvatarColor,
+      int quizWins,
+      int questionsAnswered});
 }
 
 /// @nodoc
@@ -75,6 +81,8 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
     Object? appDisplayName = null,
     Object? appAvatar = null,
     Object? appAvatarColor = null,
+    Object? quizWins = null,
+    Object? questionsAnswered = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -109,6 +117,14 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
           ? _value.appAvatarColor
           : appAvatarColor // ignore: cast_nullable_to_non_nullable
               as int,
+      quizWins: null == quizWins
+          ? _value.quizWins
+          : quizWins // ignore: cast_nullable_to_non_nullable
+              as int,
+      questionsAnswered: null == questionsAnswered
+          ? _value.questionsAnswered
+          : questionsAnswered // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -128,7 +144,9 @@ abstract class _$$_AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
       bool firstTimeUser,
       String appDisplayName,
       String appAvatar,
-      int appAvatarColor});
+      int appAvatarColor,
+      int quizWins,
+      int questionsAnswered});
 }
 
 /// @nodoc
@@ -149,6 +167,8 @@ class __$$_AppUserCopyWithImpl<$Res>
     Object? appDisplayName = null,
     Object? appAvatar = null,
     Object? appAvatarColor = null,
+    Object? quizWins = null,
+    Object? questionsAnswered = null,
   }) {
     return _then(_$_AppUser(
       uid: null == uid
@@ -183,6 +203,14 @@ class __$$_AppUserCopyWithImpl<$Res>
           ? _value.appAvatarColor
           : appAvatarColor // ignore: cast_nullable_to_non_nullable
               as int,
+      quizWins: null == quizWins
+          ? _value.quizWins
+          : quizWins // ignore: cast_nullable_to_non_nullable
+              as int,
+      questionsAnswered: null == questionsAnswered
+          ? _value.questionsAnswered
+          : questionsAnswered // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -198,7 +226,9 @@ class _$_AppUser implements _AppUser {
       this.firstTimeUser = true,
       this.appDisplayName = '',
       this.appAvatar = '',
-      this.appAvatarColor = 1});
+      this.appAvatarColor = 1,
+      this.quizWins = 0,
+      this.questionsAnswered = 0});
 
   factory _$_AppUser.fromJson(Map<String, dynamic> json) =>
       _$$_AppUserFromJson(json);
@@ -223,10 +253,16 @@ class _$_AppUser implements _AppUser {
   @override
   @JsonKey()
   int appAvatarColor;
+  @override
+  @JsonKey()
+  int quizWins;
+  @override
+  @JsonKey()
+  int questionsAnswered;
 
   @override
   String toString() {
-    return 'AppUser(uid: $uid, email: $email, authDisplayName: $authDisplayName, authPhotoURL: $authPhotoURL, firstTimeUser: $firstTimeUser, appDisplayName: $appDisplayName, appAvatar: $appAvatar, appAvatarColor: $appAvatarColor)';
+    return 'AppUser(uid: $uid, email: $email, authDisplayName: $authDisplayName, authPhotoURL: $authPhotoURL, firstTimeUser: $firstTimeUser, appDisplayName: $appDisplayName, appAvatar: $appAvatar, appAvatarColor: $appAvatarColor, quizWins: $quizWins, questionsAnswered: $questionsAnswered)';
   }
 
   @JsonKey(ignore: true)
@@ -252,7 +288,9 @@ abstract class _AppUser implements AppUser {
       bool firstTimeUser,
       String appDisplayName,
       String appAvatar,
-      int appAvatarColor}) = _$_AppUser;
+      int appAvatarColor,
+      int quizWins,
+      int questionsAnswered}) = _$_AppUser;
 
   factory _AppUser.fromJson(Map<String, dynamic> json) = _$_AppUser.fromJson;
 
@@ -276,6 +314,12 @@ abstract class _AppUser implements AppUser {
   @override
   int get appAvatarColor;
   set appAvatarColor(int value);
+  @override
+  int get quizWins;
+  set quizWins(int value);
+  @override
+  int get questionsAnswered;
+  set questionsAnswered(int value);
   @override
   @JsonKey(ignore: true)
   _$$_AppUserCopyWith<_$_AppUser> get copyWith =>

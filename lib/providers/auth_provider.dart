@@ -2,9 +2,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quizkidz/models/app_user.dart';
 
 // Project imports:
+import 'package:quizkidz/models/app_user.dart';
 import 'package:quizkidz/services/auth_service.dart';
 
 final firebaseAuthProvider = Provider<FirebaseAuth>((ref) {

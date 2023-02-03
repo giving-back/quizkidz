@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_user.freezed.dart';
@@ -14,6 +15,8 @@ class AppUser with _$AppUser {
     @Default('') String appDisplayName,
     @Default('') String appAvatar,
     @Default(1) int appAvatarColor,
+    @Default(0) int quizWins,
+    @Default(0) int questionsAnswered,
   }) = _AppUser;
 
   factory AppUser.fromJson(Map<String, Object?> json) =>

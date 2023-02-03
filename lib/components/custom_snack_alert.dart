@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+
+// Project imports:
 import 'package:quizkidz/util/util.dart';
 
 class CustomSnackAlert {
