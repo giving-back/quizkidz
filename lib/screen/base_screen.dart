@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:quizkidz/components/common_app_bar.dart';
+
+// Project imports:
 import 'package:quizkidz/providers/state_providers.dart';
 import 'package:quizkidz/screen/home_screen.dart';
 import 'package:quizkidz/screen/profile_screen.dart';

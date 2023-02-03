@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:quizkidz/components/new_user_layout.dart';
 import 'package:quizkidz/models/app_user.dart';
 import 'package:quizkidz/screen/new_user_username_screen.dart';

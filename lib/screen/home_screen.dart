@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/text_divider.dart';
