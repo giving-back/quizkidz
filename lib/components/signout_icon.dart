@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
+import 'package:quizkidz/providers/state_providers.dart';
 
 class SignoutIcon extends ConsumerWidget {
   const SignoutIcon({Key? key}) : super(key: key);
@@ -9,6 +10,7 @@ class SignoutIcon extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authService = ref.watch(authServicesProvider);
+    final tabIndex = ref.watch(tabIndexProvider);
 
     return IconButton(
       onPressed: () async => await authService.signOut().then(
@@ -18,7 +20,9 @@ class SignoutIcon extends ConsumerWidget {
                 ..showSnackBar(
                   CustomSnackAlert.showErrorSnackBar(),
                 ),
-              (r) {},
+              (r) {
+                ref.read(tabIndexProvider.notifier).state = 0;
+              },
             ),
           ),
       icon: const Icon(Icons.logout),
