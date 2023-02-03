@@ -103,7 +103,7 @@ class HomeScreen extends ConsumerWidget {
                                 image: const AssetImage(
                                   'lib/images/quiz/winners_medal.png',
                                 ),
-                                text: 'Correct',
+                                text: 'Answers',
                                 data: data.questionsAnswered.toString(),
                               ),
                             ),
