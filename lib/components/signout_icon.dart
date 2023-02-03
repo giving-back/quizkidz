@@ -21,7 +21,8 @@ class SignoutIcon extends ConsumerWidget {
                   CustomSnackAlert.showErrorSnackBar(),
                 ),
               (r) {
-                ref.read(tabIndexProvider.notifier).state = 0;
+                ref.read(tabIndexProvider.notifier).state =
+                    0; // return home for next login
               },
             ),
           ),
