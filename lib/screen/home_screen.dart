@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/text_divider.dart';
+import 'package:quizkidz/components/user_score_summary.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
@@ -79,22 +80,12 @@ class HomeScreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                              child: ListTile(
-                                leading: const CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  backgroundImage: AssetImage(
-                                      'lib/images/quiz/winners_trophy.jpg'),
+                              child: UserScoreSummary(
+                                image: const AssetImage(
+                                  'lib/images/quiz/winners_trophy.jpg',
                                 ),
-                                title: const Text(
-                                  'Won',
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  data.quizWins.toString(),
-                                ),
+                                text: 'Won',
+                                data: data.quizWins.toString(),
                               ),
                             ),
                             const VerticalDivider(
@@ -103,23 +94,12 @@ class HomeScreen extends ConsumerWidget {
                               thickness: 2,
                             ),
                             Expanded(
-                              child: ListTile(
-                                leading: const CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  backgroundImage: AssetImage(
-                                    'lib/images/quiz/winners_medal.png',
-                                  ),
+                              child: UserScoreSummary(
+                                image: const AssetImage(
+                                  'lib/images/quiz/winners_medal.png',
                                 ),
-                                title: const Text(
-                                  'Correct',
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  data.questionsAnswered.toString(),
-                                ),
+                                text: 'Correct',
+                                data: data.questionsAnswered.toString(),
                               ),
                             ),
                           ],
