@@ -30,7 +30,7 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ListTile(
                     leading: CircleAvatar(
