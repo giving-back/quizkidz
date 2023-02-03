@@ -19,7 +19,7 @@ class UserWrapper extends ConsumerWidget {
     if (user.firstTimeUser) {
       appUser.when(
         data: (data) {
-          return const HomeScreen();
+          return HomeScreen(uid: user.uid);
         },
         error: (error, stackTrace) => Text(
           stackTrace.toString(),
@@ -28,7 +28,7 @@ class UserWrapper extends ConsumerWidget {
       );
       return NewUserAvatarScreen(user: user);
     } else {
-      return const HomeScreen();
+      return HomeScreen(uid: user.uid);
     }
   }
 }
