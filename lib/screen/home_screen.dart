@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
+import 'package:quizkidz/components/quiz_button.dart';
+import 'package:quizkidz/components/text_divider.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
@@ -12,7 +13,6 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authService = ref.watch(authServicesProvider);
     final appUser = ref.watch(appUserByIdProvider(uid));
 
     return appUser.when(
@@ -133,18 +133,21 @@ class HomeScreen extends ConsumerWidget {
           ),
           Expanded(
             flex: 65,
-            child: IconButton(
-              onPressed: () async => await authService.signOut().then(
-                    (value) => value.match(
-                      (error) => ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(
-                          CustomSnackAlert.showErrorSnackBar(),
-                        ),
-                      (r) {},
-                    ),
-                  ),
-              icon: const Icon(Icons.logout),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                QuizButton(
+                  text: 'Join a Quiz',
+                  onTap: () {},
+                ),
+                const TextDivider(
+                  text: 'Or',
+                ),
+                QuizButton(
+                  text: 'Start a Quiz',
+                  onTap: () {},
+                ),
+              ],
             ),
           ),
         ],
