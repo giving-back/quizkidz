@@ -7,10 +7,10 @@ import 'package:quizkidz/components/change_avatar.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/quiz_button.dart';
-import 'package:quizkidz/components/signout_button.dart';
 
 // Project imports:
 import 'package:quizkidz/providers/auth_provider.dart';
+import 'package:quizkidz/providers/state_providers.dart';
 import 'package:quizkidz/util/util.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -190,7 +190,28 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SignoutButton(),
+                QuizButton(
+                  text: ' Sign Out',
+                  onPressed: () async => await authServices.signOut().then(
+                        (value) => value.match(
+                          (error) => ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              CustomSnackAlert.showErrorSnackBar(),
+                            ),
+                          (r) {
+                            ref.read(tabIndexProvider.notifier).state =
+                                0; // return home for next login
+                          },
+                        ),
+                      ),
+                  edgeInsets: const EdgeInsets.only(
+                    left: 30,
+                    right: 30,
+                    top: 10,
+                    bottom: 10,
+                  ),
+                ),
               ],
             ),
           ),

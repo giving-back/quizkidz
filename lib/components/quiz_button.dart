@@ -6,12 +6,14 @@ import 'package:quizkidz/util/util.dart';
 
 class QuizButton extends StatelessWidget {
   final String text;
-  final Function()? onTap;
+  final EdgeInsets edgeInsets;
+  final Function()? onPressed;
 
   const QuizButton({
     super.key,
     required this.text,
-    required this.onTap,
+    required this.edgeInsets,
+    required this.onPressed,
   });
 
   @override
@@ -36,16 +38,11 @@ class QuizButton extends StatelessWidget {
           ),
         ),
       ),
+      onPressed: onPressed,
       child: Padding(
-        padding: const EdgeInsets.only(
-          left: 50,
-          right: 50,
-          top: 30,
-          bottom: 30,
-        ),
+        padding: edgeInsets,
         child: Text(text),
       ),
-      onPressed: () {},
     );
   }
 }
