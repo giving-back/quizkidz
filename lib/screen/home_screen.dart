@@ -103,7 +103,7 @@ class HomeScreen extends ConsumerWidget {
                                 image: const AssetImage(
                                   'lib/images/quiz/winners_medal.png',
                                 ),
-                                text: 'Correct',
+                                text: 'Answers',
                                 data: data.questionsAnswered.toString(),
                               ),
                             ),
@@ -123,14 +123,26 @@ class HomeScreen extends ConsumerWidget {
               children: [
                 QuizButton(
                   text: 'Join a Quiz',
-                  onTap: () {},
+                  onPressed: () {},
+                  edgeInsets: const EdgeInsets.only(
+                    left: 50,
+                    right: 50,
+                    top: 30,
+                    bottom: 30,
+                  ),
                 ),
                 const TextDivider(
                   text: 'Or',
                 ),
                 QuizButton(
                   text: 'Start a Quiz',
-                  onTap: () {},
+                  onPressed: () {},
+                  edgeInsets: const EdgeInsets.only(
+                    left: 50,
+                    right: 50,
+                    top: 30,
+                    bottom: 30,
+                  ),
                 ),
               ],
             ),
