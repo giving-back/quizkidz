@@ -7,6 +7,7 @@ import 'package:quizkidz/components/change_avatar.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/quiz_button.dart';
+import 'package:quizkidz/components/username_form.dart';
 
 // Project imports:
 import 'package:quizkidz/providers/auth_provider.dart';
@@ -22,7 +23,6 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appUser = ref.watch(appUserByIdProvider(uid));
     final authServices = ref.watch(authServicesProvider);
-    final userNameController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     return appUser.when(
@@ -93,84 +93,9 @@ class ProfileScreen extends ConsumerWidget {
                                         height: 180,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Form(
-                                            key: formKey,
-                                            child: Card(
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: TextFormField(
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return "Let players see who you are.";
-                                                        }
-                                                        return null;
-                                                      },
-                                                      controller:
-                                                          userNameController,
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        border:
-                                                            UnderlineInputBorder(),
-                                                        labelText:
-                                                            'Choose a Username',
-                                                        prefixIcon: Icon(Icons
-                                                            .verified_user_outlined),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      TextButton(
-                                                        child: const Text(
-                                                          'Go',
-                                                          style: TextStyle(
-                                                            color: Color(
-                                                                kBlueColor),
-                                                            fontSize: 17,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        onPressed: () {
-                                                          if (formKey
-                                                              .currentState!
-                                                              .validate()) {
-                                                            data.appDisplayName =
-                                                                userNameController
-                                                                    .text;
-                                                            authServices
-                                                                .addNewAppUser(
-                                                                    data)
-                                                                .then(
-                                                                  (value) =>
-                                                                      value
-                                                                          .match(
-                                                                    (error) => ScaffoldMessenger.of(
-                                                                        context)
-                                                                      ..hideCurrentSnackBar()
-                                                                      ..showSnackBar(
-                                                                        CustomSnackAlert
-                                                                            .showErrorSnackBar(),
-                                                                      ),
-                                                                    (r) => Navigator
-                                                                        .pop(
-                                                                            context),
-                                                                  ),
-                                                                );
-                                                          }
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                                          child: Card(
+                                            child: UsernameForm(
+                                              user: data,
                                             ),
                                           ),
                                         ),
