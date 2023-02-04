@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/change_avatar.dart';
 
 // Project imports:
 import 'package:quizkidz/components/new_user_layout.dart';
@@ -35,33 +36,16 @@ class NewUserAvatarScreen extends ConsumerWidget {
         ),
         SizedBox(
           height: 80,
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: kAvatarImages.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: GestureDetector(
-                  onTap: () {
-                    user.appAvatar = kAvatarImages[index].image;
-                    user.appAvatarColor = kAvatarImages[index].color;
+          child: AvatarListView(
+            onTap: (index) {
+              user.appAvatar = kAvatarImages[index].image;
+              user.appAvatarColor = kAvatarImages[index].color;
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewUserUsernameScreen(
-                          user: user,
-                        ),
-                      ),
-                    );
-                  },
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Color(kAvatarImages[index].color),
-                    backgroundImage: AssetImage(
-                      kAvatarImages[index].image,
-                    ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewUserUsernameScreen(
+                    user: user,
                   ),
                 ),
               );

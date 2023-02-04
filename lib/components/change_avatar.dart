@@ -69,43 +69,23 @@ class ChangeAvatar extends ConsumerWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: kAvatarImages.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          data.appAvatar =
-                                              kAvatarImages[index].image;
-                                          data.appAvatarColor =
-                                              kAvatarImages[index].color;
-                                          authServices.addNewAppUser(data).then(
-                                                (value) => value.match(
-                                                  (error) =>
-                                                      ScaffoldMessenger.of(
-                                                          context)
-                                                        ..hideCurrentSnackBar()
-                                                        ..showSnackBar(
-                                                          CustomSnackAlert
-                                                              .showErrorSnackBar(),
-                                                        ),
-                                                  (r) => Navigator.pop(context),
-                                                ),
-                                              );
-                                        },
-                                        child: CircleAvatar(
-                                          radius: 35,
-                                          backgroundColor:
-                                              Color(kAvatarImages[index].color),
-                                          backgroundImage: AssetImage(
-                                            kAvatarImages[index].image,
+                                child: AvatarListView(
+                                  onTap: (index) {
+                                    data.appAvatar = kAvatarImages[index].image;
+                                    data.appAvatarColor =
+                                        kAvatarImages[index].color;
+                                    authServices.addNewAppUser(data).then(
+                                          (value) => value.match(
+                                            (error) =>
+                                                ScaffoldMessenger.of(context)
+                                                  ..hideCurrentSnackBar()
+                                                  ..showSnackBar(
+                                                    CustomSnackAlert
+                                                        .showErrorSnackBar(),
+                                                  ),
+                                            (r) => Navigator.pop(context),
                                           ),
-                                        ),
-                                      ),
-                                    );
+                                        );
                                   },
                                 ),
                               ),
@@ -127,6 +107,39 @@ class ChangeAvatar extends ConsumerWidget {
       ),
       error: (error, stackTrace) => const Text('error'),
       loading: () => const LoadingSpinner(),
+    );
+  }
+}
+
+class AvatarListView extends StatelessWidget {
+  final Function(int) onTap;
+
+  const AvatarListView({
+    super.key,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      itemCount: kAvatarImages.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: GestureDetector(
+            onTap: () => onTap(index),
+            child: CircleAvatar(
+              radius: 35,
+              backgroundColor: Color(kAvatarImages[index].color),
+              backgroundImage: AssetImage(
+                kAvatarImages[index].image,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
