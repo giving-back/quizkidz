@@ -49,6 +49,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   line_icons: ^2.0.1
   import_sorter: ^4.6.0
+  sign_in_with_apple: ^4.3.0
 
 dev_dependencies:
   flutter_test:

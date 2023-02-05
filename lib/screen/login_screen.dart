@@ -57,7 +57,17 @@ class LoginScreen extends ConsumerWidget {
                         imagePath: kGoogleAuthImage,
                       ),
                       GestureIcon(
-                        onTap: () {},
+                        onTap: () async =>
+                            await authService.signInWithApple().then(
+                                  (value) => value.match(
+                                    (error) => ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(
+                                        CustomSnackAlert.showErrorSnackBar(),
+                                      ),
+                                    (r) {},
+                                  ),
+                                ),
                         imagePath: kAppleAuthImage,
                       ),
                     ],

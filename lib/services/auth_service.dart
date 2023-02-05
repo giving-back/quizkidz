@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 // Project imports:
 import 'package:quizkidz/models/app_user.dart';
 import 'package:quizkidz/util/util.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;
@@ -63,6 +64,25 @@ class AuthService {
             .doc(appUser.uid)
             .set(appUser.toJson()),
         (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> signInWithApple() async =>
+      TaskEither.tryCatch(
+        () => SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+        ).then(
+          (credential) {
+            print(credential);
+          },
+        ),
+        (error, stackTrace) {
+          print(error);
+          print(stackTrace);
+          return Exception(kUserError);
+        },
       ).run();
 
   Future<Either<Exception, void>> signInWithGoogle() async =>
