@@ -18,6 +18,8 @@ const kAvatarDarkOrange = 0xFFFF7D25;
 const kAvatarExtraDarkOrange = 0xFFF16625;
 const kAvatarBrown = 0xFF7F341F;
 
+final numQuestions = [5, 10, 15, 20, 25];
+
 class Avatar {
   final String image;
   final int color;
