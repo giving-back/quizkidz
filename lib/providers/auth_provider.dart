@@ -7,28 +7,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/services/auth_service.dart';
 
-final firebaseAuthProvider = Provider<FirebaseAuth>((ref) {
-  return FirebaseAuth.instance;
-});
-
-final firestoreProvider = Provider<FirebaseFirestore>(
-  (ref) {
-    return FirebaseFirestore.instance;
-  },
+final firebaseAuthProvider = Provider<FirebaseAuth>(
+  (ref) => FirebaseAuth.instance,
 );
 
-final authServicesProvider = Provider<AuthService>((ref) {
-  return AuthService(
+final firestoreProvider = Provider<FirebaseFirestore>(
+  (ref) => FirebaseFirestore.instance,
+);
+
+final authServicesProvider = Provider<AuthService>(
+  (ref) => AuthService(
     ref.read(firebaseAuthProvider),
     ref.read(firestoreProvider),
-  );
-});
+  ),
+);
 
-final authStateProvider = StreamProvider<AppUser?>((ref) {
-  return ref.watch(authServicesProvider).user;
-});
+final authStateProvider = StreamProvider<AppUser?>(
+  (ref) => ref.watch(authServicesProvider).user,
+);
 
-final appUserByIdProvider =
-    StreamProvider.autoDispose.family<AppUser?, String>((ref, uid) {
-  return ref.watch(authServicesProvider).appUserStreamById(uid);
-});
+final activeAppUserProvider = StreamProvider.autoDispose<AppUser?>(
+  (ref) => ref.watch(authServicesProvider).activeAppUserStream(),
+);

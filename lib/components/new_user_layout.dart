@@ -1,10 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:quizkidz/components/common_app_bar.dart';
-
 // Project imports:
+import 'package:quizkidz/components/common_app_bar.dart';
 import 'package:quizkidz/util/util.dart';
 
 class NewUserLayout extends StatelessWidget {

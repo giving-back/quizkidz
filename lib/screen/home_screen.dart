@@ -14,15 +14,13 @@ import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class HomeScreen extends ConsumerWidget {
-  final String uid;
-
-  const HomeScreen({Key? key, required this.uid}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appUser = ref.watch(appUserByIdProvider(uid));
+    final activeAppUser = ref.watch(activeAppUserProvider);
 
-    return appUser.when(
+    return activeAppUser.when(
       data: (data) => Column(
         children: [
           Expanded(

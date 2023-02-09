@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 // Project imports:
 import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/util/util.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;
@@ -19,41 +19,31 @@ class AuthService {
     this._firebaseFirestore,
   );
 
-  Future<AppUser?> _appUserFromFirebase(User? user) async {
-    if (user == null) {
-      return null;
-    }
+  Future<AppUser?> _appUserFromFirebase(User? user) async => user == null
+      ? null
+      : await _appUserById(user.uid) ??
+          AppUser(
+            uid: user.uid,
+            email: user.email,
+            authDisplayName: user.displayName,
+            authPhotoURL: user.photoURL,
+          );
 
-    return await appUserById(user.uid) ??
-        AppUser(
-          uid: user.uid,
-          email: user.email,
-          authDisplayName: user.displayName,
-          authPhotoURL: user.photoURL,
+  AppUser? _appUserFromFirestore(DocumentSnapshot snapshot) => !snapshot.exists
+      ? null
+      : AppUser.fromJson(
+          snapshot.data()! as Map<String, dynamic>,
         );
-  }
 
-  AppUser? _appUserFromFirestore(DocumentSnapshot snapshot) {
-    if (!snapshot.exists) {
-      return null;
-    }
-    return AppUser.fromJson(
-      snapshot.data()! as Map<String, dynamic>,
-    );
-  }
+  Future<AppUser?> _appUserById(String uid) async => _appUserFromFirestore(
+      await _firebaseFirestore.collection(usersCollection).doc(uid).get());
 
-  Stream<AppUser?> get user {
-    return _firebaseAuth.authStateChanges().asyncMap(_appUserFromFirebase);
-  }
+  Stream<AppUser?> get user =>
+      _firebaseAuth.authStateChanges().asyncMap(_appUserFromFirebase);
 
-  Future<AppUser?> appUserById(String uid) async {
-    return _appUserFromFirestore(
-        await _firebaseFirestore.collection(usersCollection).doc(uid).get());
-  }
-
-  Stream<AppUser?> appUserStreamById(String uid) => _firebaseFirestore
+  Stream<AppUser?> activeAppUserStream() => _firebaseFirestore
       .collection(usersCollection)
-      .doc(uid)
+      .doc(_firebaseAuth.currentUser?.uid)
       .snapshots()
       .map(_appUserFromFirestore);
 

@@ -18,21 +18,23 @@ class UserWrapper extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appUser = ref.watch(appUserByIdProvider(user.uid));
+    final activeAppUser = ref.watch(activeAppUserProvider);
 
     if (user.firstTimeUser) {
-      appUser.when(
+      activeAppUser.when(
         data: (data) {
-          return BaseScreen(uid: user.uid);
+          return const BaseScreen();
         },
         error: (error, stackTrace) => Text(
           stackTrace.toString(),
         ),
         loading: () => const LoadingSpinner(),
       );
-      return NewUserAvatarScreen(user: user);
+      return NewUserAvatarScreen(
+        user: user,
+      );
     } else {
-      return BaseScreen(uid: user.uid);
+      return const BaseScreen();
     }
   }
 }

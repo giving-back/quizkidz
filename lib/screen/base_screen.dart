@@ -12,24 +12,15 @@ import 'package:quizkidz/screen/home_screen.dart';
 import 'package:quizkidz/screen/profile_screen.dart';
 
 class BaseScreen extends ConsumerWidget {
-  final String uid;
-
-  const BaseScreen({
-    super.key,
-    required this.uid,
-  });
+  const BaseScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabIndex = ref.watch(tabIndexProvider);
 
     final List<Widget> widgetOptions = <Widget>[
-      HomeScreen(
-        uid: uid,
-      ),
-      ProfileScreen(
-        uid: uid,
-      ),
+      const HomeScreen(),
+      const ProfileScreen(),
     ];
 
     return Scaffold(

@@ -1,11 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// Project imports:
 import 'package:quizkidz/components/new_user_layout.dart';
 import 'package:quizkidz/components/username_form.dart';
-
-// Project imports:
 import 'package:quizkidz/models/user.dart';
 
 class NewUserUsernameScreen extends StatelessWidget {

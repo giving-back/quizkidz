@@ -3,28 +3,26 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:quizkidz/components/change_avatar.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/username_form.dart';
-
-// Project imports:
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class ProfileScreen extends ConsumerWidget {
-  final String uid;
-
-  const ProfileScreen({Key? key, required this.uid}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appUser = ref.watch(appUserByIdProvider(uid));
+    final activeAppUser = ref.watch(activeAppUserProvider);
     final authServices = ref.watch(authServicesProvider);
 
-    return appUser.when(
+    return activeAppUser.when(
       data: (data) => Column(
         children: [
           Expanded(
@@ -52,11 +50,9 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.bottomCenter,
-                  child: ChangeAvatar(
-                    uid: data!.uid,
-                  ),
+                  child: ChangeAvatar(),
                 ),
               ],
             ),
@@ -77,7 +73,7 @@ class ProfileScreen extends ConsumerWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: data.appDisplayName,
+                          text: data?.appDisplayName,
                         ),
                         WidgetSpan(
                           child: Padding(
@@ -94,7 +90,7 @@ class ProfileScreen extends ConsumerWidget {
                                           padding: const EdgeInsets.all(8.0),
                                           child: Card(
                                             child: UsernameForm(
-                                              user: data,
+                                              user: data!,
                                             ),
                                           ),
                                         ),

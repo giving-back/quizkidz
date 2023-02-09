@@ -1,9 +1,9 @@
 // Package imports:
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quizkidz/models/quiz.dart';
 
 // Project imports:
+import 'package:quizkidz/models/quiz.dart';
 import 'package:quizkidz/services/storage_service.dart';
 
 final firebaseStorageProvider =
