@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/selected_text.dart';
-import 'package:quizkidz/components/storage_image.dart';
 import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/providers/storage_provider.dart';
 

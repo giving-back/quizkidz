@@ -7,8 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
-import 'package:quizkidz/screen/home_screen.dart';
-import 'package:quizkidz/wrappers/auth_wrapper.dart';
 
 class QuizWrapper extends ConsumerWidget {
   final String quizid;
