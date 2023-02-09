@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:quizkidz/components/change_avatar.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/username_form.dart';
-
-// Project imports:
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/util/util.dart';

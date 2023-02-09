@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:quizkidz/models/user.dart';
 
 part 'quiz.freezed.dart';

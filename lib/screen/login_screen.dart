@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quizkidz/components/storage_image.dart';
 
 // Project imports:
 import 'package:quizkidz/components/custom_snack_alert.dart';
+import 'package:quizkidz/components/storage_image.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
