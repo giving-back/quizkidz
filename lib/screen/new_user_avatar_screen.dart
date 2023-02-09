@@ -7,7 +7,7 @@ import 'package:quizkidz/components/change_avatar.dart';
 import 'package:quizkidz/components/new_user_layout.dart';
 
 // Project imports:
-import 'package:quizkidz/models/app_user.dart';
+import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/screen/new_user_username_screen.dart';
 import 'package:quizkidz/util/util.dart';
 

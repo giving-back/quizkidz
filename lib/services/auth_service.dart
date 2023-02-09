@@ -5,7 +5,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // Project imports:
-import 'package:quizkidz/models/app_user.dart';
+import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/util/util.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -40,6 +40,10 @@ class AuthService {
     return AppUser.fromJson(
       snapshot.data()! as Map<String, dynamic>,
     );
+  }
+
+  Future<AppUser?> get currentUser async {
+    return await _appUserFromFirebase(_firebaseAuth.currentUser);
   }
 
   Stream<AppUser?> get user {

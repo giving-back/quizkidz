@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:quizkidz/models/quiz_type.dart';
+import 'package:quizkidz/models/quiz.dart';
 
 class StorageService {
   final FirebaseStorage _firebaseStorage;

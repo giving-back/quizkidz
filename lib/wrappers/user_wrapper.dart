@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/loading_spinner.dart';
-import 'package:quizkidz/models/app_user.dart';
+import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/screen/base_screen.dart';
 import 'package:quizkidz/screen/new_user_avatar_screen.dart';

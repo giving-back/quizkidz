@@ -11,7 +11,7 @@ import 'package:quizkidz/components/username_form.dart';
 
 // Project imports:
 import 'package:quizkidz/providers/auth_provider.dart';
-import 'package:quizkidz/providers/state_providers.dart';
+import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class ProfileScreen extends ConsumerWidget {

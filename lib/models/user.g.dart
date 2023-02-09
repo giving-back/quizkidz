@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_user.dart';
+part of 'user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -31,4 +31,19 @@ Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
       'appAvatarColor': instance.appAvatarColor,
       'quizWins': instance.quizWins,
       'questionsAnswered': instance.questionsAnswered,
+    };
+
+_$_QuizUser _$$_QuizUserFromJson(Map<String, dynamic> json) => _$_QuizUser(
+      uid: json['uid'] as String,
+      appDisplayName: json['appDisplayName'] as String,
+      appAvatar: json['appAvatar'] as String,
+      appAvatarColor: json['appAvatarColor'] as int,
+    );
+
+Map<String, dynamic> _$$_QuizUserToJson(_$_QuizUser instance) =>
+    <String, dynamic>{
+      'uid': instance.uid,
+      'appDisplayName': instance.appDisplayName,
+      'appAvatar': instance.appAvatar,
+      'appAvatarColor': instance.appAvatarColor,
     };

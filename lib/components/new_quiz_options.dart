@@ -1,10 +1,16 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/custom_snack_alert.dart';
+import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/num_questions_list.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/subjects_list.dart';
-import 'package:quizkidz/providers/state_providers.dart';
+import 'package:quizkidz/models/quiz.dart';
+import 'package:quizkidz/models/user.dart';
+import 'package:quizkidz/providers/auth_provider.dart';
+import 'package:quizkidz/providers/quiz_provider.dart';
+import 'package:quizkidz/providers/state_provider.dart';
 
 class NewQuizOptions extends ConsumerWidget {
   const NewQuizOptions({
@@ -13,8 +19,10 @@ class NewQuizOptions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final questionTypeIndex = ref.watch(questionTypeProvider);
-    final numQuestionsIndex = ref.watch(numQuestionProvider);
+    final questionType = ref.watch(questionTypeProvider);
+    final numQuestions = ref.watch(numQuestionProvider);
+    final quizService = ref.watch(quizServiceProvider);
+    final currentUser = ref.watch(currentUserProvider);
 
     return Padding(
       padding: const EdgeInsets.only(top: 25.0),
@@ -90,9 +98,47 @@ class NewQuizOptions extends ConsumerWidget {
                   top: 10,
                   bottom: 10,
                 ),
-                onPressed: () {
-                  print(questionTypeIndex);
-                  print(numQuestionsIndex);
+                onPressed: () async {
+                  currentUser.when(
+                    data: (data) {
+                      final quiz = Quiz(
+                        quizmaster: QuizUser(
+                          uid: data!.uid,
+                          appDisplayName: data.appDisplayName,
+                          appAvatar: data.appAvatar,
+                          appAvatarColor: data.appAvatarColor,
+                        ),
+                        subject: questionType,
+                        questions: numQuestions,
+                        created: DateTime.now(),
+                      );
+
+                      quizService.startNewQuiz(quiz).then(
+                            (value) => value.match(
+                              (error) {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context)
+                                  ..hideCurrentSnackBar()
+                                  ..showSnackBar(
+                                    CustomSnackAlert.showErrorSnackBar(),
+                                  );
+                              },
+                              (result) {
+                                print(result);
+                              },
+                            ),
+                          );
+                    },
+                    error: (_, __) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          CustomSnackAlert.showErrorSnackBar(),
+                        );
+                    },
+                    loading: () => const LoadingSpinner(),
+                  );
                 },
               ),
             ),

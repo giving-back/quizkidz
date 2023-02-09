@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
-import 'package:quizkidz/models/app_user.dart';
+import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/services/auth_service.dart';
 
 final firebaseAuthProvider = Provider<FirebaseAuth>((ref) {
@@ -26,6 +26,10 @@ final authServicesProvider = Provider<AuthService>((ref) {
 
 final authStateProvider = StreamProvider<AppUser?>((ref) {
   return ref.watch(authServicesProvider).user;
+});
+
+final currentUserProvider = FutureProvider.autoDispose<AppUser?>((ref) {
+  return ref.watch(authServicesProvider).currentUser;
 });
 
 final appUserByIdProvider =
