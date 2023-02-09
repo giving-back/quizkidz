@@ -5,25 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
+import 'package:quizkidz/components/avatar_list_view.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class ChangeAvatar extends ConsumerWidget {
-  final String uid;
-
-  const ChangeAvatar({
-    super.key,
-    required this.uid,
-  });
+  const ChangeAvatar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authServices = ref.watch(authServicesProvider);
-    final appUser = ref.watch(appUserByIdProvider(uid));
+    final activeAppUser = ref.watch(activeAppUserProvider);
 
-    return appUser.when(
+    return activeAppUser.when(
       data: (data) => Stack(
         children: [
           CircleAvatar(
@@ -111,39 +107,6 @@ class ChangeAvatar extends ConsumerWidget {
       ),
       error: (error, stackTrace) => const Text('error'),
       loading: () => const LoadingSpinner(),
-    );
-  }
-}
-
-class AvatarListView extends StatelessWidget {
-  final Function(int) onTap;
-
-  const AvatarListView({
-    super.key,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      scrollDirection: Axis.horizontal,
-      itemCount: kAvatarImages.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: GestureDetector(
-            onTap: () => onTap(index),
-            child: CircleAvatar(
-              radius: 35,
-              backgroundColor: Color(kAvatarImages[index].color),
-              backgroundImage: AssetImage(
-                kAvatarImages[index].image,
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

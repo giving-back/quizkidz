@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
-import 'package:quizkidz/components/change_avatar.dart';
+import 'package:quizkidz/components/avatar_list_view.dart';
 import 'package:quizkidz/components/new_user_layout.dart';
 import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/screen/new_user_username_screen.dart';
