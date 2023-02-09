@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/loading_spinner.dart';
+import 'package:quizkidz/components/new_quiz_options.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/text_divider.dart';
 import 'package:quizkidz/components/user_score_summary.dart';
@@ -87,7 +88,7 @@ class HomeScreen extends ConsumerWidget {
                             Expanded(
                               child: UserScoreSummary(
                                 image: const AssetImage(
-                                  'lib/images/quiz/winners_trophy.jpg',
+                                  kWinnersTrophyImage,
                                 ),
                                 text: 'Won',
                                 data: data.quizWins.toString(),
@@ -101,7 +102,7 @@ class HomeScreen extends ConsumerWidget {
                             Expanded(
                               child: UserScoreSummary(
                                 image: const AssetImage(
-                                  'lib/images/quiz/winners_medal.png',
+                                  kWinnersMedalImage,
                                 ),
                                 text: 'Answers',
                                 data: data.questionsAnswered.toString(),
@@ -136,7 +137,17 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 QuizButton(
                   text: 'Start a Quiz',
-                  onPressed: () {},
+                  onPressed: () => showModalBottomSheet(
+                    backgroundColor: Colors.white,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
+                    context: context,
+                    builder: (_) => const NewQuizOptions(),
+                  ),
                   edgeInsets: const EdgeInsets.only(
                     left: 50,
                     right: 50,

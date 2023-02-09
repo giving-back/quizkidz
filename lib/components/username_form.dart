@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/custom_snack_alert.dart';
-import 'package:quizkidz/models/app_user.dart';
+import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 

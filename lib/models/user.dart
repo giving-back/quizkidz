@@ -1,8 +1,8 @@
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'app_user.freezed.dart';
-part 'app_user.g.dart';
+part 'user.freezed.dart';
+part 'user.g.dart';
 
 @unfreezed
 class AppUser with _$AppUser {
@@ -21,4 +21,17 @@ class AppUser with _$AppUser {
 
   factory AppUser.fromJson(Map<String, Object?> json) =>
       _$AppUserFromJson(json);
+}
+
+@Freezed()
+class QuizUser with _$QuizUser {
+  const factory QuizUser({
+    required final String uid,
+    required final String appDisplayName,
+    required final String appAvatar,
+    required final int appAvatarColor,
+  }) = _QuizUser;
+
+  factory QuizUser.fromJson(Map<String, Object?> json) =>
+      _$QuizUserFromJson(json);
 }

@@ -7,7 +7,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 // Project imports:
-import 'package:quizkidz/providers/state_providers.dart';
+import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/screen/home_screen.dart';
 import 'package:quizkidz/screen/profile_screen.dart';
 

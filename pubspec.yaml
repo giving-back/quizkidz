@@ -50,6 +50,8 @@ dependencies:
   line_icons: ^2.0.1
   import_sorter: ^4.6.0
   sign_in_with_apple: ^4.3.0
+  google_fonts: ^4.0.3
+  firebase_storage: ^11.0.11
 
 dev_dependencies:
   flutter_test:
@@ -78,7 +80,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/images/auth/
     - lib/images/avatar/
     - lib/images/quiz/
   #   - images/a_dot_burr.jpeg

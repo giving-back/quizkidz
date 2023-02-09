@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 const kUserError = 'Something has gone wrong. Please try again.';
 
-const kGoogleAuthImage = 'lib/images/auth/google.png';
-const kAppleAuthImage = 'lib/images/auth/apple.png';
+const kGoogleAuthImage = 'images/auth/google.png';
+const kAppleAuthImage = 'images/auth/apple.png';
+const kWinnersTrophyImage = 'lib/images/quiz/winners_trophy.jpg';
+const kWinnersMedalImage = 'lib/images/quiz/winners_medal.png';
 
 const kBlueColor = 0xFF88B5FE;
 const kWhiteColor = 0xFFEFF0F7;
@@ -17,6 +19,8 @@ const kAvatarOrange = 0xFFFF9F00;
 const kAvatarDarkOrange = 0xFFFF7D25;
 const kAvatarExtraDarkOrange = 0xFFF16625;
 const kAvatarBrown = 0xFF7F341F;
+
+final numQuestions = [5, 10, 15, 20, 25];
 
 class Avatar {
   final String image;

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'app_user.dart';
+part of 'user.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -323,5 +323,206 @@ abstract class _AppUser implements AppUser {
   @override
   @JsonKey(ignore: true)
   _$$_AppUserCopyWith<_$_AppUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+QuizUser _$QuizUserFromJson(Map<String, dynamic> json) {
+  return _QuizUser.fromJson(json);
+}
+
+/// @nodoc
+mixin _$QuizUser {
+  String get uid => throw _privateConstructorUsedError;
+  String get appDisplayName => throw _privateConstructorUsedError;
+  String get appAvatar => throw _privateConstructorUsedError;
+  int get appAvatarColor => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $QuizUserCopyWith<QuizUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $QuizUserCopyWith<$Res> {
+  factory $QuizUserCopyWith(QuizUser value, $Res Function(QuizUser) then) =
+      _$QuizUserCopyWithImpl<$Res, QuizUser>;
+  @useResult
+  $Res call(
+      {String uid,
+      String appDisplayName,
+      String appAvatar,
+      int appAvatarColor});
+}
+
+/// @nodoc
+class _$QuizUserCopyWithImpl<$Res, $Val extends QuizUser>
+    implements $QuizUserCopyWith<$Res> {
+  _$QuizUserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+    Object? appDisplayName = null,
+    Object? appAvatar = null,
+    Object? appAvatarColor = null,
+  }) {
+    return _then(_value.copyWith(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      appDisplayName: null == appDisplayName
+          ? _value.appDisplayName
+          : appDisplayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      appAvatar: null == appAvatar
+          ? _value.appAvatar
+          : appAvatar // ignore: cast_nullable_to_non_nullable
+              as String,
+      appAvatarColor: null == appAvatarColor
+          ? _value.appAvatarColor
+          : appAvatarColor // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_QuizUserCopyWith<$Res> implements $QuizUserCopyWith<$Res> {
+  factory _$$_QuizUserCopyWith(
+          _$_QuizUser value, $Res Function(_$_QuizUser) then) =
+      __$$_QuizUserCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String uid,
+      String appDisplayName,
+      String appAvatar,
+      int appAvatarColor});
+}
+
+/// @nodoc
+class __$$_QuizUserCopyWithImpl<$Res>
+    extends _$QuizUserCopyWithImpl<$Res, _$_QuizUser>
+    implements _$$_QuizUserCopyWith<$Res> {
+  __$$_QuizUserCopyWithImpl(
+      _$_QuizUser _value, $Res Function(_$_QuizUser) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+    Object? appDisplayName = null,
+    Object? appAvatar = null,
+    Object? appAvatarColor = null,
+  }) {
+    return _then(_$_QuizUser(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      appDisplayName: null == appDisplayName
+          ? _value.appDisplayName
+          : appDisplayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      appAvatar: null == appAvatar
+          ? _value.appAvatar
+          : appAvatar // ignore: cast_nullable_to_non_nullable
+              as String,
+      appAvatarColor: null == appAvatarColor
+          ? _value.appAvatarColor
+          : appAvatarColor // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_QuizUser implements _QuizUser {
+  const _$_QuizUser(
+      {required this.uid,
+      required this.appDisplayName,
+      required this.appAvatar,
+      required this.appAvatarColor});
+
+  factory _$_QuizUser.fromJson(Map<String, dynamic> json) =>
+      _$$_QuizUserFromJson(json);
+
+  @override
+  final String uid;
+  @override
+  final String appDisplayName;
+  @override
+  final String appAvatar;
+  @override
+  final int appAvatarColor;
+
+  @override
+  String toString() {
+    return 'QuizUser(uid: $uid, appDisplayName: $appDisplayName, appAvatar: $appAvatar, appAvatarColor: $appAvatarColor)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_QuizUser &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.appDisplayName, appDisplayName) ||
+                other.appDisplayName == appDisplayName) &&
+            (identical(other.appAvatar, appAvatar) ||
+                other.appAvatar == appAvatar) &&
+            (identical(other.appAvatarColor, appAvatarColor) ||
+                other.appAvatarColor == appAvatarColor));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, uid, appDisplayName, appAvatar, appAvatarColor);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_QuizUserCopyWith<_$_QuizUser> get copyWith =>
+      __$$_QuizUserCopyWithImpl<_$_QuizUser>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_QuizUserToJson(
+      this,
+    );
+  }
+}
+
+abstract class _QuizUser implements QuizUser {
+  const factory _QuizUser(
+      {required final String uid,
+      required final String appDisplayName,
+      required final String appAvatar,
+      required final int appAvatarColor}) = _$_QuizUser;
+
+  factory _QuizUser.fromJson(Map<String, dynamic> json) = _$_QuizUser.fromJson;
+
+  @override
+  String get uid;
+  @override
+  String get appDisplayName;
+  @override
+  String get appAvatar;
+  @override
+  int get appAvatarColor;
+  @override
+  @JsonKey(ignore: true)
+  _$$_QuizUserCopyWith<_$_QuizUser> get copyWith =>
       throw _privateConstructorUsedError;
 }

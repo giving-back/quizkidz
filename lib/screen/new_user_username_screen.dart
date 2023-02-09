@@ -6,7 +6,7 @@ import 'package:quizkidz/components/new_user_layout.dart';
 import 'package:quizkidz/components/username_form.dart';
 
 // Project imports:
-import 'package:quizkidz/models/app_user.dart';
+import 'package:quizkidz/models/user.dart';
 
 class NewUserUsernameScreen extends StatelessWidget {
   final AppUser user;

@@ -11,7 +11,7 @@ import 'package:quizkidz/components/username_form.dart';
 
 // Project imports:
 import 'package:quizkidz/providers/auth_provider.dart';
-import 'package:quizkidz/providers/state_providers.dart';
+import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -23,7 +23,6 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appUser = ref.watch(appUserByIdProvider(uid));
     final authServices = ref.watch(authServicesProvider);
-    final formKey = GlobalKey<FormState>();
 
     return appUser.when(
       data: (data) => Column(
