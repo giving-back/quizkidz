@@ -23,7 +23,6 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appUser = ref.watch(appUserByIdProvider(uid));
     final authServices = ref.watch(authServicesProvider);
-    final formKey = GlobalKey<FormState>();
 
     return appUser.when(
       data: (data) => Column(

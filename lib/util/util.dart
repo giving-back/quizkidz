@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 const kUserError = 'Something has gone wrong. Please try again.';
 
-const kGoogleAuthImage = 'lib/images/auth/google.png';
-const kAppleAuthImage = 'lib/images/auth/apple.png';
+const kGoogleAuthImage = 'images/auth/google.png';
+const kAppleAuthImage = 'images/auth/apple.png';
 
 const kBlueColor = 0xFF88B5FE;
 const kWhiteColor = 0xFFEFF0F7;

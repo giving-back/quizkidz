@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/quiz_button.dart';
-import 'package:quizkidz/models/quiz_type.dart';
+import 'package:quizkidz/components/subjects_list.dart';
 import 'package:quizkidz/providers/state_providers.dart';
 import 'package:quizkidz/util/util.dart';
 
@@ -41,53 +41,9 @@ class NewQuizOptions extends ConsumerWidget {
                 ),
               ),
             ),
-            Expanded(
+            const Expanded(
               flex: 20,
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => SizedBox(
-                  height: 110,
-                  width: 110,
-                  child: GestureDetector(
-                    onTap: () {
-                      ref.read(questionTypeIndexProvider.notifier).state =
-                          index;
-                    },
-                    child: Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage:
-                                AssetImage(kQuizTypeImages[index].image),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                          ),
-                          Text(
-                            kQuizTypeImages[index].text,
-                            style: const TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                separatorBuilder: (context, index) => const Padding(
-                  padding: EdgeInsets.only(right: 5),
-                ),
-                itemCount: kQuizTypeImages.length,
-              ),
+              child: SubjectsList(),
             ),
             Expanded(
               flex: 5,
@@ -128,25 +84,18 @@ class NewQuizOptions extends ConsumerWidget {
                     onTap: () => ref
                         .read(numQuestionsIndexProvider.notifier)
                         .state = index,
-                    child: Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      color: const Color(kBlueColor),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            numQuestions[index].toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          )
-                        ],
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          numQuestions[index].toString(),
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),

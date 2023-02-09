@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/auth_button.dart';
 
 // Project imports:
 import 'package:quizkidz/components/custom_snack_alert.dart';
-import 'package:quizkidz/components/gesture_icon.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
@@ -42,7 +42,9 @@ class LoginScreen extends ConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureIcon(
+                      AuthButton(
+                        image: kGoogleAuthImage,
+                        size: 45,
                         onTap: () async =>
                             await authService.signInWithGoogle().then(
                                   (value) => value.match(
@@ -54,9 +56,13 @@ class LoginScreen extends ConsumerWidget {
                                     (r) {},
                                   ),
                                 ),
-                        imagePath: kGoogleAuthImage,
                       ),
-                      GestureIcon(
+                      const Padding(
+                        padding: EdgeInsets.all(15),
+                      ),
+                      AuthButton(
+                        image: kAppleAuthImage,
+                        size: 50,
                         onTap: () async =>
                             await authService.signInWithApple().then(
                                   (value) => value.match(
@@ -68,7 +74,6 @@ class LoginScreen extends ConsumerWidget {
                                     (r) {},
                                   ),
                                 ),
-                        imagePath: kAppleAuthImage,
                       ),
                     ],
                   ),
