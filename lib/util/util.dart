@@ -5,6 +5,8 @@ const kUserError = 'Something has gone wrong. Please try again.';
 
 const kGoogleAuthImage = 'images/auth/google.png';
 const kAppleAuthImage = 'images/auth/apple.png';
+const kWinnersTrophyImage = 'lib/images/quiz/winners_trophy.jpg';
+const kWinnersMedalImage = 'lib/images/quiz/winners_medal.png';
 
 const kBlueColor = 0xFF88B5FE;
 const kWhiteColor = 0xFFEFF0F7;

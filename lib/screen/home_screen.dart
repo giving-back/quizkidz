@@ -88,7 +88,7 @@ class HomeScreen extends ConsumerWidget {
                             Expanded(
                               child: UserScoreSummary(
                                 image: const AssetImage(
-                                  'lib/images/quiz/winners_trophy.jpg',
+                                  kWinnersTrophyImage,
                                 ),
                                 text: 'Won',
                                 data: data.quizWins.toString(),
@@ -102,7 +102,7 @@ class HomeScreen extends ConsumerWidget {
                             Expanded(
                               child: UserScoreSummary(
                                 image: const AssetImage(
-                                  'lib/images/quiz/winners_medal.png',
+                                  kWinnersMedalImage,
                                 ),
                                 text: 'Answers',
                                 data: data.questionsAnswered.toString(),
