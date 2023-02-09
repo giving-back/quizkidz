@@ -23,3 +23,7 @@ final getDownloadURLProvider =
 final quizTypesProvider = Provider<List<QuizType>>(
   (ref) => ref.watch(storageServicesProvider).quizTypes(),
 );
+
+final numQuestionsProvider = Provider<List<int>>(
+  (ref) => ref.watch(storageServicesProvider).numQuestions(),
+);

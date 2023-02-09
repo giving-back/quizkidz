@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/num_questions_list.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/subjects_list.dart';
 import 'package:quizkidz/providers/state_providers.dart';
-import 'package:quizkidz/util/util.dart';
 
 class NewQuizOptions extends ConsumerWidget {
   const NewQuizOptions({
@@ -13,8 +13,8 @@ class NewQuizOptions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final questionTypeIndex = ref.watch(questionTypeIndexProvider);
-    final numQuestionsIndex = ref.watch(numQuestionsIndexProvider);
+    final questionTypeIndex = ref.watch(questionTypeProvider);
+    final numQuestionsIndex = ref.watch(numQuestionProvider);
 
     return Padding(
       padding: const EdgeInsets.only(top: 25.0),
@@ -72,38 +72,9 @@ class NewQuizOptions extends ConsumerWidget {
                 ),
               ),
             ),
-            Expanded(
+            const Expanded(
               flex: 10,
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => SizedBox(
-                  height: 80,
-                  width: 80,
-                  child: GestureDetector(
-                    onTap: () => ref
-                        .read(numQuestionsIndexProvider.notifier)
-                        .state = index,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          numQuestions[index].toString(),
-                          style: const TextStyle(
-                            color: Colors.black54,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                separatorBuilder: (context, index) => const Padding(
-                  padding: EdgeInsets.only(right: 5),
-                ),
-                itemCount: numQuestions.length,
-              ),
+              child: NumQuestionsList(),
             ),
             Expanded(
               flex: 10,

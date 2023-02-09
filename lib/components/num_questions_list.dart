@@ -2,45 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/selected_text.dart';
 import 'package:quizkidz/components/storage_image.dart';
-import 'package:quizkidz/models/quiz_type.dart';
 import 'package:quizkidz/providers/state_providers.dart';
 import 'package:quizkidz/providers/storage_provider.dart';
 
-class SubjectsList extends ConsumerWidget {
-  const SubjectsList({
+class NumQuestionsList extends ConsumerWidget {
+  const NumQuestionsList({
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<QuizType> quizTypes = ref.watch(quizTypesProvider);
-    final selectedQuizType = ref.watch(questionTypeProvider);
+    final List<int> numQuestions = ref.watch(numQuestionsProvider);
+    final selectedNumQuestion = ref.watch(numQuestionProvider);
 
     return ListView(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       children: [
-        for (final quizType in quizTypes)
+        for (final numQuestion in numQuestions)
           SizedBox(
             height: 110,
             width: 110,
             child: GestureDetector(
-              onTap: () {
-                ref.read(questionTypeProvider.notifier).state = quizType.text;
-              },
+              onTap: () =>
+                  ref.read(numQuestionProvider.notifier).state = numQuestion,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  StorageImage(
-                    image: quizType.image,
-                    size: 50,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 5),
-                  ),
                   SelectedText(
-                    text: quizType.text,
-                    selected: selectedQuizType == quizType.text,
+                    text: numQuestion.toString(),
+                    selected: selectedNumQuestion == numQuestion,
                   ),
                 ],
               ),

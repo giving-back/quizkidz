@@ -21,4 +21,6 @@ class StorageService {
         QuizType(text: 'Geography', image: 'images/quiz/geography.png'),
         QuizType(text: 'Nature', image: 'images/quiz/nature.png'),
       ];
+
+  List<int> numQuestions() => [5, 10, 15, 20, 25];
 }
