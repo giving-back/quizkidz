@@ -11,6 +11,7 @@ import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/providers/state_provider.dart';
+import 'package:quizkidz/wrappers/quiz_wrapper.dart';
 
 class NewQuizOptions extends ConsumerWidget {
   const NewQuizOptions({
@@ -102,17 +103,19 @@ class NewQuizOptions extends ConsumerWidget {
                   currentUser.when(
                     data: (data) {
                       quizService
-                          .startNewQuiz(Quiz(
-                            quizmaster: QuizUser(
-                              uid: data!.uid,
-                              appDisplayName: data.appDisplayName,
-                              appAvatar: data.appAvatar,
-                              appAvatarColor: data.appAvatarColor,
+                          .startNewQuiz(
+                            Quiz(
+                              quizmaster: QuizUser(
+                                uid: data!.uid,
+                                appDisplayName: data.appDisplayName,
+                                appAvatar: data.appAvatar,
+                                appAvatarColor: data.appAvatarColor,
+                              ),
+                              subject: questionType,
+                              questions: numQuestions,
+                              created: DateTime.now(),
                             ),
-                            subject: questionType,
-                            questions: numQuestions,
-                            created: DateTime.now(),
-                          ))
+                          )
                           .then(
                             (value) => value.match(
                               (error) {
@@ -124,7 +127,14 @@ class NewQuizOptions extends ConsumerWidget {
                                   );
                               },
                               (result) {
-                                print(result);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QuizWrapper(
+                                      quizid: result,
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                           );

@@ -14,6 +14,11 @@ class QuizService {
     this._firebaseFirestore,
   );
 
+  Quiz? _quizFromFirebase(DocumentSnapshot? snapshot) {
+    if (snapshot == null) return null;
+    return Quiz.fromJson(snapshot.data() as Map<String, dynamic>);
+  }
+
   Future<Either<Exception, String>> startNewQuiz(Quiz quiz) async =>
       TaskEither.tryCatch(
         () => _firebaseFirestore
@@ -27,8 +32,13 @@ class QuizService {
             )
             .then((value) => value.id),
         (error, stackTrace) {
-          print(stackTrace);
           return Exception(kUserError);
         },
       ).run();
+
+  Stream<Quiz?> quizById(String id) => _firebaseFirestore
+      .collection(quizzesCollection)
+      .doc(id)
+      .snapshots()
+      .map(_quizFromFirebase);
 }
