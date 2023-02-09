@@ -28,10 +28,6 @@ final authStateProvider = StreamProvider<AppUser?>((ref) {
   return ref.watch(authServicesProvider).user;
 });
 
-final currentUserProvider = FutureProvider.autoDispose<AppUser?>((ref) {
-  return ref.watch(authServicesProvider).currentUser;
-});
-
 final appUserByIdProvider =
     StreamProvider.autoDispose.family<AppUser?, String>((ref, uid) {
   return ref.watch(authServicesProvider).appUserStreamById(uid);

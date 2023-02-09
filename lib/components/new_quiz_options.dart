@@ -22,7 +22,7 @@ class NewQuizOptions extends ConsumerWidget {
     final questionType = ref.watch(questionTypeProvider);
     final numQuestions = ref.watch(numQuestionProvider);
     final quizService = ref.watch(quizServiceProvider);
-    final currentUser = ref.watch(currentUserProvider);
+    final currentUser = ref.watch(authStateProvider);
 
     return Padding(
       padding: const EdgeInsets.only(top: 25.0),
@@ -101,19 +101,19 @@ class NewQuizOptions extends ConsumerWidget {
                 onPressed: () async {
                   currentUser.when(
                     data: (data) {
-                      final quiz = Quiz(
-                        quizmaster: QuizUser(
-                          uid: data!.uid,
-                          appDisplayName: data.appDisplayName,
-                          appAvatar: data.appAvatar,
-                          appAvatarColor: data.appAvatarColor,
-                        ),
-                        subject: questionType,
-                        questions: numQuestions,
-                        created: DateTime.now(),
-                      );
-
-                      quizService.startNewQuiz(quiz).then(
+                      quizService
+                          .startNewQuiz(Quiz(
+                            quizmaster: QuizUser(
+                              uid: data!.uid,
+                              appDisplayName: data.appDisplayName,
+                              appAvatar: data.appAvatar,
+                              appAvatarColor: data.appAvatarColor,
+                            ),
+                            subject: questionType,
+                            questions: numQuestions,
+                            created: DateTime.now(),
+                          ))
+                          .then(
                             (value) => value.match(
                               (error) {
                                 Navigator.pop(context);

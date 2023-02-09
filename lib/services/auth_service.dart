@@ -42,10 +42,6 @@ class AuthService {
     );
   }
 
-  Future<AppUser?> get currentUser async {
-    return await _appUserFromFirebase(_firebaseAuth.currentUser);
-  }
-
   Stream<AppUser?> get user {
     return _firebaseAuth.authStateChanges().asyncMap(_appUserFromFirebase);
   }
