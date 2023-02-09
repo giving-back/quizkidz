@@ -4,16 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/storage_provider.dart';
 
-class AuthButton extends ConsumerWidget {
+class StorageImage extends ConsumerWidget {
   final String image;
   final double size;
-  final Function()? onTap;
 
-  const AuthButton({
+  const StorageImage({
     super.key,
     required this.image,
     required this.size,
-    required this.onTap,
   });
 
   @override
@@ -21,15 +19,12 @@ class AuthButton extends ConsumerWidget {
     final imageURL = ref.watch(getDownloadURLProvider(image));
 
     return imageURL.when(
-      data: (data) => GestureDetector(
-        onTap: onTap,
-        child: SizedBox(
-          width: size,
-          height: size,
-          child: Image.network(
-            data,
-            fit: BoxFit.scaleDown,
-          ),
+      data: (data) => SizedBox(
+        width: size,
+        height: size,
+        child: Image.network(
+          data,
+          fit: BoxFit.scaleDown,
         ),
       ),
       error: (error, stacktrace) => Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/storage_image.dart';
 import 'package:quizkidz/models/quiz_type.dart';
 import 'package:quizkidz/providers/state_providers.dart';
 
@@ -23,13 +24,9 @@ class SubjectsList extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: Image.asset(
-                  kQuizTypeImages[index].image,
-                  fit: BoxFit.scaleDown,
-                ),
+              StorageImage(
+                image: kQuizTypeImages[index].image,
+                size: 50,
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 5),
