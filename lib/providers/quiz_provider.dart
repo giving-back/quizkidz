@@ -14,7 +14,7 @@ final firestoreProvider = Provider<FirebaseFirestore>(
 
 final quizServiceProvider = Provider<QuizService>((ref) {
   return QuizService(
-    ref.read(firestoreProvider),
+    ref.watch(firestoreProvider),
   );
 });
 

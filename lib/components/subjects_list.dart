@@ -31,7 +31,7 @@ class SubjectsList extends ConsumerWidget {
             width: 110,
             child: GestureDetector(
               onTap: () {
-                ref.read(questionTypeProvider.notifier).state = quizType.text;
+                ref.watch(questionTypeProvider.notifier).state = quizType.text;
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

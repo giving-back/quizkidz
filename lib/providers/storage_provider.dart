@@ -11,7 +11,7 @@ final firebaseStorageProvider =
 
 final storageServicesProvider = Provider<StorageService>(
   (ref) => StorageService(
-    ref.read(firebaseStorageProvider),
+    ref.watch(firebaseStorageProvider),
   ),
 );
 

@@ -120,7 +120,7 @@ class ProfileScreen extends ConsumerWidget {
                               CustomSnackAlert.showErrorSnackBar(),
                             ),
                           (r) {
-                            ref.read(tabIndexProvider.notifier).state =
+                            ref.watch(tabIndexProvider.notifier).state =
                                 0; // return home for next login
                           },
                         ),
