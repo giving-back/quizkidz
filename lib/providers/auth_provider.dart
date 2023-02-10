@@ -17,8 +17,8 @@ final firestoreProvider = Provider<FirebaseFirestore>(
 
 final authServicesProvider = Provider<AuthService>(
   (ref) => AuthService(
-    ref.read(firebaseAuthProvider),
-    ref.read(firestoreProvider),
+    ref.watch(firebaseAuthProvider),
+    ref.watch(firestoreProvider),
   ),
 );
 

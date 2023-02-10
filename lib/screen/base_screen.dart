@@ -53,7 +53,7 @@ class BaseScreen extends ConsumerWidget {
             ],
             selectedIndex: tabIndex,
             onTabChange: (index) {
-              ref.read(tabIndexProvider.notifier).state = index;
+              ref.watch(tabIndexProvider.notifier).state = index;
             },
           ),
         ),

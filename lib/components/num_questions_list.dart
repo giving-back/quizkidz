@@ -29,7 +29,7 @@ class NumQuestionsList extends ConsumerWidget {
             width: 110,
             child: GestureDetector(
               onTap: () =>
-                  ref.read(numQuestionProvider.notifier).state = numQuestion,
+                  ref.watch(numQuestionProvider.notifier).state = numQuestion,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
