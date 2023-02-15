@@ -35,6 +35,18 @@ class AuthService {
           snapshot.data()! as Map<String, dynamic>,
         );
 
+  List<AppUser> _appUsersFromFirestore(QuerySnapshot? snapshot) {
+    if (snapshot == null) {
+      return [];
+    }
+    return snapshot.docs.map(
+      (DocumentSnapshot document) {
+        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+        return AppUser.fromJson(data);
+      },
+    ).toList();
+  }
+
   Future<AppUser?> _appUserById(String uid) async => _appUserFromFirestore(
       await _firebaseFirestore.collection(usersCollection).doc(uid).get());
 
@@ -46,6 +58,11 @@ class AuthService {
       .doc(_firebaseAuth.currentUser?.uid)
       .snapshots()
       .map(_appUserFromFirestore);
+
+  Stream<List<AppUser>> activeAppUsersStream() => _firebaseFirestore
+      .collection(usersCollection)
+      .snapshots()
+      .map(_appUsersFromFirestore);
 
   Future<Either<Exception, void>> addNewAppUser(AppUser appUser) async =>
       TaskEither.tryCatch(
