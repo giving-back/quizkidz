@@ -13,6 +13,7 @@ class AuthService {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
   final String usersCollection = 'users';
+  final String friendsSubCollection = 'friends';
 
   AuthService(
     this._firebaseAuth,
@@ -47,6 +48,18 @@ class AuthService {
     ).toList();
   }
 
+  List<Friend> _friendsFromFirestore(QuerySnapshot? snapshot) {
+    if (snapshot == null) {
+      return [];
+    }
+    return snapshot.docs.map(
+      (DocumentSnapshot document) {
+        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+        return Friend.fromJson(data);
+      },
+    ).toList();
+  }
+
   Future<AppUser?> _appUserById(String uid) async => _appUserFromFirestore(
       await _firebaseFirestore.collection(usersCollection).doc(uid).get());
 
@@ -63,6 +76,14 @@ class AuthService {
       .collection(usersCollection)
       .snapshots()
       .map(_appUsersFromFirestore);
+
+  Stream<List<Friend>> friends(String uid) => _firebaseFirestore
+      .collection(usersCollection)
+      .doc(uid)
+      .collection(friendsSubCollection)
+      .orderBy('matched', descending: true)
+      .snapshots()
+      .map(_friendsFromFirestore);
 
   Future<Either<Exception, void>> addNewAppUser(AppUser appUser) async =>
       TaskEither.tryCatch(

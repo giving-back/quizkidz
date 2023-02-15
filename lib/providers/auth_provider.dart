@@ -33,3 +33,8 @@ final activeAppUserProvider = StreamProvider.autoDispose<AppUser?>(
 final activeUsersProvider = StreamProvider.autoDispose<List<AppUser>>((ref) {
   return ref.watch(authServicesProvider).activeAppUsersStream();
 });
+
+final myFriendsProvider = StreamProvider.autoDispose<List<Friend>>((ref) {
+  final auth = ref.watch(firebaseAuthProvider);
+  return ref.watch(authServicesProvider).friends(auth.currentUser!.uid);
+});

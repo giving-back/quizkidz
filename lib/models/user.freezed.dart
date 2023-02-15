@@ -526,3 +526,150 @@ abstract class _QuizUser implements QuizUser {
   _$$_QuizUserCopyWith<_$_QuizUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+Friend _$FriendFromJson(Map<String, dynamic> json) {
+  return _Friend.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Friend {
+  String get uid => throw _privateConstructorUsedError;
+  DateTime get matched => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $FriendCopyWith<Friend> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FriendCopyWith<$Res> {
+  factory $FriendCopyWith(Friend value, $Res Function(Friend) then) =
+      _$FriendCopyWithImpl<$Res, Friend>;
+  @useResult
+  $Res call({String uid, DateTime matched});
+}
+
+/// @nodoc
+class _$FriendCopyWithImpl<$Res, $Val extends Friend>
+    implements $FriendCopyWith<$Res> {
+  _$FriendCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+    Object? matched = null,
+  }) {
+    return _then(_value.copyWith(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      matched: null == matched
+          ? _value.matched
+          : matched // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_FriendCopyWith<$Res> implements $FriendCopyWith<$Res> {
+  factory _$$_FriendCopyWith(_$_Friend value, $Res Function(_$_Friend) then) =
+      __$$_FriendCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String uid, DateTime matched});
+}
+
+/// @nodoc
+class __$$_FriendCopyWithImpl<$Res>
+    extends _$FriendCopyWithImpl<$Res, _$_Friend>
+    implements _$$_FriendCopyWith<$Res> {
+  __$$_FriendCopyWithImpl(_$_Friend _value, $Res Function(_$_Friend) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+    Object? matched = null,
+  }) {
+    return _then(_$_Friend(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      matched: null == matched
+          ? _value.matched
+          : matched // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_Friend implements _Friend {
+  const _$_Friend({required this.uid, required this.matched});
+
+  factory _$_Friend.fromJson(Map<String, dynamic> json) =>
+      _$$_FriendFromJson(json);
+
+  @override
+  final String uid;
+  @override
+  final DateTime matched;
+
+  @override
+  String toString() {
+    return 'Friend(uid: $uid, matched: $matched)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Friend &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.matched, matched) || other.matched == matched));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, uid, matched);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_FriendCopyWith<_$_Friend> get copyWith =>
+      __$$_FriendCopyWithImpl<_$_Friend>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_FriendToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Friend implements Friend {
+  const factory _Friend(
+      {required final String uid, required final DateTime matched}) = _$_Friend;
+
+  factory _Friend.fromJson(Map<String, dynamic> json) = _$_Friend.fromJson;
+
+  @override
+  String get uid;
+  @override
+  DateTime get matched;
+  @override
+  @JsonKey(ignore: true)
+  _$$_FriendCopyWith<_$_Friend> get copyWith =>
+      throw _privateConstructorUsedError;
+}

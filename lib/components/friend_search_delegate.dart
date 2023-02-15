@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:quizkidz/models/user.dart';
 
 class FriendSearchDelegate extends SearchDelegate {
