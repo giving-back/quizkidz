@@ -533,8 +533,11 @@ Friend _$FriendFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Friend {
-  String get uid => throw _privateConstructorUsedError;
-  DateTime get matched => throw _privateConstructorUsedError;
+  AppUser get details => throw _privateConstructorUsedError;
+  bool get iRequested => throw _privateConstructorUsedError;
+  bool get matched => throw _privateConstructorUsedError;
+  DateTime get requested => throw _privateConstructorUsedError;
+  DateTime get matchedOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -546,7 +549,14 @@ abstract class $FriendCopyWith<$Res> {
   factory $FriendCopyWith(Friend value, $Res Function(Friend) then) =
       _$FriendCopyWithImpl<$Res, Friend>;
   @useResult
-  $Res call({String uid, DateTime matched});
+  $Res call(
+      {AppUser details,
+      bool iRequested,
+      bool matched,
+      DateTime requested,
+      DateTime matchedOn});
+
+  $AppUserCopyWith<$Res> get details;
 }
 
 /// @nodoc
@@ -562,19 +572,42 @@ class _$FriendCopyWithImpl<$Res, $Val extends Friend>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = null,
+    Object? details = null,
+    Object? iRequested = null,
     Object? matched = null,
+    Object? requested = null,
+    Object? matchedOn = null,
   }) {
     return _then(_value.copyWith(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
+      details: null == details
+          ? _value.details
+          : details // ignore: cast_nullable_to_non_nullable
+              as AppUser,
+      iRequested: null == iRequested
+          ? _value.iRequested
+          : iRequested // ignore: cast_nullable_to_non_nullable
+              as bool,
       matched: null == matched
           ? _value.matched
           : matched // ignore: cast_nullable_to_non_nullable
+              as bool,
+      requested: null == requested
+          ? _value.requested
+          : requested // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      matchedOn: null == matchedOn
+          ? _value.matchedOn
+          : matchedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AppUserCopyWith<$Res> get details {
+    return $AppUserCopyWith<$Res>(_value.details, (value) {
+      return _then(_value.copyWith(details: value) as $Val);
+    });
   }
 }
 
@@ -584,7 +617,15 @@ abstract class _$$_FriendCopyWith<$Res> implements $FriendCopyWith<$Res> {
       __$$_FriendCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uid, DateTime matched});
+  $Res call(
+      {AppUser details,
+      bool iRequested,
+      bool matched,
+      DateTime requested,
+      DateTime matchedOn});
+
+  @override
+  $AppUserCopyWith<$Res> get details;
 }
 
 /// @nodoc
@@ -597,17 +638,32 @@ class __$$_FriendCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = null,
+    Object? details = null,
+    Object? iRequested = null,
     Object? matched = null,
+    Object? requested = null,
+    Object? matchedOn = null,
   }) {
     return _then(_$_Friend(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
+      details: null == details
+          ? _value.details
+          : details // ignore: cast_nullable_to_non_nullable
+              as AppUser,
+      iRequested: null == iRequested
+          ? _value.iRequested
+          : iRequested // ignore: cast_nullable_to_non_nullable
+              as bool,
       matched: null == matched
           ? _value.matched
           : matched // ignore: cast_nullable_to_non_nullable
+              as bool,
+      requested: null == requested
+          ? _value.requested
+          : requested // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      matchedOn: null == matchedOn
+          ? _value.matchedOn
+          : matchedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -616,19 +672,30 @@ class __$$_FriendCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Friend implements _Friend {
-  const _$_Friend({required this.uid, required this.matched});
+  const _$_Friend(
+      {required this.details,
+      required this.iRequested,
+      required this.matched,
+      required this.requested,
+      required this.matchedOn});
 
   factory _$_Friend.fromJson(Map<String, dynamic> json) =>
       _$$_FriendFromJson(json);
 
   @override
-  final String uid;
+  final AppUser details;
   @override
-  final DateTime matched;
+  final bool iRequested;
+  @override
+  final bool matched;
+  @override
+  final DateTime requested;
+  @override
+  final DateTime matchedOn;
 
   @override
   String toString() {
-    return 'Friend(uid: $uid, matched: $matched)';
+    return 'Friend(details: $details, iRequested: $iRequested, matched: $matched, requested: $requested, matchedOn: $matchedOn)';
   }
 
   @override
@@ -636,13 +703,20 @@ class _$_Friend implements _Friend {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Friend &&
-            (identical(other.uid, uid) || other.uid == uid) &&
-            (identical(other.matched, matched) || other.matched == matched));
+            (identical(other.details, details) || other.details == details) &&
+            (identical(other.iRequested, iRequested) ||
+                other.iRequested == iRequested) &&
+            (identical(other.matched, matched) || other.matched == matched) &&
+            (identical(other.requested, requested) ||
+                other.requested == requested) &&
+            (identical(other.matchedOn, matchedOn) ||
+                other.matchedOn == matchedOn));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid, matched);
+  int get hashCode => Object.hash(
+      runtimeType, details, iRequested, matched, requested, matchedOn);
 
   @JsonKey(ignore: true)
   @override
@@ -660,14 +734,24 @@ class _$_Friend implements _Friend {
 
 abstract class _Friend implements Friend {
   const factory _Friend(
-      {required final String uid, required final DateTime matched}) = _$_Friend;
+      {required final AppUser details,
+      required final bool iRequested,
+      required final bool matched,
+      required final DateTime requested,
+      required final DateTime matchedOn}) = _$_Friend;
 
   factory _Friend.fromJson(Map<String, dynamic> json) = _$_Friend.fromJson;
 
   @override
-  String get uid;
+  AppUser get details;
   @override
-  DateTime get matched;
+  bool get iRequested;
+  @override
+  bool get matched;
+  @override
+  DateTime get requested;
+  @override
+  DateTime get matchedOn;
   @override
   @JsonKey(ignore: true)
   _$$_FriendCopyWith<_$_Friend> get copyWith =>

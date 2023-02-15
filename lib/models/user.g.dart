@@ -49,11 +49,17 @@ Map<String, dynamic> _$$_QuizUserToJson(_$_QuizUser instance) =>
     };
 
 _$_Friend _$$_FriendFromJson(Map<String, dynamic> json) => _$_Friend(
-      uid: json['uid'] as String,
-      matched: DateTime.parse(json['matched'] as String),
+      details: AppUser.fromJson(json['details'] as Map<String, dynamic>),
+      iRequested: json['iRequested'] as bool,
+      matched: json['matched'] as bool,
+      requested: DateTime.parse(json['requested'] as String),
+      matchedOn: DateTime.parse(json['matchedOn'] as String),
     );
 
 Map<String, dynamic> _$$_FriendToJson(_$_Friend instance) => <String, dynamic>{
-      'uid': instance.uid,
-      'matched': instance.matched.toIso8601String(),
+      'details': instance.details.toJson(),
+      'iRequested': instance.iRequested,
+      'matched': instance.matched,
+      'requested': instance.requested.toIso8601String(),
+      'matchedOn': instance.matchedOn.toIso8601String(),
     };

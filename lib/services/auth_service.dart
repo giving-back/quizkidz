@@ -40,12 +40,18 @@ class AuthService {
     if (snapshot == null) {
       return [];
     }
-    return snapshot.docs.map(
+
+    List<AppUser> users = snapshot.docs.map(
       (DocumentSnapshot document) {
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
         return AppUser.fromJson(data);
       },
     ).toList();
+
+    // Remove the active user from the list
+    users.removeWhere((item) => item.uid == _firebaseAuth.currentUser!.uid);
+
+    return users;
   }
 
   List<Friend> _friendsFromFirestore(QuerySnapshot? snapshot) {
@@ -91,6 +97,17 @@ class AuthService {
             .collection(usersCollection)
             .doc(appUser.uid)
             .set(appUser.toJson()),
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> addFriend(Friend friend) async =>
+      TaskEither.tryCatch(
+        () => _firebaseFirestore
+            .collection(usersCollection)
+            .doc(_firebaseAuth.currentUser?.uid)
+            .collection(friendsSubCollection)
+            .doc(friend.details.uid)
+            .set(friend.toJson()),
         (error, stackTrace) => Exception(kUserError),
       ).run();
 

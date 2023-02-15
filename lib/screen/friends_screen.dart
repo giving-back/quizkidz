@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:line_icons/line_icons.dart';
 
 // Project imports:
@@ -65,13 +66,36 @@ class FriendsScreen extends ConsumerWidget {
                       ],
                     ),
                     subtitle: myFriends.when(
-                      data: (data) => Text(
-                        '${data.length} friends',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
+                      data: (data) {
+                        final matched = data
+                            .where((friend) => friend.matched)
+                            .toList()
+                            .length;
+
+                        final pending = data
+                            .where((friend) => !friend.matched)
+                            .toList()
+                            .length;
+
+                        return Row(
+                          children: [
+                            Text(
+                              '$matched matched. ',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              '$pending pending.',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                       error: (error, stackTrace) => Text(
                         error.toString(),
                       ),
@@ -108,6 +132,7 @@ class FriendsScreen extends ConsumerWidget {
                           showSearch(
                             context: context,
                             delegate: FriendSearchDelegate(
+                              authService: ref.watch(authServicesProvider),
                               items: data,
                             ),
                           );

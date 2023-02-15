@@ -39,8 +39,11 @@ class QuizUser with _$QuizUser {
 @Freezed()
 class Friend with _$Friend {
   const factory Friend({
-    required final String uid,
-    required final DateTime matched,
+    required final AppUser details,
+    required final bool iRequested,
+    required final bool matched,
+    required final DateTime requested,
+    required final DateTime matchedOn,
   }) = _Friend;
 
   factory Friend.fromJson(Map<String, Object?> json) => _$FriendFromJson(json);
