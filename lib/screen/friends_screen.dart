@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:line_icons/line_icons.dart';
 
 // Project imports:
@@ -18,13 +17,13 @@ class FriendsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeAppUser = ref.watch(activeAppUserProvider);
-    final activeAppUsers = ref.watch(activeUsersProvider);
-    final myFriends = ref.watch(myFriendsProvider);
+    final following = ref.watch(followingProvider);
+    final followers = ref.watch(followersProvider);
 
     return Column(
       children: [
         Expanded(
-          flex: 15,
+          flex: 20,
           child: activeAppUser.when(
             data: (data) => Container(
               decoration: const BoxDecoration(
@@ -52,54 +51,85 @@ class FriendsScreen extends ConsumerWidget {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "My Friends",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 30,
                                 color: Colors.white,
                               ),
-                            )
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showSearch(
+                                  context: context,
+                                  delegate: FriendSearchDelegate(),
+                                );
+                              },
+                              icon: const Icon(
+                                LineIcons.search,
+                                color: Colors.white,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
-                    subtitle: myFriends.when(
-                      data: (data) {
-                        final matched = data
-                            .where((friend) => friend.matched)
-                            .toList()
-                            .length;
-
-                        final pending = data
-                            .where((friend) => !friend.matched)
-                            .toList()
-                            .length;
-
-                        return Row(
+                    subtitle: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '$matched matched. ',
-                              style: const TextStyle(
+                            const Text(
+                              'Following',
+                              style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),
                             ),
-                            Text(
-                              '$pending pending.',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
+                            following.when(
+                              data: (following) => Text(
+                                '${following.length}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
+                              error: (error, stackTrace) =>
+                                  Text(error.toString()),
+                              loading: () => const LoadingSpinner(),
+                            )
                           ],
-                        );
-                      },
-                      error: (error, stackTrace) => Text(
-                        error.toString(),
-                      ),
-                      loading: () => const LoadingSpinner(),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(18.0),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Followers',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            followers.when(
+                              data: (followers) => Text(
+                                '${followers.length}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              error: (error, stackTrace) =>
+                                  Text(error.toString()),
+                              loading: () => const LoadingSpinner(),
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -110,67 +140,16 @@ class FriendsScreen extends ConsumerWidget {
           ),
         ),
         Expanded(
-          flex: 85,
+          flex: 80,
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Friends",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.black54,
-                      ),
-                    ),
-                    activeAppUsers.when(
-                      data: (data) => IconButton(
-                        onPressed: () {
-                          showSearch(
-                            context: context,
-                            delegate: FriendSearchDelegate(
-                              authService: ref.watch(authServicesProvider),
-                              items: data,
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          LineIcons.search,
-                          color: Colors.black54,
-                        ),
-                      ),
-                      error: (error, stackTrace) => Text(
-                        error.toString(),
-                      ),
-                      loading: () => const LoadingSpinner(),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
                   children: const [
                     Text(
-                      "Pending",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  children: const [
-                    Text(
-                      "Invitations",
+                      "Following",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,

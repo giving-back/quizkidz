@@ -13,7 +13,8 @@ class AuthService {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
   final String usersCollection = 'users';
-  final String friendsSubCollection = 'friends';
+  final String followingSubCollection = 'following';
+  final String followersSubCollection = 'followers';
 
   AuthService(
     this._firebaseAuth,
@@ -54,10 +55,11 @@ class AuthService {
     return users;
   }
 
-  List<Friend> _friendsFromFirestore(QuerySnapshot? snapshot) {
+  List<Friend> _friendFromFirestore(QuerySnapshot? snapshot) {
     if (snapshot == null) {
       return [];
     }
+
     return snapshot.docs.map(
       (DocumentSnapshot document) {
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
@@ -83,13 +85,19 @@ class AuthService {
       .snapshots()
       .map(_appUsersFromFirestore);
 
-  Stream<List<Friend>> friends(String uid) => _firebaseFirestore
+  Stream<List<Friend>> followingStream() => _firebaseFirestore
       .collection(usersCollection)
-      .doc(uid)
-      .collection(friendsSubCollection)
-      .orderBy('matched', descending: true)
+      .doc(_firebaseAuth.currentUser?.uid)
+      .collection(followingSubCollection)
       .snapshots()
-      .map(_friendsFromFirestore);
+      .map(_friendFromFirestore);
+
+  Stream<List<Friend>> followersStream() => _firebaseFirestore
+      .collection(usersCollection)
+      .doc(_firebaseAuth.currentUser?.uid)
+      .collection(followersSubCollection)
+      .snapshots()
+      .map(_friendFromFirestore);
 
   Future<Either<Exception, void>> addNewAppUser(AppUser appUser) async =>
       TaskEither.tryCatch(
@@ -100,14 +108,30 @@ class AuthService {
         (error, stackTrace) => Exception(kUserError),
       ).run();
 
-  Future<Either<Exception, void>> addFriend(Friend friend) async =>
+  Future<Either<Exception, void>> followUser(String uid) async =>
       TaskEither.tryCatch(
-        () => _firebaseFirestore
-            .collection(usersCollection)
-            .doc(_firebaseAuth.currentUser?.uid)
-            .collection(friendsSubCollection)
-            .doc(friend.details.uid)
-            .set(friend.toJson()),
+        () async {
+          await _firebaseFirestore
+              .collection(usersCollection)
+              .doc(_firebaseAuth.currentUser?.uid)
+              .collection(followingSubCollection)
+              .doc(uid)
+              .set(
+                Friend(uid: uid, added: DateTime.now()).toJson(),
+              );
+
+          _firebaseFirestore
+              .collection(usersCollection)
+              .doc(uid)
+              .collection(followersSubCollection)
+              .doc(_firebaseAuth.currentUser?.uid)
+              .set(
+                Friend(
+                        uid: _firebaseAuth.currentUser!.uid,
+                        added: DateTime.now())
+                    .toJson(),
+              );
+        },
         (error, stackTrace) => Exception(kUserError),
       ).run();
 
