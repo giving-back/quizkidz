@@ -107,47 +107,51 @@ class AuthService {
 
   Future<Either<Exception, void>> followUser(String uid) async =>
       TaskEither.tryCatch(
-        () async {
-          await _firebaseFirestore
-              .collection(usersCollection)
-              .doc(_firebaseAuth.currentUser?.uid)
-              .collection(followingSubCollection)
-              .doc(uid)
-              .set(
-                Friend(uid: uid, added: DateTime.now()).toJson(),
-              );
+        () {
+          final batch = _firebaseFirestore.batch();
 
-          _firebaseFirestore
-              .collection(usersCollection)
-              .doc(uid)
-              .collection(followersSubCollection)
-              .doc(_firebaseAuth.currentUser?.uid)
-              .set(
-                Friend(
-                        uid: _firebaseAuth.currentUser!.uid,
-                        added: DateTime.now())
-                    .toJson(),
-              );
+          batch.set(
+            _firebaseFirestore
+                .collection(usersCollection)
+                .doc(_firebaseAuth.currentUser?.uid)
+                .collection(followingSubCollection)
+                .doc(uid),
+            Friend(uid: uid, added: DateTime.now()).toJson(),
+          );
+
+          batch.set(
+            _firebaseFirestore
+                .collection(usersCollection)
+                .doc(uid)
+                .collection(followersSubCollection)
+                .doc(_firebaseAuth.currentUser?.uid),
+            Friend(uid: _firebaseAuth.currentUser!.uid, added: DateTime.now())
+                .toJson(),
+          );
+
+          return batch.commit();
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();
 
   Future<Either<Exception, void>> unfollowUser(String uid) async =>
       TaskEither.tryCatch(
-        () async {
-          await _firebaseFirestore
+        () {
+          final batch = _firebaseFirestore.batch();
+
+          batch.delete(_firebaseFirestore
               .collection(usersCollection)
               .doc(_firebaseAuth.currentUser?.uid)
               .collection(followingSubCollection)
-              .doc(uid)
-              .delete();
+              .doc(uid));
 
-          _firebaseFirestore
+          batch.delete(_firebaseFirestore
               .collection(usersCollection)
               .doc(uid)
               .collection(followersSubCollection)
-              .doc(_firebaseAuth.currentUser?.uid)
-              .delete();
+              .doc(_firebaseAuth.currentUser?.uid));
+
+          return batch.commit();
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();

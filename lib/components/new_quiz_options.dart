@@ -28,6 +28,7 @@ class NewQuizOptions extends ConsumerWidget {
     final numQuestions = ref.watch(numQuestionProvider);
     final quizService = ref.watch(quizServiceProvider);
     final currentUser = ref.watch(authStateProvider);
+    final following = ref.watch(followingProvider);
 
     return Padding(
       padding: const EdgeInsets.only(top: 25.0),
@@ -105,43 +106,54 @@ class NewQuizOptions extends ConsumerWidget {
                 ),
                 onPressed: () async {
                   currentUser.when(
-                    data: (data) {
-                      quizService
-                          .startNewQuiz(
-                            Quiz(
-                              quizmaster: QuizUser(
-                                uid: data!.uid,
-                                appDisplayName: data.appDisplayName,
-                                appAvatar: data.appAvatar,
-                                appAvatarColor: data.appAvatarColor,
-                              ),
-                              subject: questionType,
-                              questions: numQuestions,
-                              created: DateTime.now(),
-                            ),
-                          )
-                          .then(
-                            (value) => value.match(
-                              (error) {
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(
-                                    CustomSnackAlert.showErrorSnackBar(),
-                                  );
-                              },
-                              (result) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => QuizWrapper(
-                                      quizid: result,
-                                    ),
+                    data: (user) {
+                      following.when(
+                          data: (following) => quizService
+                              .startNewQuiz(
+                                quiz: Quiz(
+                                  quizmaster: QuizUser(
+                                    uid: user!.uid,
+                                    appDisplayName: user.appDisplayName,
+                                    appAvatar: user.appAvatar,
+                                    appAvatarColor: user.appAvatarColor,
                                   ),
-                                );
-                              },
-                            ),
-                          );
+                                  subject: questionType,
+                                  questions: numQuestions,
+                                  created: DateTime.now(),
+                                ),
+                                following: following,
+                              )
+                              .then(
+                                (value) => value.match(
+                                  (error) {
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(
+                                        CustomSnackAlert.showErrorSnackBar(),
+                                      );
+                                  },
+                                  (result) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => QuizWrapper(
+                                          quizid: result,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                          error: (_, __) {
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(
+                                CustomSnackAlert.showErrorSnackBar(),
+                              );
+                          },
+                          loading: () => const LoadingSpinner());
                     },
                     error: (_, __) {
                       Navigator.pop(context);
