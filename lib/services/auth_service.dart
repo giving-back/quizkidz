@@ -60,6 +60,13 @@ class AuthService {
       return [];
     }
 
+    final test = snapshot.docs.map(
+      (DocumentSnapshot document) {
+        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+        return Friend.fromJson(data);
+      },
+    ).toList();
+
     return snapshot.docs.map(
       (DocumentSnapshot document) {
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
@@ -131,6 +138,26 @@ class AuthService {
                         added: DateTime.now())
                     .toJson(),
               );
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> unfollowUser(String uid) async =>
+      TaskEither.tryCatch(
+        () async {
+          await _firebaseFirestore
+              .collection(usersCollection)
+              .doc(_firebaseAuth.currentUser?.uid)
+              .collection(followingSubCollection)
+              .doc(uid)
+              .delete();
+
+          _firebaseFirestore
+              .collection(usersCollection)
+              .doc(uid)
+              .collection(followersSubCollection)
+              .doc(_firebaseAuth.currentUser?.uid)
+              .delete();
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();

@@ -30,7 +30,7 @@ final activeAppUserProvider = StreamProvider.autoDispose<AppUser?>(
   (ref) => ref.watch(authServicesProvider).activeAppUserStream(),
 );
 
-final activeUsersProvider = StreamProvider.autoDispose<List<AppUser>>(
+final activeAppUsersProvider = StreamProvider.autoDispose<List<AppUser>>(
   (ref) => ref.watch(authServicesProvider).activeAppUsersStream(),
 );
 

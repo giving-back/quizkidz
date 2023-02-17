@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:quizkidz/components/following_list.dart';
 
 // Project imports:
 import 'package:quizkidz/components/friend_search_delegate.dart';
@@ -25,7 +26,7 @@ class FriendsScreen extends ConsumerWidget {
         Expanded(
           flex: 20,
           child: activeAppUser.when(
-            data: (data) => Container(
+            data: (activeAppUserData) => Container(
               decoration: const BoxDecoration(
                 color: Color(
                   kBlueColor,
@@ -41,10 +42,10 @@ class FriendsScreen extends ConsumerWidget {
                     leading: CircleAvatar(
                       radius: 30,
                       backgroundColor: Color(
-                        data!.appAvatarColor,
+                        activeAppUserData!.appAvatarColor,
                       ),
                       backgroundImage: AssetImage(
-                        data.appAvatar,
+                        activeAppUserData.appAvatar,
                       ),
                     ),
                     title: Column(
@@ -89,8 +90,8 @@ class FriendsScreen extends ConsumerWidget {
                               ),
                             ),
                             following.when(
-                              data: (following) => Text(
-                                '${following.length}',
+                              data: (followingData) => Text(
+                                '${followingData.length}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
@@ -116,8 +117,8 @@ class FriendsScreen extends ConsumerWidget {
                               ),
                             ),
                             followers.when(
-                              data: (followers) => Text(
-                                '${followers.length}',
+                              data: (followersData) => Text(
+                                '${followersData.length}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
@@ -144,7 +145,11 @@ class FriendsScreen extends ConsumerWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                  top: 20.0,
+                  bottom: 8.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
@@ -159,6 +164,7 @@ class FriendsScreen extends ConsumerWidget {
                   ],
                 ),
               ),
+              const FollowingList(),
             ],
           ),
         ),

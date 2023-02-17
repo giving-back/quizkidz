@@ -22,12 +22,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  if (kDebugMode) {
+  /*if (kDebugMode) {
     FirebaseFirestore.instance.useFirestoreEmulator(
       Platform.isAndroid ? '10.0.2.2' : 'localhost',
       8080,
     );
-  }
+  }*/
 
   runApp(
     const ProviderScope(

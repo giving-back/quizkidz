@@ -19,18 +19,18 @@ class SearchList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeAppUsers = ref.watch(activeUsersProvider);
-    final authService = ref.watch(authServicesProvider);
+    final activeAppUsers = ref.watch(activeAppUsersProvider);
 
     return activeAppUsers.when(
-      data: (data) {
-        final List<AppUser> filteredMembers = data
+      data: (searchActiveUsersData) {
+        final List<AppUser> filteredMembers = searchActiveUsersData
             .where(
               (member) => member.appDisplayName.toLowerCase().contains(
                     query.toLowerCase(),
                   ),
             )
             .toList();
+
         return ListView.builder(
           itemCount: filteredMembers.length,
           itemBuilder: ((context, index) => Padding(
