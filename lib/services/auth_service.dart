@@ -55,25 +55,15 @@ class AuthService {
     return users;
   }
 
-  List<Friend> _friendFromFirestore(QuerySnapshot? snapshot) {
-    if (snapshot == null) {
-      return [];
-    }
-
-    final test = snapshot.docs.map(
-      (DocumentSnapshot document) {
-        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-        return Friend.fromJson(data);
-      },
-    ).toList();
-
-    return snapshot.docs.map(
-      (DocumentSnapshot document) {
-        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-        return Friend.fromJson(data);
-      },
-    ).toList();
-  }
+  List<Friend> _friendFromFirestore(QuerySnapshot? snapshot) => snapshot == null
+      ? []
+      : snapshot.docs.map(
+          (DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            return Friend.fromJson(data);
+          },
+        ).toList();
 
   Future<AppUser?> _appUserById(String uid) async => _appUserFromFirestore(
       await _firebaseFirestore.collection(usersCollection).doc(uid).get());
