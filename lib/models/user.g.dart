@@ -47,3 +47,13 @@ Map<String, dynamic> _$$_QuizUserToJson(_$_QuizUser instance) =>
       'appAvatar': instance.appAvatar,
       'appAvatarColor': instance.appAvatarColor,
     };
+
+_$_Friend _$$_FriendFromJson(Map<String, dynamic> json) => _$_Friend(
+      uid: json['uid'] as String,
+      added: DateTime.parse(json['added'] as String),
+    );
+
+Map<String, dynamic> _$$_FriendToJson(_$_Friend instance) => <String, dynamic>{
+      'uid': instance.uid,
+      'added': instance.added.toIso8601String(),
+    };

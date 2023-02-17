@@ -8,6 +8,7 @@ import 'package:line_icons/line_icons.dart';
 
 // Project imports:
 import 'package:quizkidz/providers/state_provider.dart';
+import 'package:quizkidz/screen/friends_screen.dart';
 import 'package:quizkidz/screen/home_screen.dart';
 import 'package:quizkidz/screen/profile_screen.dart';
 
@@ -20,6 +21,7 @@ class BaseScreen extends ConsumerWidget {
 
     final List<Widget> widgetOptions = <Widget>[
       const HomeScreen(),
+      const FriendsScreen(),
       const ProfileScreen(),
     ];
 
@@ -46,6 +48,9 @@ class BaseScreen extends ConsumerWidget {
             tabs: const [
               GButton(
                 icon: LineIcons.home,
+              ),
+              GButton(
+                icon: LineIcons.userFriends,
               ),
               GButton(
                 icon: LineIcons.user,

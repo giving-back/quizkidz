@@ -29,3 +29,15 @@ final authStateProvider = StreamProvider<AppUser?>(
 final activeAppUserProvider = StreamProvider.autoDispose<AppUser?>(
   (ref) => ref.watch(authServicesProvider).activeAppUserStream(),
 );
+
+final activeAppUsersProvider = StreamProvider.autoDispose<List<AppUser>>(
+  (ref) => ref.watch(authServicesProvider).activeAppUsersStream(),
+);
+
+final followingProvider = StreamProvider.autoDispose<List<Friend>>(
+  (ref) => ref.watch(authServicesProvider).followingStream(),
+);
+
+final followersProvider = StreamProvider.autoDispose<List<Friend>>(
+  (ref) => ref.watch(authServicesProvider).followersStream(),
+);
