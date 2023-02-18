@@ -28,7 +28,7 @@ class NewQuizOptions extends ConsumerWidget {
     final numQuestions = ref.watch(numQuestionProvider);
     final quizService = ref.watch(quizServiceProvider);
     final currentUser = ref.watch(authStateProvider);
-    final following = ref.watch(followingProvider);
+    final followers = ref.watch(followersProvider);
 
     return Padding(
       padding: const EdgeInsets.only(top: 25.0),
@@ -107,8 +107,8 @@ class NewQuizOptions extends ConsumerWidget {
                 onPressed: () async {
                   currentUser.when(
                     data: (user) {
-                      following.when(
-                          data: (following) => quizService
+                      followers.when(
+                          data: (followers) => quizService
                               .startNewQuiz(
                                 quiz: Quiz(
                                   quizmaster: QuizUser(
@@ -121,7 +121,7 @@ class NewQuizOptions extends ConsumerWidget {
                                   questions: numQuestions,
                                   created: DateTime.now(),
                                 ),
-                                following: following,
+                                followers: followers,
                               )
                               .then(
                                 (value) => value.match(
