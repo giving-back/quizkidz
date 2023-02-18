@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_badge/icon_badge.dart';
 
 // Package imports:
-import 'package:line_icons/line_icons.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 
@@ -37,6 +36,7 @@ class CommonAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 icon: const Icon(
                   Icons.notifications,
                   color: Colors.black54,
+                  size: 30,
                 ),
                 itemCount: newQuizAlerts,
                 badgeColor: Colors.red.shade400,
