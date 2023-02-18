@@ -24,6 +24,7 @@ class QuizSearchList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activeQuizzes = ref.watch(activeQuizzesProvider);
     final dateFormatter = ref.watch(dateFormatServiceProvider);
+    final quizService = ref.watch(quizServiceProvider);
 
     return activeQuizzes.when(
       data: (activeQuizzesList) {
@@ -76,14 +77,23 @@ class QuizSearchList extends ConsumerWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => QuizWrapper(
-                              quizid: filteredQuizzes[index].id,
-                            ),
-                          ),
-                        );
+                        quizService
+                            .markQuizAlertAsRead(
+                              uid: filteredQuizzes[index].id,
+                            )
+                            .then(
+                              (value) => value.match(
+                                (error) => print(error.toString()),
+                                (value) => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QuizWrapper(
+                                      quizid: filteredQuizzes[index].id,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
                       },
                     ),
                   ),
