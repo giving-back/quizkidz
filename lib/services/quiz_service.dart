@@ -42,10 +42,12 @@ class QuizService {
       .snapshots()
       .map(_quizFromFirebase);
 
-  Stream<List<QuizAlert>> quizAlerts() => _firebaseFirestore
+  Stream<List<QuizAlert>> unreadQuizAlerts() => _firebaseFirestore
       .collection(userCollection)
       .doc(_firebaseAuth.currentUser?.uid)
       .collection(quizAlertsSubCollection)
+      .where('read', isEqualTo: false)
+      .orderBy('raised', descending: true)
       .snapshots()
       .map(_quizAlertsFromFirebase);
 
@@ -76,6 +78,7 @@ class QuizService {
             batch.set(
               ref,
               QuizAlert(
+                uid: ref.id,
                 sender: quiz.quizmaster.appDisplayName,
                 quizId: quizId,
                 raised: DateTime.now(),
@@ -90,5 +93,33 @@ class QuizService {
         (error, stackTrace) {
           return Exception(kUserError);
         },
+      ).run();
+
+  Future<Either<Exception, void>> deleteQuizAlert(
+          {required String uid}) async =>
+      TaskEither.tryCatch(
+        () {
+          return _firebaseFirestore
+              .collection(userCollection)
+              .doc(_firebaseAuth.currentUser?.uid)
+              .collection(quizAlertsSubCollection)
+              .doc(uid)
+              .delete();
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> markQuizAlertAsRead(
+          {required String uid}) async =>
+      TaskEither.tryCatch(
+        () {
+          return _firebaseFirestore
+              .collection(userCollection)
+              .doc(_firebaseAuth.currentUser?.uid)
+              .collection(quizAlertsSubCollection)
+              .doc(uid)
+              .update({'read': true});
+        },
+        (error, stackTrace) => Exception(kUserError),
       ).run();
 }

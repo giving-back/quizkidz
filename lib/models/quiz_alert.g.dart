@@ -7,6 +7,7 @@ part of 'quiz_alert.dart';
 // **************************************************************************
 
 _$_QuizAlert _$$_QuizAlertFromJson(Map<String, dynamic> json) => _$_QuizAlert(
+      uid: json['uid'] as String,
       sender: json['sender'] as String,
       quizId: json['quizId'] as String,
       raised: DateTime.parse(json['raised'] as String),
@@ -15,6 +16,7 @@ _$_QuizAlert _$$_QuizAlertFromJson(Map<String, dynamic> json) => _$_QuizAlert(
 
 Map<String, dynamic> _$$_QuizAlertToJson(_$_QuizAlert instance) =>
     <String, dynamic>{
+      'uid': instance.uid,
       'sender': instance.sender,
       'quizId': instance.quizId,
       'raised': instance.raised.toIso8601String(),
