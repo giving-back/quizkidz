@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:quizkidz/components/quiz_search_list.dart';
 
 class QuizSearchDelegate extends SearchDelegate {
