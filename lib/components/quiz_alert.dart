@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/date_format_provider.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
+import 'package:quizkidz/wrappers/quiz_wrapper.dart';
 
 class QuizAlert extends ConsumerWidget {
   const QuizAlert({
@@ -51,10 +52,22 @@ class QuizAlert extends ConsumerWidget {
               .map(
                 (d) => PopupMenuItem(
                   onTap: () {
-                    quizService.markQuizAlertAsRead(uid: d.uid).then(
+                    quizService
+                        .markQuizAlertAsRead(uid: d.uid)
+                        .then(
                           (value) => value.match(
                               (error) => print(error.toString()),
                               (result) => null),
+                        )
+                        .then(
+                          (value) => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QuizWrapper(
+                                quizid: d.quizId,
+                              ),
+                            ),
+                          ),
                         );
                   },
                   child: Column(
