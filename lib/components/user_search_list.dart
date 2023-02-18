@@ -9,10 +9,10 @@ import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 
-class SearchList extends ConsumerWidget {
+class UserSearchList extends ConsumerWidget {
   final String query;
 
-  const SearchList({
+  const UserSearchList({
     super.key,
     required this.query,
   });

@@ -170,10 +170,18 @@ Quiz _$QuizFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Quiz {
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
   QuizUser get quizmaster => throw _privateConstructorUsedError;
+  set quizmaster(QuizUser value) => throw _privateConstructorUsedError;
   String get subject => throw _privateConstructorUsedError;
+  set subject(String value) => throw _privateConstructorUsedError;
   int get questions => throw _privateConstructorUsedError;
+  set questions(int value) => throw _privateConstructorUsedError;
   DateTime get created => throw _privateConstructorUsedError;
+  set created(DateTime value) => throw _privateConstructorUsedError;
+  bool get active => throw _privateConstructorUsedError;
+  set active(bool value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -186,7 +194,12 @@ abstract class $QuizCopyWith<$Res> {
       _$QuizCopyWithImpl<$Res, Quiz>;
   @useResult
   $Res call(
-      {QuizUser quizmaster, String subject, int questions, DateTime created});
+      {String id,
+      QuizUser quizmaster,
+      String subject,
+      int questions,
+      DateTime created,
+      bool active});
 
   $QuizUserCopyWith<$Res> get quizmaster;
 }
@@ -204,12 +217,18 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? quizmaster = null,
     Object? subject = null,
     Object? questions = null,
     Object? created = null,
+    Object? active = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       quizmaster: null == quizmaster
           ? _value.quizmaster
           : quizmaster // ignore: cast_nullable_to_non_nullable
@@ -226,6 +245,10 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -245,7 +268,12 @@ abstract class _$$_QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {QuizUser quizmaster, String subject, int questions, DateTime created});
+      {String id,
+      QuizUser quizmaster,
+      String subject,
+      int questions,
+      DateTime created,
+      bool active});
 
   @override
   $QuizUserCopyWith<$Res> get quizmaster;
@@ -260,12 +288,18 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? quizmaster = null,
     Object? subject = null,
     Object? questions = null,
     Object? created = null,
+    Object? active = null,
   }) {
     return _then(_$_Quiz(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       quizmaster: null == quizmaster
           ? _value.quizmaster
           : quizmaster // ignore: cast_nullable_to_non_nullable
@@ -282,6 +316,10 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -289,45 +327,35 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
 /// @nodoc
 @JsonSerializable()
 class _$_Quiz implements _Quiz {
-  const _$_Quiz(
-      {required this.quizmaster,
+  _$_Quiz(
+      {this.id = '',
+      required this.quizmaster,
       required this.subject,
       required this.questions,
-      required this.created});
+      required this.created,
+      this.active = true});
 
   factory _$_Quiz.fromJson(Map<String, dynamic> json) => _$$_QuizFromJson(json);
 
   @override
-  final QuizUser quizmaster;
+  @JsonKey()
+  String id;
   @override
-  final String subject;
+  QuizUser quizmaster;
   @override
-  final int questions;
+  String subject;
   @override
-  final DateTime created;
+  int questions;
+  @override
+  DateTime created;
+  @override
+  @JsonKey()
+  bool active;
 
   @override
   String toString() {
-    return 'Quiz(quizmaster: $quizmaster, subject: $subject, questions: $questions, created: $created)';
+    return 'Quiz(id: $id, quizmaster: $quizmaster, subject: $subject, questions: $questions, created: $created, active: $active)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Quiz &&
-            (identical(other.quizmaster, quizmaster) ||
-                other.quizmaster == quizmaster) &&
-            (identical(other.subject, subject) || other.subject == subject) &&
-            (identical(other.questions, questions) ||
-                other.questions == questions) &&
-            (identical(other.created, created) || other.created == created));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, quizmaster, subject, questions, created);
 
   @JsonKey(ignore: true)
   @override
@@ -344,22 +372,34 @@ class _$_Quiz implements _Quiz {
 }
 
 abstract class _Quiz implements Quiz {
-  const factory _Quiz(
-      {required final QuizUser quizmaster,
-      required final String subject,
-      required final int questions,
-      required final DateTime created}) = _$_Quiz;
+  factory _Quiz(
+      {String id,
+      required QuizUser quizmaster,
+      required String subject,
+      required int questions,
+      required DateTime created,
+      bool active}) = _$_Quiz;
 
   factory _Quiz.fromJson(Map<String, dynamic> json) = _$_Quiz.fromJson;
 
   @override
+  String get id;
+  set id(String value);
+  @override
   QuizUser get quizmaster;
+  set quizmaster(QuizUser value);
   @override
   String get subject;
+  set subject(String value);
   @override
   int get questions;
+  set questions(int value);
   @override
   DateTime get created;
+  set created(DateTime value);
+  @override
+  bool get active;
+  set active(bool value);
   @override
   @JsonKey(ignore: true)
   _$$_QuizCopyWith<_$_Quiz> get copyWith => throw _privateConstructorUsedError;

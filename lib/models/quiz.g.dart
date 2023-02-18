@@ -18,15 +18,19 @@ Map<String, dynamic> _$$_QuizTypeToJson(_$_QuizType instance) =>
     };
 
 _$_Quiz _$$_QuizFromJson(Map<String, dynamic> json) => _$_Quiz(
+      id: json['id'] as String? ?? '',
       quizmaster: QuizUser.fromJson(json['quizmaster'] as Map<String, dynamic>),
       subject: json['subject'] as String,
       questions: json['questions'] as int,
       created: DateTime.parse(json['created'] as String),
+      active: json['active'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$_QuizToJson(_$_Quiz instance) => <String, dynamic>{
+      'id': instance.id,
       'quizmaster': instance.quizmaster.toJson(),
       'subject': instance.subject,
       'questions': instance.questions,
       'created': instance.created.toIso8601String(),
+      'active': instance.active,
     };

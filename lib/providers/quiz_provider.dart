@@ -8,17 +8,19 @@ import 'package:quizkidz/models/quiz_alert.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/services/quiz_service.dart';
 
-final firestoreProvider = Provider<FirebaseFirestore>(
-  (ref) {
-    return FirebaseFirestore.instance;
-  },
-);
+final firestoreProvider = Provider<FirebaseFirestore>((ref) {
+  return FirebaseFirestore.instance;
+});
 
 final quizServiceProvider = Provider<QuizService>((ref) {
   return QuizService(
     ref.watch(firebaseAuthProvider),
     ref.watch(firestoreProvider),
   );
+});
+
+final activeQuizzesProvider = StreamProvider.autoDispose<List<Quiz>>((ref) {
+  return ref.watch(quizServiceProvider).activeQuizzes();
 });
 
 final quizByIdProvider =
