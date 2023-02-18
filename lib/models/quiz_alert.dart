@@ -9,6 +9,7 @@ class QuizAlert with _$QuizAlert {
   factory QuizAlert({
     required final String sender,
     required final String quizId,
+    required final DateTime raised,
     @Default(false) bool read,
   }) = _QuizAlert;
 
