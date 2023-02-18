@@ -89,16 +89,14 @@ class QuizService {
           final batch = _firebaseFirestore.batch();
 
           for (var follow in followers) {
-            var ref = _firebaseFirestore
-                .collection(userCollection)
-                .doc(follow.uid)
-                .collection(quizAlertsSubCollection)
-                .doc();
-
             batch.set(
-              ref,
+              _firebaseFirestore
+                  .collection(userCollection)
+                  .doc(follow.uid)
+                  .collection(quizAlertsSubCollection)
+                  .doc(quiz.id),
               QuizAlert(
-                uid: ref.id,
+                uid: quiz.id,
                 sender: quiz.quizmaster.appDisplayName,
                 quizId: quiz.id,
                 raised: DateTime.now(),
