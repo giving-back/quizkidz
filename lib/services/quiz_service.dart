@@ -100,7 +100,7 @@ class QuizService {
               QuizAlert(
                 uid: ref.id,
                 sender: quiz.quizmaster.appDisplayName,
-                quizId: ref.id,
+                quizId: quiz.id,
                 raised: DateTime.now(),
               ).toJson(),
             );
