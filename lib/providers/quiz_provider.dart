@@ -26,6 +26,7 @@ final quizByIdProvider =
   return ref.watch(quizServiceProvider).quizById(id);
 });
 
-final quizAlertsProvider = StreamProvider.autoDispose<List<QuizAlert>>((ref) {
-  return ref.watch(quizServiceProvider).quizAlerts();
+final unreadQuizAlertsProvider =
+    StreamProvider.autoDispose<List<QuizAlert>>((ref) {
+  return ref.watch(quizServiceProvider).unreadQuizAlerts();
 });

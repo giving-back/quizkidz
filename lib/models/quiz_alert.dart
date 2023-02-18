@@ -7,6 +7,7 @@ part 'quiz_alert.g.dart';
 @Freezed()
 class QuizAlert with _$QuizAlert {
   factory QuizAlert({
+    required final String uid,
     required final String sender,
     required final String quizId,
     required final DateTime raised,

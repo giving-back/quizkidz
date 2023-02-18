@@ -17,20 +17,22 @@ class QuizAlert extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizAlerts = ref.watch(quizAlertsProvider);
+    final unreadQuizAlerts = ref.watch(unreadQuizAlertsProvider);
     final dateFormatter = ref.watch(dateFormatServiceProvider);
+    final quizService = ref.watch(quizServiceProvider);
 
-    return quizAlerts.when(
-      data: (data) {
-        final newQuizAlerts = data.where((element) => !element.read).length;
-
+    return unreadQuizAlerts.when(
+      data: (unreadQuizAlertList) {
         return PopupMenuButton(
           tooltip: '',
           iconSize: 30,
           icon: badges.Badge(
-            showBadge: newQuizAlerts > 0,
+            showBadge: unreadQuizAlertList.isNotEmpty,
+            badgeStyle: const badges.BadgeStyle(
+              badgeColor: Colors.redAccent,
+            ),
             badgeContent: Text(
-              newQuizAlerts.toString(),
+              unreadQuizAlertList.length.toString(),
               style: const TextStyle(color: Colors.white),
             ),
             badgeAnimation: const badges.BadgeAnimation.scale(
@@ -45,17 +47,39 @@ class QuizAlert extends ConsumerWidget {
               size: 30,
             ),
           ),
-          itemBuilder: (context) => data
+          itemBuilder: (context) => unreadQuizAlertList
               .map(
                 (d) => PopupMenuItem(
-                  child: Text(
-                      '${d.sender} started a quiz ${dateFormatter.formatDate(d.raised)}'),
+                  onTap: () {
+                    quizService.markQuizAlertAsRead(uid: d.uid).then(
+                          (value) => value.match(
+                              (error) => print(error.toString()),
+                              (result) => null),
+                        );
+                  },
+                  child: Column(
+                    children: [
+                      Text(
+                        '${d.sender} started a quiz ${dateFormatter.formatDate(d.raised)}. Click to join.',
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 1,
+                      ),
+                    ],
+                  ),
                 ),
               )
               .toList(),
         );
       },
-      error: (error, stackTrace) => Text(error.toString()),
+      error: (error, stackTrace) {
+        return Text(error.toString());
+      },
       loading: () => const LoadingSpinner(),
     );
   }

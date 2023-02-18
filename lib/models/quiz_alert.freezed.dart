@@ -20,6 +20,7 @@ QuizAlert _$QuizAlertFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$QuizAlert {
+  String get uid => throw _privateConstructorUsedError;
   String get sender => throw _privateConstructorUsedError;
   String get quizId => throw _privateConstructorUsedError;
   DateTime get raised => throw _privateConstructorUsedError;
@@ -36,7 +37,8 @@ abstract class $QuizAlertCopyWith<$Res> {
   factory $QuizAlertCopyWith(QuizAlert value, $Res Function(QuizAlert) then) =
       _$QuizAlertCopyWithImpl<$Res, QuizAlert>;
   @useResult
-  $Res call({String sender, String quizId, DateTime raised, bool read});
+  $Res call(
+      {String uid, String sender, String quizId, DateTime raised, bool read});
 }
 
 /// @nodoc
@@ -52,12 +54,17 @@ class _$QuizAlertCopyWithImpl<$Res, $Val extends QuizAlert>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? uid = null,
     Object? sender = null,
     Object? quizId = null,
     Object? raised = null,
     Object? read = null,
   }) {
     return _then(_value.copyWith(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       sender: null == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
@@ -85,7 +92,8 @@ abstract class _$$_QuizAlertCopyWith<$Res> implements $QuizAlertCopyWith<$Res> {
       __$$_QuizAlertCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String sender, String quizId, DateTime raised, bool read});
+  $Res call(
+      {String uid, String sender, String quizId, DateTime raised, bool read});
 }
 
 /// @nodoc
@@ -99,12 +107,17 @@ class __$$_QuizAlertCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? uid = null,
     Object? sender = null,
     Object? quizId = null,
     Object? raised = null,
     Object? read = null,
   }) {
     return _then(_$_QuizAlert(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       sender: null == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
@@ -129,7 +142,8 @@ class __$$_QuizAlertCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_QuizAlert implements _QuizAlert {
   _$_QuizAlert(
-      {required this.sender,
+      {required this.uid,
+      required this.sender,
       required this.quizId,
       required this.raised,
       this.read = false});
@@ -137,6 +151,8 @@ class _$_QuizAlert implements _QuizAlert {
   factory _$_QuizAlert.fromJson(Map<String, dynamic> json) =>
       _$$_QuizAlertFromJson(json);
 
+  @override
+  final String uid;
   @override
   final String sender;
   @override
@@ -149,7 +165,7 @@ class _$_QuizAlert implements _QuizAlert {
 
   @override
   String toString() {
-    return 'QuizAlert(sender: $sender, quizId: $quizId, raised: $raised, read: $read)';
+    return 'QuizAlert(uid: $uid, sender: $sender, quizId: $quizId, raised: $raised, read: $read)';
   }
 
   @override
@@ -157,6 +173,7 @@ class _$_QuizAlert implements _QuizAlert {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_QuizAlert &&
+            (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.sender, sender) || other.sender == sender) &&
             (identical(other.quizId, quizId) || other.quizId == quizId) &&
             (identical(other.raised, raised) || other.raised == raised) &&
@@ -165,7 +182,8 @@ class _$_QuizAlert implements _QuizAlert {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, sender, quizId, raised, read);
+  int get hashCode =>
+      Object.hash(runtimeType, uid, sender, quizId, raised, read);
 
   @JsonKey(ignore: true)
   @override
@@ -183,7 +201,8 @@ class _$_QuizAlert implements _QuizAlert {
 
 abstract class _QuizAlert implements QuizAlert {
   factory _QuizAlert(
-      {required final String sender,
+      {required final String uid,
+      required final String sender,
       required final String quizId,
       required final DateTime raised,
       final bool read}) = _$_QuizAlert;
@@ -191,6 +210,8 @@ abstract class _QuizAlert implements QuizAlert {
   factory _QuizAlert.fromJson(Map<String, dynamic> json) =
       _$_QuizAlert.fromJson;
 
+  @override
+  String get uid;
   @override
   String get sender;
   @override
