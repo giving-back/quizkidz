@@ -45,10 +45,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Quiz Kidz",
       home: Scaffold(
-        appBar: CommonAppBar(),
-        body: SafeArea(
-          child: AuthWrapper(),
-        ),
+        body: AuthWrapper(),
       ),
     );
   }
