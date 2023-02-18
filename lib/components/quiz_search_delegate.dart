@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:quizkidz/components/user_search_list.dart';
+import 'package:quizkidz/components/quiz_search_list.dart';
 
-class FriendSearchDelegate extends SearchDelegate {
+class QuizSearchDelegate extends SearchDelegate {
   @override
   List<Widget>? buildActions(BuildContext context) => [
         IconButton(
@@ -35,7 +35,7 @@ class FriendSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return UserSearchList(query: query);
+    return QuizSearchList(query: query);
   }
 
   @override

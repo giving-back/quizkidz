@@ -18,13 +18,15 @@ class QuizType with _$QuizType {
       _$QuizTypeFromJson(json);
 }
 
-@Freezed()
+@unfreezed
 class Quiz with _$Quiz {
-  const factory Quiz({
+  factory Quiz({
+    @Default('') String id,
     required QuizUser quizmaster,
     required String subject,
     required int questions,
     required DateTime created,
+    @Default(true) bool active,
   }) = _Quiz;
 
   factory Quiz.fromJson(Map<String, dynamic> json) => _$QuizFromJson(json);

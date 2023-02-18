@@ -25,6 +25,16 @@ class QuizService {
       ? null
       : Quiz.fromJson(snapshot.data() as Map<String, dynamic>);
 
+  List<Quiz> _quizzesFromFirebase(QuerySnapshot? snapshot) => snapshot == null
+      ? []
+      : snapshot.docs.map(
+          (DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            return Quiz.fromJson(data);
+          },
+        ).toList();
+
   List<QuizAlert> _quizAlertsFromFirebase(QuerySnapshot? snapshot) =>
       snapshot == null
           ? []
@@ -35,6 +45,13 @@ class QuizService {
                 return QuizAlert.fromJson(data);
               },
             ).toList();
+
+  Stream<List<Quiz>> activeQuizzes() => _firebaseFirestore
+      .collection(quizzesCollection)
+      .where('active', isEqualTo: true)
+      .orderBy('created', descending: true)
+      .snapshots()
+      .map(_quizzesFromFirebase);
 
   Stream<Quiz?> quizById(String id) => _firebaseFirestore
       .collection(quizzesCollection)
@@ -55,16 +72,19 @@ class QuizService {
           {required Quiz quiz, required List<Friend> followers}) async =>
       TaskEither.tryCatch(
         () async {
-          final quizId = await _firebaseFirestore
+          final ref = _firebaseFirestore
               .collection(quizzesCollection)
               .withConverter<Quiz>(
                 fromFirestore: (snapshot, _) => Quiz.fromJson(snapshot.data()!),
                 toFirestore: (quiz, _) => quiz.toJson(),
               )
-              .add(
-                quiz,
-              )
-              .then((value) => value.id);
+              .doc();
+
+          quiz.id = ref.id;
+
+          await ref.set(
+            quiz,
+          );
 
           final batch = _firebaseFirestore.batch();
 
@@ -80,7 +100,7 @@ class QuizService {
               QuizAlert(
                 uid: ref.id,
                 sender: quiz.quizmaster.appDisplayName,
-                quizId: quizId,
+                quizId: quiz.id,
                 raised: DateTime.now(),
               ).toJson(),
             );
@@ -88,7 +108,7 @@ class QuizService {
 
           await batch.commit();
 
-          return quizId;
+          return ref.id;
         },
         (error, stackTrace) {
           return Exception(kUserError);

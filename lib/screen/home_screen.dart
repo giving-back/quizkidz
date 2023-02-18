@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/new_quiz_options.dart';
 import 'package:quizkidz/components/quiz_button.dart';
+import 'package:quizkidz/components/quiz_search_delegate.dart';
 import 'package:quizkidz/components/text_divider.dart';
 import 'package:quizkidz/components/user_score_summary.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
@@ -122,7 +123,12 @@ class HomeScreen extends ConsumerWidget {
               children: [
                 QuizButton(
                   text: 'Join a Quiz',
-                  onPressed: () {},
+                  onPressed: () {
+                    showSearch(
+                      context: context,
+                      delegate: QuizSearchDelegate(),
+                    );
+                  },
                   edgeInsets: const EdgeInsets.only(
                     left: 50,
                     right: 50,
