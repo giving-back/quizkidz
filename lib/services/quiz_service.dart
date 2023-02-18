@@ -78,6 +78,7 @@ class QuizService {
               QuizAlert(
                 sender: quiz.quizmaster.appDisplayName,
                 quizId: quizId,
+                raised: DateTime.now(),
               ).toJson(),
             );
           }
