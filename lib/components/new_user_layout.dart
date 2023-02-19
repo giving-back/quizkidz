@@ -13,7 +13,9 @@ class NewUserLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppBar(),
+      appBar: const CommonAppBar(
+        showAlert: false,
+      ),
       body: Container(
         color: const Color(kBlueColor),
         child: Column(

@@ -9,8 +9,10 @@ import 'package:quizkidz/components/quiz_alert.dart';
 import 'package:quizkidz/util/util.dart';
 
 class CommonAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  final bool showAlert;
   const CommonAppBar({
     Key? key,
+    required this.showAlert,
   }) : super(key: key);
 
   @override
@@ -21,10 +23,10 @@ class CommonAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: const Color(kBlueColor),
       elevation: 0,
-      actions: const [
+      actions: [
         Padding(
-          padding: EdgeInsets.all(8.0),
-          child: QuizAlert(),
+          padding: const EdgeInsets.all(8.0),
+          child: showAlert ? const QuizAlert() : Container(),
         ),
       ],
     );

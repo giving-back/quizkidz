@@ -27,7 +27,9 @@ class BaseScreen extends ConsumerWidget {
     ];
 
     return Scaffold(
-      appBar: const CommonAppBar(),
+      appBar: const CommonAppBar(
+        showAlert: true,
+      ),
       body: widgetOptions.elementAt(
         tabIndex,
       ),
