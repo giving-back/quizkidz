@@ -14,7 +14,7 @@ class AuthService {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
   final String usersCollection = 'users';
-  final String connectionsCollection = 'collections';
+  final String connectionsCollection = 'connections';
 
   AuthService(
     this._firebaseAuth,
