@@ -86,8 +86,9 @@ class FollowingCheckIcon extends ConsumerWidget {
     final authService = ref.watch(authServicesProvider);
 
     return following.when(
-        data: (data) {
-          var contain = data.where((element) => element.uid == uid);
+        data: (followingList) {
+          var contain =
+              followingList.where((following) => following.following == uid);
 
           if (contain.isEmpty) {
             return IconButton(

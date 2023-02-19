@@ -9,7 +9,7 @@ import 'package:line_icons/line_icons.dart';
 // Project imports:
 import 'package:quizkidz/components/common_app_bar.dart';
 import 'package:quizkidz/providers/state_provider.dart';
-import 'package:quizkidz/screen/friends_screen.dart';
+import 'package:quizkidz/screen/connections_screen.dart';
 import 'package:quizkidz/screen/home_screen.dart';
 import 'package:quizkidz/screen/profile_screen.dart';
 
@@ -22,7 +22,7 @@ class BaseScreen extends ConsumerWidget {
 
     final List<Widget> widgetOptions = <Widget>[
       const HomeScreen(),
-      const FriendsScreen(),
+      const ConnectionsScreen(),
       const ProfileScreen(),
     ];
 

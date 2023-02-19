@@ -7,13 +7,13 @@ import 'package:line_icons/line_icons.dart';
 
 // Project imports:
 import 'package:quizkidz/components/following_list.dart';
-import 'package:quizkidz/components/friend_search_delegate.dart';
+import 'package:quizkidz/components/connection_search_delegate.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
-class FriendsScreen extends ConsumerWidget {
-  const FriendsScreen({Key? key}) : super(key: key);
+class ConnectionsScreen extends ConsumerWidget {
+  const ConnectionsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,7 +65,7 @@ class FriendsScreen extends ConsumerWidget {
                               onPressed: () {
                                 showSearch(
                                   context: context,
-                                  delegate: FriendSearchDelegate(),
+                                  delegate: ConnectionSearchDelegate(),
                                 );
                               },
                               icon: const Icon(

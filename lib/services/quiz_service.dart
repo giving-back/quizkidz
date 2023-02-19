@@ -2,11 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:quizkidz/models/connection.dart';
 
 // Project imports:
 import 'package:quizkidz/models/quiz.dart';
 import 'package:quizkidz/models/quiz_alert.dart';
-import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/util/util.dart';
 
 class QuizService {
@@ -69,7 +69,7 @@ class QuizService {
       .map(_quizAlertsFromFirebase);
 
   Future<Either<Exception, String>> startNewQuiz(
-          {required Quiz quiz, required List<Friend> followers}) async =>
+          {required Quiz quiz, required List<Connection> followers}) async =>
       TaskEither.tryCatch(
         () async {
           final ref = _firebaseFirestore
@@ -88,11 +88,11 @@ class QuizService {
 
           final batch = _firebaseFirestore.batch();
 
-          for (var follow in followers) {
+          for (var follower in followers) {
             batch.set(
               _firebaseFirestore
                   .collection(userCollection)
-                  .doc(follow.uid)
+                  .doc(follower.follower)
                   .collection(quizAlertsSubCollection)
                   .doc(quiz.id),
               QuizAlert(

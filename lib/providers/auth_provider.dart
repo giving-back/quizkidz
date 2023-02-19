@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/models/connection.dart';
 
 // Project imports:
 import 'package:quizkidz/models/user.dart';
@@ -34,10 +35,10 @@ final activeAppUsersProvider = StreamProvider.autoDispose<List<AppUser>>(
   (ref) => ref.watch(authServicesProvider).activeAppUsersStream(),
 );
 
-final followingProvider = StreamProvider.autoDispose<List<Friend>>(
+final followingProvider = StreamProvider.autoDispose<List<Connection>>(
   (ref) => ref.watch(authServicesProvider).followingStream(),
 );
 
-final followersProvider = StreamProvider.autoDispose<List<Friend>>(
+final followersProvider = StreamProvider.autoDispose<List<Connection>>(
   (ref) => ref.watch(authServicesProvider).followersStream(),
 );
