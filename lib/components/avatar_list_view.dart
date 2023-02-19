@@ -19,16 +19,20 @@ class AvatarListView extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: kAvatarImages.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: GestureDetector(
-            onTap: () => onTap(index),
-            child: CircleAvatar(
-              radius: 35,
-              backgroundColor: Color(kAvatarImages[index].color),
-              backgroundImage: AssetImage(
-                kAvatarImages[index].image,
+        return TextButton(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40.0),
               ),
+            ),
+          ),
+          onPressed: () => onTap(index),
+          child: CircleAvatar(
+            radius: 35,
+            backgroundColor: Color(kAvatarImages[index].color),
+            backgroundImage: AssetImage(
+              kAvatarImages[index].image,
             ),
           ),
         );
