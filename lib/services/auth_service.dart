@@ -15,6 +15,8 @@ class AuthService {
   final FirebaseFirestore _firebaseFirestore;
   final String usersCollection = 'users';
   final String connectionsCollection = 'connections';
+  final String quizzesCollection = 'quizzes';
+  final String quizAlertsSubCollection = 'alerts';
 
   AuthService(
     this._firebaseAuth,
@@ -101,6 +103,60 @@ class AuthService {
             .collection(usersCollection)
             .doc(appUser.uid)
             .set(appUser.toJson()),
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> deleteActiveAppUser() async =>
+      TaskEither.tryCatch(
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
+
+          final quizRef = await _firebaseFirestore
+              .collection(quizzesCollection)
+              .where('quizmaster.uid',
+                  isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in quizRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final followingRef = await _firebaseFirestore
+              .collection(connectionsCollection)
+              .where('following', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in followingRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final followerRef = await _firebaseFirestore
+              .collection(connectionsCollection)
+              .where('follower', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in followerRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final alertsRef = await _firebaseFirestore
+              .collection(usersCollection)
+              .doc(_firebaseAuth.currentUser?.uid)
+              .collection(quizAlertsSubCollection)
+              .get();
+
+          for (var doc in alertsRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final usersRef = _firebaseFirestore
+              .collection(usersCollection)
+              .doc(_firebaseAuth.currentUser?.uid);
+
+          batch.delete(usersRef);
+
+          return batch.commit();
+        },
         (error, stackTrace) => Exception(kUserError),
       ).run();
 

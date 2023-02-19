@@ -173,7 +173,34 @@ class ProfileScreen extends ConsumerWidget {
                                             }),
                                         TextButton(
                                           child: const Text("Continue"),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            authServices
+                                                .deleteActiveAppUser()
+                                                .then(
+                                                  (value) => value.match(
+                                                    (error) => print(
+                                                      error.toString(),
+                                                    ),
+                                                    (r) => authServices
+                                                        .signOut()
+                                                        .then(
+                                                          (value) =>
+                                                              value.match(
+                                                            (error) =>
+                                                                print('error'),
+                                                            (r) {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                          ),
+                                                        ),
+                                                  ),
+                                                );
+                                          },
                                         ),
                                       ],
                                     );
