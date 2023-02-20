@@ -59,7 +59,7 @@ class NotificationsScreen extends ConsumerWidget {
                       child: const Padding(
                         padding: EdgeInsets.all(5.0),
                         child: Text(
-                          'new quiz',
+                          'New quiz',
                           style: TextStyle(
                             color: Colors.black45,
                             fontSize: 10,
@@ -82,19 +82,47 @@ class NotificationsScreen extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 2,
+                    top: 8,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${unreadQuizAlertsList[index].senderName} started a new quiz.',
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontSize: 11,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: () => quizService
+                                .deleteQuizAlert(
+                                  quizId: unreadQuizAlertsList[index].quizId,
+                                )
+                                .then(
+                                  (value) => value.match(
+                                      (error) => print(error.toString()),
+                                      (r) => null),
+                                ),
+                            child: const Icon(
+                              Icons.delete_outline,
+                              color: Colors.black54,
+                              size: 18,
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                              left: 35,
+                            ),
+                          ),
+                          Text(
+                            '${unreadQuizAlertsList[index].senderName} started a new quiz.',
+                            style: const TextStyle(
+                              color: Colors.black54,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
                       ),
-                      TextButton(
-                        onPressed: () {
+                      InkWell(
+                        onTap: () {
                           quizService
                               .markQuizAlertAsRead(
                                 quizId: unreadQuizAlertsList[index].quizId,
@@ -119,11 +147,13 @@ class NotificationsScreen extends ConsumerWidget {
                         child: const Text(
                           'Join here',
                           style: TextStyle(
-                            color: Colors.black54,
+                            color: Color(kBlueColor),
                             fontSize: 11,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
+                      //),
                     ],
                   ),
                 ),
