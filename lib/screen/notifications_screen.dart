@@ -147,8 +147,9 @@ class NotificationsScreen extends ConsumerWidget {
                         child: const Text(
                           'Join here',
                           style: TextStyle(
-                            color: Colors.black54,
+                            color: Color(kBlueColor),
                             fontSize: 11,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
