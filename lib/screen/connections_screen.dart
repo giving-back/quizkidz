@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
 
 // Project imports:
-import 'package:quizkidz/components/following_list.dart';
 import 'package:quizkidz/components/connection_search_delegate.dart';
+import 'package:quizkidz/components/following_list.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/util/util.dart';

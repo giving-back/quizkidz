@@ -2,9 +2,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quizkidz/models/connection.dart';
 
 // Project imports:
+import 'package:quizkidz/models/connection.dart';
 import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/services/auth_service.dart';
 

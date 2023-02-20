@@ -2,9 +2,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:quizkidz/models/connection.dart';
 
 // Project imports:
+import 'package:quizkidz/models/connection.dart';
 import 'package:quizkidz/models/quiz.dart';
 import 'package:quizkidz/models/quiz_alert.dart';
 import 'package:quizkidz/util/util.dart';
