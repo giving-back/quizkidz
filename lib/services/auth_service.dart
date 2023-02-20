@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:quizkidz/models/connection.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 // Project imports:
@@ -13,8 +14,9 @@ class AuthService {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
   final String usersCollection = 'users';
-  final String followingSubCollection = 'following';
-  final String followersSubCollection = 'followers';
+  final String connectionsCollection = 'connections';
+  final String quizzesCollection = 'quizzes';
+  final String quizAlertsCollection = 'alerts';
 
   AuthService(
     this._firebaseAuth,
@@ -55,15 +57,16 @@ class AuthService {
     return users;
   }
 
-  List<Friend> _friendFromFirestore(QuerySnapshot? snapshot) => snapshot == null
-      ? []
-      : snapshot.docs.map(
-          (DocumentSnapshot document) {
-            Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
-            return Friend.fromJson(data);
-          },
-        ).toList();
+  List<Connection> _connectionsFromFirestore(QuerySnapshot? snapshot) =>
+      snapshot == null
+          ? []
+          : snapshot.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return Connection.fromJson(data);
+              },
+            ).toList();
 
   Future<AppUser?> _appUserById(String uid) async => _appUserFromFirestore(
       await _firebaseFirestore.collection(usersCollection).doc(uid).get());
@@ -82,19 +85,17 @@ class AuthService {
       .snapshots()
       .map(_appUsersFromFirestore);
 
-  Stream<List<Friend>> followingStream() => _firebaseFirestore
-      .collection(usersCollection)
-      .doc(_firebaseAuth.currentUser?.uid)
-      .collection(followingSubCollection)
+  Stream<List<Connection>> followingStream() => _firebaseFirestore
+      .collection(connectionsCollection)
+      .where('follower', isEqualTo: _firebaseAuth.currentUser?.uid)
       .snapshots()
-      .map(_friendFromFirestore);
+      .map(_connectionsFromFirestore);
 
-  Stream<List<Friend>> followersStream() => _firebaseFirestore
-      .collection(usersCollection)
-      .doc(_firebaseAuth.currentUser?.uid)
-      .collection(followersSubCollection)
+  Stream<List<Connection>> followersStream() => _firebaseFirestore
+      .collection(connectionsCollection)
+      .where('following', isEqualTo: _firebaseAuth.currentUser?.uid)
       .snapshots()
-      .map(_friendFromFirestore);
+      .map(_connectionsFromFirestore);
 
   Future<Either<Exception, void>> addNewAppUser(AppUser appUser) async =>
       TaskEither.tryCatch(
@@ -105,53 +106,98 @@ class AuthService {
         (error, stackTrace) => Exception(kUserError),
       ).run();
 
-  Future<Either<Exception, void>> followUser(String uid) async =>
+  Future<Either<Exception, void>> deleteActiveAppUser() async =>
       TaskEither.tryCatch(
-        () {
-          final batch = _firebaseFirestore.batch();
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
 
-          batch.set(
-            _firebaseFirestore
-                .collection(usersCollection)
-                .doc(_firebaseAuth.currentUser?.uid)
-                .collection(followingSubCollection)
-                .doc(uid),
-            Friend(uid: uid, added: DateTime.now()).toJson(),
-          );
+          final quizRef = await _firebaseFirestore
+              .collection(quizzesCollection)
+              .where('quizmaster.uid',
+                  isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
 
-          batch.set(
-            _firebaseFirestore
-                .collection(usersCollection)
-                .doc(uid)
-                .collection(followersSubCollection)
-                .doc(_firebaseAuth.currentUser?.uid),
-            Friend(uid: _firebaseAuth.currentUser!.uid, added: DateTime.now())
-                .toJson(),
-          );
+          for (var doc in quizRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final followingRef = await _firebaseFirestore
+              .collection(connectionsCollection)
+              .where('following', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in followingRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final followerRef = await _firebaseFirestore
+              .collection(connectionsCollection)
+              .where('follower', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in followerRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final quizAlertsSentRef = await _firebaseFirestore
+              .collection(quizAlertsCollection)
+              .where('senderId', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in quizAlertsSentRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final quizAlertsReceivedRef = await _firebaseFirestore
+              .collection(quizAlertsCollection)
+              .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in quizAlertsReceivedRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final usersRef = _firebaseFirestore
+              .collection(usersCollection)
+              .doc(_firebaseAuth.currentUser?.uid);
+
+          batch.delete(usersRef);
 
           return batch.commit();
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();
 
+  Future<Either<Exception, void>> followUser(String uid) async =>
+      TaskEither.tryCatch(
+        () => _firebaseFirestore.collection(connectionsCollection).add(
+              Connection(
+                follower: _firebaseAuth.currentUser!.uid,
+                following: uid,
+              ).toJson(),
+            ),
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
   Future<Either<Exception, void>> unfollowUser(String uid) async =>
       TaskEither.tryCatch(
         () {
-          final batch = _firebaseFirestore.batch();
+          WriteBatch batch = _firebaseFirestore.batch();
 
-          batch.delete(_firebaseFirestore
-              .collection(usersCollection)
-              .doc(_firebaseAuth.currentUser?.uid)
-              .collection(followingSubCollection)
-              .doc(uid));
+          return _firebaseFirestore
+              .collection(connectionsCollection)
+              .where('follower', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .where('following', isEqualTo: uid)
+              .get()
+              .then(
+            (querySnapshot) {
+              for (var document in querySnapshot.docs) {
+                batch.delete(document.reference);
+              }
 
-          batch.delete(_firebaseFirestore
-              .collection(usersCollection)
-              .doc(uid)
-              .collection(followersSubCollection)
-              .doc(_firebaseAuth.currentUser?.uid));
-
-          return batch.commit();
+              return batch.commit();
+            },
+          );
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();

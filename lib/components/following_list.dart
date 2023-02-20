@@ -23,8 +23,9 @@ class FollowingList extends ConsumerWidget {
       data: (followingListData) {
         return activeUsers.when(
           data: (active) {
-            final List<String> followingIds =
-                followingListData.map((follower) => follower.uid).toList();
+            final List<String> followingIds = followingListData
+                .map((following) => following.following)
+                .toList();
 
             List<AppUser> activeCopy = [];
             activeCopy.addAll(active);

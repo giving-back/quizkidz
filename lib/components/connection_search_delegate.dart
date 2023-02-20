@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:quizkidz/components/user_search_list.dart';
 
-class FriendSearchDelegate extends SearchDelegate {
+class ConnectionSearchDelegate extends SearchDelegate {
   @override
   List<Widget>? buildActions(BuildContext context) => [
         IconButton(

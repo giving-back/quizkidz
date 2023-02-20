@@ -53,7 +53,9 @@ class QuizAlert extends ConsumerWidget {
                 (unreadQuizAlert) => PopupMenuItem(
                   onTap: () {
                     quizService
-                        .markQuizAlertAsRead(uid: unreadQuizAlert.uid)
+                        .markQuizAlertAsRead(
+                          quizId: unreadQuizAlert.quizId,
+                        )
                         .then(
                           (value) => value.match(
                               (error) => print(error.toString()),
@@ -73,7 +75,7 @@ class QuizAlert extends ConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        '${unreadQuizAlert.sender} started a quiz ${dateFormatter.formatDate(unreadQuizAlert.raised)}. Click to join.',
+                        '${unreadQuizAlert.senderName} started a quiz ${dateFormatter.formatDate(unreadQuizAlert.raised)}. Click to join.',
                         style: const TextStyle(
                           color: Colors.black54,
                           fontSize: 13,
@@ -91,6 +93,7 @@ class QuizAlert extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) {
+        print(error.toString());
         return Text(error.toString());
       },
       loading: () => const LoadingSpinner(),

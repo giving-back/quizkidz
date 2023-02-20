@@ -79,7 +79,7 @@ class QuizSearchList extends ConsumerWidget {
                       onPressed: () {
                         quizService
                             .markQuizAlertAsRead(
-                              uid: filteredQuizzes[index].id,
+                              quizId: filteredQuizzes[index].id,
                             )
                             .then(
                               (value) => value.match(
