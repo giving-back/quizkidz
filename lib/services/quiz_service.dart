@@ -109,6 +109,27 @@ class QuizService {
         },
       ).run();
 
+  Future<Either<Exception, void>> deleteQuizAlert(
+          {required String quizId}) async =>
+      TaskEither.tryCatch(
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
+
+          final alertRef = await _firebaseFirestore
+              .collection(quizAlertsCollection)
+              .where('quizId', isEqualTo: quizId)
+              .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in alertRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          return batch.commit();
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
   Future<Either<Exception, void>> markQuizAlertAsRead(
           {required String quizId}) async =>
       TaskEither.tryCatch(
