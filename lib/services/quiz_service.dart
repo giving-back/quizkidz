@@ -13,7 +13,7 @@ class QuizService {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
   final quizzesCollection = 'quizzes';
-  final quizAlertsSubCollection = 'alerts';
+  final quizAlertsCollection = 'alerts';
   final userCollection = 'users';
 
   QuizService(
@@ -60,9 +60,8 @@ class QuizService {
       .map(_quizFromFirebase);
 
   Stream<List<QuizAlert>> unreadQuizAlerts() => _firebaseFirestore
-      .collection(userCollection)
-      .doc(_firebaseAuth.currentUser?.uid)
-      .collection(quizAlertsSubCollection)
+      .collection(quizAlertsCollection)
+      .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
       .where('read', isEqualTo: false)
       .orderBy('raised', descending: true)
       .snapshots()
@@ -90,14 +89,11 @@ class QuizService {
 
           for (var follower in followers) {
             batch.set(
-              _firebaseFirestore
-                  .collection(userCollection)
-                  .doc(follower.follower)
-                  .collection(quizAlertsSubCollection)
-                  .doc(quiz.id),
+              _firebaseFirestore.collection(quizAlertsCollection).doc(),
               QuizAlert(
-                uid: quiz.id,
-                sender: quiz.quizmaster.appDisplayName,
+                receiverId: follower.follower,
+                senderName: quiz.quizmaster.appDisplayName,
+                senderId: quiz.quizmaster.uid,
                 quizId: quiz.id,
                 raised: DateTime.now(),
               ).toJson(),
@@ -113,30 +109,23 @@ class QuizService {
         },
       ).run();
 
-  Future<Either<Exception, void>> deleteQuizAlert(
-          {required String uid}) async =>
-      TaskEither.tryCatch(
-        () {
-          return _firebaseFirestore
-              .collection(userCollection)
-              .doc(_firebaseAuth.currentUser?.uid)
-              .collection(quizAlertsSubCollection)
-              .doc(uid)
-              .delete();
-        },
-        (error, stackTrace) => Exception(kUserError),
-      ).run();
-
   Future<Either<Exception, void>> markQuizAlertAsRead(
-          {required String uid}) async =>
+          {required String quizId}) async =>
       TaskEither.tryCatch(
-        () {
-          return _firebaseFirestore
-              .collection(userCollection)
-              .doc(_firebaseAuth.currentUser?.uid)
-              .collection(quizAlertsSubCollection)
-              .doc(uid)
-              .update({'read': true});
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
+
+          final ref = await _firebaseFirestore
+              .collection(quizAlertsCollection)
+              .where('quizId', isEqualTo: quizId)
+              .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in ref.docs) {
+            batch.update(doc.reference, {'read': true});
+          }
+
+          return batch.commit();
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();

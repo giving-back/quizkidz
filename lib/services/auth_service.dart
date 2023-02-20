@@ -16,7 +16,7 @@ class AuthService {
   final String usersCollection = 'users';
   final String connectionsCollection = 'connections';
   final String quizzesCollection = 'quizzes';
-  final String quizAlertsSubCollection = 'alerts';
+  final String quizAlertsCollection = 'alerts';
 
   AuthService(
     this._firebaseAuth,
@@ -139,13 +139,21 @@ class AuthService {
             batch.delete(doc.reference);
           }
 
-          final alertsRef = await _firebaseFirestore
-              .collection(usersCollection)
-              .doc(_firebaseAuth.currentUser?.uid)
-              .collection(quizAlertsSubCollection)
+          final quizAlertsSentRef = await _firebaseFirestore
+              .collection(quizAlertsCollection)
+              .where('senderId', isEqualTo: _firebaseAuth.currentUser?.uid)
               .get();
 
-          for (var doc in alertsRef.docs) {
+          for (var doc in quizAlertsSentRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final quizAlertsReceivedRef = await _firebaseFirestore
+              .collection(quizAlertsCollection)
+              .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .get();
+
+          for (var doc in quizAlertsReceivedRef.docs) {
             batch.delete(doc.reference);
           }
 

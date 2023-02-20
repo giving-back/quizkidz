@@ -20,8 +20,9 @@ QuizAlert _$QuizAlertFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$QuizAlert {
-  String get uid => throw _privateConstructorUsedError;
-  String get sender => throw _privateConstructorUsedError;
+  String get receiverId => throw _privateConstructorUsedError;
+  String get senderId => throw _privateConstructorUsedError;
+  String get senderName => throw _privateConstructorUsedError;
   String get quizId => throw _privateConstructorUsedError;
   DateTime get raised => throw _privateConstructorUsedError;
   bool get read => throw _privateConstructorUsedError;
@@ -38,7 +39,12 @@ abstract class $QuizAlertCopyWith<$Res> {
       _$QuizAlertCopyWithImpl<$Res, QuizAlert>;
   @useResult
   $Res call(
-      {String uid, String sender, String quizId, DateTime raised, bool read});
+      {String receiverId,
+      String senderId,
+      String senderName,
+      String quizId,
+      DateTime raised,
+      bool read});
 }
 
 /// @nodoc
@@ -54,20 +60,25 @@ class _$QuizAlertCopyWithImpl<$Res, $Val extends QuizAlert>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = null,
-    Object? sender = null,
+    Object? receiverId = null,
+    Object? senderId = null,
+    Object? senderName = null,
     Object? quizId = null,
     Object? raised = null,
     Object? read = null,
   }) {
     return _then(_value.copyWith(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      receiverId: null == receiverId
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderName: null == senderName
+          ? _value.senderName
+          : senderName // ignore: cast_nullable_to_non_nullable
               as String,
       quizId: null == quizId
           ? _value.quizId
@@ -93,7 +104,12 @@ abstract class _$$_QuizAlertCopyWith<$Res> implements $QuizAlertCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String uid, String sender, String quizId, DateTime raised, bool read});
+      {String receiverId,
+      String senderId,
+      String senderName,
+      String quizId,
+      DateTime raised,
+      bool read});
 }
 
 /// @nodoc
@@ -107,20 +123,25 @@ class __$$_QuizAlertCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = null,
-    Object? sender = null,
+    Object? receiverId = null,
+    Object? senderId = null,
+    Object? senderName = null,
     Object? quizId = null,
     Object? raised = null,
     Object? read = null,
   }) {
     return _then(_$_QuizAlert(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      receiverId: null == receiverId
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderName: null == senderName
+          ? _value.senderName
+          : senderName // ignore: cast_nullable_to_non_nullable
               as String,
       quizId: null == quizId
           ? _value.quizId
@@ -142,8 +163,9 @@ class __$$_QuizAlertCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_QuizAlert implements _QuizAlert {
   _$_QuizAlert(
-      {required this.uid,
-      required this.sender,
+      {required this.receiverId,
+      required this.senderId,
+      required this.senderName,
       required this.quizId,
       required this.raised,
       this.read = false});
@@ -152,9 +174,11 @@ class _$_QuizAlert implements _QuizAlert {
       _$$_QuizAlertFromJson(json);
 
   @override
-  final String uid;
+  final String receiverId;
   @override
-  final String sender;
+  final String senderId;
+  @override
+  final String senderName;
   @override
   final String quizId;
   @override
@@ -165,7 +189,7 @@ class _$_QuizAlert implements _QuizAlert {
 
   @override
   String toString() {
-    return 'QuizAlert(uid: $uid, sender: $sender, quizId: $quizId, raised: $raised, read: $read)';
+    return 'QuizAlert(receiverId: $receiverId, senderId: $senderId, senderName: $senderName, quizId: $quizId, raised: $raised, read: $read)';
   }
 
   @override
@@ -173,8 +197,12 @@ class _$_QuizAlert implements _QuizAlert {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_QuizAlert &&
-            (identical(other.uid, uid) || other.uid == uid) &&
-            (identical(other.sender, sender) || other.sender == sender) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.senderName, senderName) ||
+                other.senderName == senderName) &&
             (identical(other.quizId, quizId) || other.quizId == quizId) &&
             (identical(other.raised, raised) || other.raised == raised) &&
             (identical(other.read, read) || other.read == read));
@@ -182,8 +210,8 @@ class _$_QuizAlert implements _QuizAlert {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, uid, sender, quizId, raised, read);
+  int get hashCode => Object.hash(
+      runtimeType, receiverId, senderId, senderName, quizId, raised, read);
 
   @JsonKey(ignore: true)
   @override
@@ -201,8 +229,9 @@ class _$_QuizAlert implements _QuizAlert {
 
 abstract class _QuizAlert implements QuizAlert {
   factory _QuizAlert(
-      {required final String uid,
-      required final String sender,
+      {required final String receiverId,
+      required final String senderId,
+      required final String senderName,
       required final String quizId,
       required final DateTime raised,
       final bool read}) = _$_QuizAlert;
@@ -211,9 +240,11 @@ abstract class _QuizAlert implements QuizAlert {
       _$_QuizAlert.fromJson;
 
   @override
-  String get uid;
+  String get receiverId;
   @override
-  String get sender;
+  String get senderId;
+  @override
+  String get senderName;
   @override
   String get quizId;
   @override
