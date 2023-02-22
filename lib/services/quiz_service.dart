@@ -15,6 +15,8 @@ class QuizService {
   final quizzesCollection = 'quizzes';
   final quizAlertsCollection = 'alerts';
   final userCollection = 'users';
+  final quizAnswersSubCollection = 'answers';
+  final quizPlayersSubCollection = 'players';
 
   QuizService(
     this._firebaseAuth,
@@ -145,6 +147,39 @@ class QuizService {
           for (var doc in ref.docs) {
             batch.update(doc.reference, {'read': true});
           }
+
+          return batch.commit();
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> deleteQuiz({required String quizId}) async =>
+      TaskEither.tryCatch(
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
+
+          final quizAnswersRef = await _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizAnswersSubCollection)
+              .get();
+
+          for (var doc in quizAnswersRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final quizPlayersRef = await _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizPlayersSubCollection)
+              .get();
+
+          for (var doc in quizPlayersRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          batch.delete(
+              _firebaseFirestore.collection(quizzesCollection).doc(quizId));
 
           return batch.commit();
         },

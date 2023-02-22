@@ -91,7 +91,9 @@ class UsernameForm extends ConsumerWidget {
                             (error) => ScaffoldMessenger.of(context)
                               ..hideCurrentSnackBar()
                               ..showSnackBar(
-                                CustomSnackAlert.showErrorSnackBar(),
+                                CustomSnackAlert.showErrorSnackBar(
+                                  message: kUserError,
+                                ),
                               ),
                             (r) => Navigator.pop(context),
                           ),

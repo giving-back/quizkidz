@@ -250,7 +250,9 @@ class ProfileScreen extends ConsumerWidget {
                               (error) => ScaffoldMessenger.of(context)
                                 ..hideCurrentSnackBar()
                                 ..showSnackBar(
-                                  CustomSnackAlert.showErrorSnackBar(),
+                                  CustomSnackAlert.showErrorSnackBar(
+                                    message: kUserError,
+                                  ),
                                 ),
                               (r) {
                                 ref.watch(tabIndexProvider.notifier).state =

@@ -74,6 +74,8 @@ class AuthService {
   Stream<AppUser?> get user =>
       _firebaseAuth.authStateChanges().asyncMap(_appUserFromFirebase);
 
+  String get currentUserId => _firebaseAuth.currentUser!.uid;
+
   Stream<AppUser?> activeAppUserStream() => _firebaseFirestore
       .collection(usersCollection)
       .doc(_firebaseAuth.currentUser?.uid)

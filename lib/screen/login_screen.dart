@@ -53,7 +53,9 @@ class LoginScreen extends ConsumerWidget {
                                     (error) => ScaffoldMessenger.of(context)
                                       ..hideCurrentSnackBar()
                                       ..showSnackBar(
-                                        CustomSnackAlert.showErrorSnackBar(),
+                                        CustomSnackAlert.showErrorSnackBar(
+                                          message: kUserError,
+                                        ),
                                       ),
                                     (r) {},
                                   ),
@@ -73,7 +75,9 @@ class LoginScreen extends ConsumerWidget {
                                     (error) => ScaffoldMessenger.of(context)
                                       ..hideCurrentSnackBar()
                                       ..showSnackBar(
-                                        CustomSnackAlert.showErrorSnackBar(),
+                                        CustomSnackAlert.showErrorSnackBar(
+                                          message: kUserError,
+                                        ),
                                       ),
                                     (r) {},
                                   ),

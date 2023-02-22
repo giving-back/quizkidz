@@ -81,7 +81,9 @@ class ChangeAvatar extends ConsumerWidget {
                                                   ..hideCurrentSnackBar()
                                                   ..showSnackBar(
                                                     CustomSnackAlert
-                                                        .showErrorSnackBar(),
+                                                        .showErrorSnackBar(
+                                                      message: kUserError,
+                                                    ),
                                                   ),
                                             (r) => Navigator.pop(context),
                                           ),
