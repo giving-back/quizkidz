@@ -15,6 +15,7 @@ import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/providers/state_provider.dart';
+import 'package:quizkidz/util/util.dart';
 import 'package:quizkidz/wrappers/quiz_wrapper.dart';
 
 class NewQuizOptions extends ConsumerWidget {
@@ -130,7 +131,9 @@ class NewQuizOptions extends ConsumerWidget {
                                     ScaffoldMessenger.of(context)
                                       ..hideCurrentSnackBar()
                                       ..showSnackBar(
-                                        CustomSnackAlert.showErrorSnackBar(),
+                                        CustomSnackAlert.showErrorSnackBar(
+                                          message: kUserError,
+                                        ),
                                       );
                                   },
                                   (result) {
@@ -150,7 +153,9 @@ class NewQuizOptions extends ConsumerWidget {
                             ScaffoldMessenger.of(context)
                               ..hideCurrentSnackBar()
                               ..showSnackBar(
-                                CustomSnackAlert.showErrorSnackBar(),
+                                CustomSnackAlert.showErrorSnackBar(
+                                  message: kUserError,
+                                ),
                               );
                           },
                           loading: () => const LoadingSpinner());
@@ -160,7 +165,9 @@ class NewQuizOptions extends ConsumerWidget {
                       ScaffoldMessenger.of(context)
                         ..hideCurrentSnackBar()
                         ..showSnackBar(
-                          CustomSnackAlert.showErrorSnackBar(),
+                          CustomSnackAlert.showErrorSnackBar(
+                            message: kUserError,
+                          ),
                         );
                     },
                     loading: () => const LoadingSpinner(),
