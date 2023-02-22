@@ -25,7 +25,7 @@ class AuthService {
 
   Future<AppUser?> _appUserFromFirebase(User? user) async => user == null
       ? null
-      : await appUserById(user.uid) ??
+      : await _appUserById(user.uid) ??
           AppUser(
             uid: user.uid,
             email: user.email,
@@ -68,7 +68,7 @@ class AuthService {
               },
             ).toList();
 
-  Future<AppUser?> appUserById(String uid) async => _appUserFromFirestore(
+  Future<AppUser?> _appUserById(String uid) async => _appUserFromFirestore(
       await _firebaseFirestore.collection(usersCollection).doc(uid).get());
 
   Future<AppUser?> activeAppUser() async =>
