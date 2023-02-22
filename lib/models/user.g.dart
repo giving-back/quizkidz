@@ -47,3 +47,15 @@ Map<String, dynamic> _$$_QuizUserToJson(_$_QuizUser instance) =>
       'appAvatar': instance.appAvatar,
       'appAvatarColor': instance.appAvatarColor,
     };
+
+_$_QuizPlayer _$$_QuizPlayerFromJson(Map<String, dynamic> json) =>
+    _$_QuizPlayer(
+      player: QuizUser.fromJson(json['player'] as Map<String, dynamic>),
+      score: json['score'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$$_QuizPlayerToJson(_$_QuizPlayer instance) =>
+    <String, dynamic>{
+      'player': instance.player.toJson(),
+      'score': instance.score,
+    };

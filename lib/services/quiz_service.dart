@@ -1,25 +1,26 @@
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 
 // Project imports:
 import 'package:quizkidz/models/connection.dart';
 import 'package:quizkidz/models/quiz.dart';
 import 'package:quizkidz/models/quiz_alert.dart';
+import 'package:quizkidz/models/user.dart';
+import 'package:quizkidz/services/auth_service.dart';
 import 'package:quizkidz/util/util.dart';
 
 class QuizService {
-  final FirebaseAuth _firebaseAuth;
+  final AuthService _authService;
   final FirebaseFirestore _firebaseFirestore;
+
   final quizzesCollection = 'quizzes';
   final quizAlertsCollection = 'alerts';
-  final userCollection = 'users';
   final quizAnswersSubCollection = 'answers';
   final quizPlayersSubCollection = 'players';
 
   QuizService(
-    this._firebaseAuth,
+    this._authService,
     this._firebaseFirestore,
   );
 
@@ -63,7 +64,7 @@ class QuizService {
 
   Stream<List<QuizAlert>> unreadQuizAlerts() => _firebaseFirestore
       .collection(quizAlertsCollection)
-      .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
+      .where('receiverId', isEqualTo: _authService.currentUserId)
       .where('read', isEqualTo: false)
       .orderBy('raised', descending: true)
       .snapshots()
@@ -120,7 +121,7 @@ class QuizService {
           final alertRef = await _firebaseFirestore
               .collection(quizAlertsCollection)
               .where('quizId', isEqualTo: quizId)
-              .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .where('receiverId', isEqualTo: _authService.currentUserId)
               .get();
 
           for (var doc in alertRef.docs) {
@@ -132,8 +133,7 @@ class QuizService {
         (error, stackTrace) => Exception(kUserError),
       ).run();
 
-  Future<Either<Exception, void>> markQuizAlertAsRead(
-          {required String quizId}) async =>
+  Future<Either<Exception, void>> joinQuiz({required String quizId}) async =>
       TaskEither.tryCatch(
         () async {
           WriteBatch batch = _firebaseFirestore.batch();
@@ -141,12 +141,35 @@ class QuizService {
           final ref = await _firebaseFirestore
               .collection(quizAlertsCollection)
               .where('quizId', isEqualTo: quizId)
-              .where('receiverId', isEqualTo: _firebaseAuth.currentUser?.uid)
+              .where('receiverId', isEqualTo: _authService.currentUserId)
               .get();
 
           for (var doc in ref.docs) {
             batch.update(doc.reference, {'read': true});
           }
+
+          final activeUser = await _authService.activeAppUser();
+
+          final player = QuizPlayer(
+            player: QuizUser(
+                uid: activeUser!.uid,
+                appDisplayName: activeUser.appDisplayName,
+                appAvatar: activeUser.appAvatar,
+                appAvatarColor: activeUser.appAvatarColor),
+          );
+
+          final playerRef = _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizPlayersSubCollection)
+              .withConverter<QuizPlayer>(
+                fromFirestore: (snapshot, _) =>
+                    QuizPlayer.fromJson(snapshot.data()!),
+                toFirestore: (quiz, _) => player.toJson(),
+              )
+              .doc();
+
+          batch.set(playerRef, player);
 
           return batch.commit();
         },
@@ -155,10 +178,27 @@ class QuizService {
 
   Future<Either<Exception, void>> endQuiz({required String quizId}) async =>
       TaskEither.tryCatch(
-        () async => _firebaseFirestore
-            .collection(quizzesCollection)
-            .doc(quizId)
-            .update({'active': false}),
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
+
+          final quizAlertsRef = await _firebaseFirestore
+              .collection(quizAlertsCollection)
+              .where('quizId', isEqualTo: quizId)
+              .get();
+
+          for (var doc in quizAlertsRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          final quizRef = await _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .get();
+
+          batch.update(quizRef.reference, {'active': false});
+
+          return batch.commit();
+        },
         (error, stackTrace) => Exception(kUserError),
       ).run();
 

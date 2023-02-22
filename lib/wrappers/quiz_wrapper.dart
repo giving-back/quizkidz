@@ -30,7 +30,9 @@ class QuizWrapper extends ConsumerWidget {
                 ? QuizmasterScreen(
                     quizId: quizData!.id,
                   )
-                : const PlayerScreen(),
+                : PlayerScreen(
+                    quizId: quizData!.id,
+                  ),
             error: (error, __) => Text(error.toString()),
             loading: () => const LoadingSpinner()),
         error: (error, __) => Text(error.toString()),

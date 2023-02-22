@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:timeago/timeago.dart' as timeago;
+
 const kUserError = 'Something has gone wrong. Please try again.';
 
 const kGoogleAuthImage = 'images/auth/google.png';
@@ -31,6 +34,16 @@ class Avatar {
     required this.image,
     required this.color,
   });
+}
+
+class DateFormatService {
+  DateFormatService();
+
+  static String formatDate(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+    return timeago.format(now.subtract(difference), locale: 'en');
+  }
 }
 
 final kAvatarImages = [

@@ -12,7 +12,7 @@ final firestoreProvider =
     Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
 
 final quizServiceProvider = Provider<QuizService>((ref) => QuizService(
-      ref.watch(firebaseAuthProvider),
+      ref.watch(authServicesProvider),
       ref.watch(firestoreProvider),
     ));
 

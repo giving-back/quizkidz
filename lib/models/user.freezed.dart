@@ -526,3 +526,170 @@ abstract class _QuizUser implements QuizUser {
   _$$_QuizUserCopyWith<_$_QuizUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+QuizPlayer _$QuizPlayerFromJson(Map<String, dynamic> json) {
+  return _QuizPlayer.fromJson(json);
+}
+
+/// @nodoc
+mixin _$QuizPlayer {
+  QuizUser get player => throw _privateConstructorUsedError;
+  int get score => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $QuizPlayerCopyWith<QuizPlayer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $QuizPlayerCopyWith<$Res> {
+  factory $QuizPlayerCopyWith(
+          QuizPlayer value, $Res Function(QuizPlayer) then) =
+      _$QuizPlayerCopyWithImpl<$Res, QuizPlayer>;
+  @useResult
+  $Res call({QuizUser player, int score});
+
+  $QuizUserCopyWith<$Res> get player;
+}
+
+/// @nodoc
+class _$QuizPlayerCopyWithImpl<$Res, $Val extends QuizPlayer>
+    implements $QuizPlayerCopyWith<$Res> {
+  _$QuizPlayerCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? player = null,
+    Object? score = null,
+  }) {
+    return _then(_value.copyWith(
+      player: null == player
+          ? _value.player
+          : player // ignore: cast_nullable_to_non_nullable
+              as QuizUser,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuizUserCopyWith<$Res> get player {
+    return $QuizUserCopyWith<$Res>(_value.player, (value) {
+      return _then(_value.copyWith(player: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_QuizPlayerCopyWith<$Res>
+    implements $QuizPlayerCopyWith<$Res> {
+  factory _$$_QuizPlayerCopyWith(
+          _$_QuizPlayer value, $Res Function(_$_QuizPlayer) then) =
+      __$$_QuizPlayerCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({QuizUser player, int score});
+
+  @override
+  $QuizUserCopyWith<$Res> get player;
+}
+
+/// @nodoc
+class __$$_QuizPlayerCopyWithImpl<$Res>
+    extends _$QuizPlayerCopyWithImpl<$Res, _$_QuizPlayer>
+    implements _$$_QuizPlayerCopyWith<$Res> {
+  __$$_QuizPlayerCopyWithImpl(
+      _$_QuizPlayer _value, $Res Function(_$_QuizPlayer) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? player = null,
+    Object? score = null,
+  }) {
+    return _then(_$_QuizPlayer(
+      player: null == player
+          ? _value.player
+          : player // ignore: cast_nullable_to_non_nullable
+              as QuizUser,
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_QuizPlayer implements _QuizPlayer {
+  const _$_QuizPlayer({required this.player, this.score = 0});
+
+  factory _$_QuizPlayer.fromJson(Map<String, dynamic> json) =>
+      _$$_QuizPlayerFromJson(json);
+
+  @override
+  final QuizUser player;
+  @override
+  @JsonKey()
+  final int score;
+
+  @override
+  String toString() {
+    return 'QuizPlayer(player: $player, score: $score)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_QuizPlayer &&
+            (identical(other.player, player) || other.player == player) &&
+            (identical(other.score, score) || other.score == score));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, player, score);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_QuizPlayerCopyWith<_$_QuizPlayer> get copyWith =>
+      __$$_QuizPlayerCopyWithImpl<_$_QuizPlayer>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_QuizPlayerToJson(
+      this,
+    );
+  }
+}
+
+abstract class _QuizPlayer implements QuizPlayer {
+  const factory _QuizPlayer({required final QuizUser player, final int score}) =
+      _$_QuizPlayer;
+
+  factory _QuizPlayer.fromJson(Map<String, dynamic> json) =
+      _$_QuizPlayer.fromJson;
+
+  @override
+  QuizUser get player;
+  @override
+  int get score;
+  @override
+  @JsonKey(ignore: true)
+  _$$_QuizPlayerCopyWith<_$_QuizPlayer> get copyWith =>
+      throw _privateConstructorUsedError;
+}

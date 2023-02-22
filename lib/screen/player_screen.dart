@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 
 class PlayerScreen extends StatelessWidget {
-  const PlayerScreen({super.key});
+  final String quizId;
+
+  const PlayerScreen({super.key, required this.quizId});
 
   @override
   Widget build(BuildContext context) {
