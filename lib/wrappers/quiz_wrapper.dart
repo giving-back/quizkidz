@@ -25,9 +25,11 @@ class QuizWrapper extends ConsumerWidget {
     final activeAppUser = ref.watch(activeAppUserProvider);
 
     return quiz.when(
-        data: (data) => activeAppUser.when(
-            data: (data1) => (data?.quizmaster.uid == data1?.uid)
-                ? const QuizmasterScreen()
+        data: (quizData) => activeAppUser.when(
+            data: (userData) => (quizData?.quizmaster.uid == userData?.uid)
+                ? QuizmasterScreen(
+                    quizId: quizData!.id,
+                  )
                 : const PlayerScreen(),
             error: (error, __) => Text(error.toString()),
             loading: () => const LoadingSpinner()),
