@@ -35,3 +35,14 @@ class QuizUser with _$QuizUser {
   factory QuizUser.fromJson(Map<String, Object?> json) =>
       _$QuizUserFromJson(json);
 }
+
+@Freezed()
+class QuizPlayer with _$QuizPlayer {
+  const factory QuizPlayer({
+    required final QuizUser player,
+    @Default(0) int score,
+  }) = _QuizPlayer;
+
+  factory QuizPlayer.fromJson(Map<String, Object?> json) =>
+      _$QuizPlayerFromJson(json);
+}

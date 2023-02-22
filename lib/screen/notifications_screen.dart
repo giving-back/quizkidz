@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/loading_spinner.dart';
-import 'package:quizkidz/providers/date_format_provider.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
 import 'package:quizkidz/wrappers/quiz_wrapper.dart';
@@ -17,7 +16,6 @@ class NotificationsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final unreadQuizAlerts = ref.watch(unreadQuizAlertsProvider);
-    final dateFormatter = ref.watch(dateFormatServiceProvider);
     final quizService = ref.watch(quizServiceProvider);
 
     return Scaffold(
@@ -69,8 +67,8 @@ class NotificationsScreen extends ConsumerWidget {
                       ),
                     ),
                     Text(
-                      dateFormatter
-                          .formatDate(unreadQuizAlertsList[index].raised),
+                      DateFormatService.formatDate(
+                          unreadQuizAlertsList[index].raised),
                       style: const TextStyle(
                         color: Colors.black54,
                         fontWeight: FontWeight.bold,
@@ -124,21 +122,19 @@ class NotificationsScreen extends ConsumerWidget {
                       InkWell(
                         onTap: () {
                           quizService
-                              .markQuizAlertAsRead(
+                              .joinQuiz(
                                 quizId: unreadQuizAlertsList[index].quizId,
                               )
                               .then(
                                 (value) => value.match(
-                                    (error) => print(error.toString()),
-                                    (result) => null),
-                              )
-                              .then(
-                                (value) => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => QuizWrapper(
-                                      quizid:
-                                          unreadQuizAlertsList[index].quizId,
+                                  (error) => print(error.toString()),
+                                  (result) => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => QuizWrapper(
+                                        quizid:
+                                            unreadQuizAlertsList[index].quizId,
+                                      ),
                                     ),
                                   ),
                                 ),

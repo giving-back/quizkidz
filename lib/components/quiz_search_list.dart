@@ -9,7 +9,6 @@ import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/models/quiz.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
-import 'package:quizkidz/providers/date_format_provider.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
 import 'package:quizkidz/wrappers/quiz_wrapper.dart';
@@ -89,7 +88,6 @@ class QuizListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dateFormatter = ref.watch(dateFormatServiceProvider);
     final quizService = ref.watch(quizServiceProvider);
 
     return Padding(
@@ -117,7 +115,7 @@ class QuizListItem extends ConsumerWidget {
             ),
           ),
           subtitle: Text(
-            dateFormatter.formatDate(
+            DateFormatService.formatDate(
               quiz.created,
             ),
           ),
@@ -131,7 +129,7 @@ class QuizListItem extends ConsumerWidget {
             ),
             onPressed: () {
               quizService
-                  .markQuizAlertAsRead(
+                  .joinQuiz(
                     quizId: quiz.id,
                   )
                   .then(
