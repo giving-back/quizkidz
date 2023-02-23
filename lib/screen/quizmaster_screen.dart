@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/quiz_app_bar.dart';
 
 // Project imports:
-import 'package:quizkidz/components/common_app_bar.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
@@ -23,127 +23,108 @@ class QuizmasterScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizService = ref.watch(quizServiceProvider);
 
-    return WillPopScope(
-      onWillPop: () async {
-        var pop = false;
-
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
-              title: const Text(
-                "Just Checking..",
-                style: TextStyle(
-                  color: Color(kAvatarOrange),
-                  fontSize: 15,
+    return Scaffold(
+      appBar: QuizAppBar(
+        quizId: quizId,
+        entries: [
+          PopupMenuItem<int>(
+            value: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  'Leave',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              content: const Text(
-                "You are leaving a quiz you are running. ",
-                style: TextStyle(
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 8,
+                  ),
+                ),
+                Icon(
+                  Icons.emoji_people,
                   color: Colors.black54,
-                  fontSize: 15,
-                ),
-              ),
-              actions: [
-                TextButton(
-                  style: const ButtonStyle(
-                    textStyle: MaterialStatePropertyAll<TextStyle?>(
-                      TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  child: const Text("Leave Quiz"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    pop = true;
-                  },
-                ),
-                TextButton(
-                  style: const ButtonStyle(
-                    textStyle: MaterialStatePropertyAll<TextStyle?>(
-                      TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  child: const Text("End Quiz"),
-                  onPressed: () {
-                    quizService.endQuiz(quizId: quizId).then(
-                          (value) => value.match(
-                            (error) => print(error.toString()),
-                            (result) {
-                              Navigator.of(context).pop();
-                              pop = true;
-                            },
-                          ),
-                        );
-                  },
+                  size: 22,
                 ),
               ],
-            );
-          },
-        );
-
-        return pop;
-      },
-      child: Scaffold(
-        appBar: const CommonAppBar(
-          showAlert: false,
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              flex: 40,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Color(
-                    kBlueColor,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(150),
+            ),
+          ),
+          PopupMenuItem<int>(
+            value: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  'End',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                child: QuizLeaderboard(quizId: quizId),
-              ),
-            ),
-            Expanded(
-              flex: 60,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: QuizButton(
-                      text: 'Next',
-                      edgeInsets: const EdgeInsets.only(
-                        left: 50,
-                        right: 50,
-                        top: 30,
-                        bottom: 30,
-                      ),
-                      onPressed: () async => await quizService
-                          .endQuestion(
-                            quizId: quizId,
-                          )
-                          .then(
-                            (value) => value.match(
-                                (error) => print(error.toString()),
-                                (r) => null),
-                          ),
-                    ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 8,
                   ),
-                ],
-              ),
+                ),
+                Icon(
+                  Icons.checklist_rtl_sharp,
+                  color: Colors.black54,
+                  size: 22,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 40,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color(
+                  kBlueColor,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(150),
+                ),
+              ),
+              child: QuizLeaderboard(quizId: quizId),
+            ),
+          ),
+          Expanded(
+            flex: 60,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: QuizButton(
+                    text: 'Next',
+                    edgeInsets: const EdgeInsets.only(
+                      left: 50,
+                      right: 50,
+                      top: 30,
+                      bottom: 30,
+                    ),
+                    onPressed: () async => await quizService
+                        .endQuestion(
+                          quizId: quizId,
+                        )
+                        .then(
+                          (value) => value.match(
+                              (error) => print(error.toString()), (r) => null),
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
