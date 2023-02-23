@@ -1,13 +1,43 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/common_app_bar.dart';
+import 'package:quizkidz/components/quiz_leaderboard.dart';
+import 'package:quizkidz/util/util.dart';
 
-class PlayerScreen extends StatelessWidget {
+class PlayerScreen extends ConsumerWidget {
   final String quizId;
 
   const PlayerScreen({super.key, required this.quizId});
 
   @override
-  Widget build(BuildContext context) {
-    return const Text('Player');
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: const CommonAppBar(
+        showAlert: false,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 40,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color(
+                  kBlueColor,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(150),
+                ),
+              ),
+              child: QuizLeaderboard(quizId: quizId),
+            ),
+          ),
+          Expanded(
+            flex: 60,
+            child: Container(),
+          ),
+        ],
+      ),
+    );
   }
 }

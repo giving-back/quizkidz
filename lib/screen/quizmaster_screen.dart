@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/common_app_bar.dart';
+import 'package:quizkidz/components/quiz_leaderboard.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
@@ -90,11 +91,32 @@ class QuizmasterScreen extends ConsumerWidget {
 
         return pop;
       },
-      child: const Scaffold(
-        appBar: CommonAppBar(
+      child: Scaffold(
+        appBar: const CommonAppBar(
           showAlert: false,
         ),
-        body: Text('Quizmaster'),
+        body: Column(
+          children: [
+            Expanded(
+              flex: 40,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color(
+                    kBlueColor,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(150),
+                  ),
+                ),
+                child: QuizLeaderboard(quizId: quizId),
+              ),
+            ),
+            Expanded(
+              flex: 60,
+              child: Container(),
+            ),
+          ],
+        ),
       ),
     );
   }
