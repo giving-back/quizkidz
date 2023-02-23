@@ -93,7 +93,6 @@ class QuizLeaderboard extends ConsumerWidget {
                         itemCount: quizPlayersList.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            tileColor: Colors.white,
                             leading: CircleAvatar(
                               backgroundColor: Color(
                                   quizPlayersList[index].player.appAvatarColor),
