@@ -263,4 +263,34 @@ class QuizService {
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();
+
+  Future<Either<Exception, void>> buzz({required String quizId}) async =>
+      TaskEither.tryCatch(
+        () async {
+          final activeUser = await _authService.activeAppUser();
+
+          return await _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizAnswersSubCollection)
+              .withConverter<QuizAnswer>(
+                fromFirestore: (snapshot, _) =>
+                    QuizAnswer.fromJson(snapshot.data()!),
+                toFirestore: (quiz, _) => quiz.toJson(),
+              )
+              .doc(activeUser!.uid)
+              .set(
+                QuizAnswer(
+                  player: QuizUser(
+                    uid: activeUser.uid,
+                    appDisplayName: activeUser.appDisplayName,
+                    appAvatar: activeUser.appAvatar,
+                    appAvatarColor: activeUser.appAvatarColor,
+                  ),
+                  buzzed: DateTime.now(),
+                ),
+              );
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
 }

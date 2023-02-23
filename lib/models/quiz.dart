@@ -31,3 +31,14 @@ class Quiz with _$Quiz {
 
   factory Quiz.fromJson(Map<String, dynamic> json) => _$QuizFromJson(json);
 }
+
+@Freezed()
+class QuizAnswer with _$QuizAnswer {
+  factory QuizAnswer({
+    required final QuizUser player,
+    required final DateTime buzzed,
+  }) = _QuizAnswer;
+
+  factory QuizAnswer.fromJson(Map<String, Object?> json) =>
+      _$QuizAnswerFromJson(json);
+}

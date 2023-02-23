@@ -34,3 +34,15 @@ Map<String, dynamic> _$$_QuizToJson(_$_Quiz instance) => <String, dynamic>{
       'created': instance.created.toIso8601String(),
       'active': instance.active,
     };
+
+_$_QuizAnswer _$$_QuizAnswerFromJson(Map<String, dynamic> json) =>
+    _$_QuizAnswer(
+      player: QuizUser.fromJson(json['player'] as Map<String, dynamic>),
+      buzzed: DateTime.parse(json['buzzed'] as String),
+    );
+
+Map<String, dynamic> _$$_QuizAnswerToJson(_$_QuizAnswer instance) =>
+    <String, dynamic>{
+      'player': instance.player.toJson(),
+      'buzzed': instance.buzzed.toIso8601String(),
+    };
