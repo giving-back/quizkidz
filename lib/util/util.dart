@@ -14,6 +14,9 @@ const kWinnersMedalImage = 'lib/images/quiz/winners_medal.png';
 const kBlueColor = 0xFF88B5FE;
 const kWhiteColor = 0xFFEFF0F7;
 const kLightGreyColor = 0xFFF2F7FB;
+const kGoldColor = 0xFFFEB661;
+const kSilverColor = 0xFFB1B0B0;
+const kBronzeColor = 0xFFC39366;
 
 const kAvatarBlue = 0xFF88B5FE;
 const kAvatarDarkBlue = 0xFF396FED;

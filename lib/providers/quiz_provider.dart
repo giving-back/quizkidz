@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Project imports:
 import 'package:quizkidz/models/quiz.dart';
 import 'package:quizkidz/models/quiz_alert.dart';
+import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
 import 'package:quizkidz/services/quiz_service.dart';
 
@@ -24,3 +25,7 @@ final quizByIdProvider = StreamProvider.autoDispose.family<Quiz?, String>(
 
 final unreadQuizAlertsProvider = StreamProvider.autoDispose<List<QuizAlert>>(
     (ref) => ref.watch(quizServiceProvider).unreadQuizAlerts());
+
+final quizPlayersProvider = StreamProvider.autoDispose
+    .family<List<QuizPlayer>, String>(
+        (ref, id) => ref.watch(quizServiceProvider).quizPlayers(id));

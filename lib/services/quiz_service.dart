@@ -49,6 +49,17 @@ class QuizService {
               },
             ).toList();
 
+  List<QuizPlayer> _quizPlayersFromFirebase(QuerySnapshot? snapshot) =>
+      snapshot == null
+          ? []
+          : snapshot.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return QuizPlayer.fromJson(data);
+              },
+            ).toList();
+
   Stream<List<Quiz>> activeQuizzes() => _firebaseFirestore
       .collection(quizzesCollection)
       .where('active', isEqualTo: true)
@@ -69,6 +80,15 @@ class QuizService {
       .orderBy('raised', descending: true)
       .snapshots()
       .map(_quizAlertsFromFirebase);
+
+  Stream<List<QuizPlayer>> quizPlayers(String quizId) => _firebaseFirestore
+      .collection(quizzesCollection)
+      .doc(quizId)
+      .collection(quizPlayersSubCollection)
+      .orderBy('score', descending: true)
+      .orderBy('player.appDisplayName')
+      .snapshots()
+      .map(_quizPlayersFromFirebase);
 
   Future<Either<Exception, String>> startNewQuiz(
           {required Quiz quiz, required List<Connection> followers}) async =>
@@ -167,7 +187,7 @@ class QuizService {
                     QuizPlayer.fromJson(snapshot.data()!),
                 toFirestore: (quiz, _) => player.toJson(),
               )
-              .doc();
+              .doc(player.player.uid);
 
           batch.set(playerRef, player);
 
