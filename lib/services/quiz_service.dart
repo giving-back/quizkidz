@@ -170,6 +170,17 @@ class QuizService {
   Future<Either<Exception, void>> joinQuiz({required String quizId}) async =>
       TaskEither.tryCatch(
         () async {
+          final quiz = _quizFromFirebase(
+            await _firebaseFirestore
+                .collection(quizzesCollection)
+                .doc(quizId)
+                .get(),
+          );
+
+          if (quiz!.quizmaster.uid == _authService.currentUserId) {
+            return;
+          }
+
           WriteBatch batch = _firebaseFirestore.batch();
 
           final ref = await _firebaseFirestore
