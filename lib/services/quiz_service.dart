@@ -307,4 +307,24 @@ class QuizService {
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();
+
+  Future<Either<Exception, void>> endQuestion({required String quizId}) async =>
+      TaskEither.tryCatch(
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
+
+          final quizAnswersRef = await _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizAnswersSubCollection)
+              .get();
+
+          for (var doc in quizAnswersRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          return batch.commit();
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
 }

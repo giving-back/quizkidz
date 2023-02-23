@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/common_app_bar.dart';
+import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
@@ -113,7 +114,33 @@ class QuizmasterScreen extends ConsumerWidget {
             ),
             Expanded(
               flex: 60,
-              child: Container(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: QuizButton(
+                      text: 'Next',
+                      edgeInsets: const EdgeInsets.only(
+                        left: 50,
+                        right: 50,
+                        top: 30,
+                        bottom: 30,
+                      ),
+                      onPressed: () async => await quizService
+                          .endQuestion(
+                            quizId: quizId,
+                          )
+                          .then(
+                            (value) => value.match(
+                                (error) => print(error.toString()),
+                                (r) => null),
+                          ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
