@@ -74,7 +74,10 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(45.0),
+                    padding: const EdgeInsets.only(
+                      left: 45.0,
+                      right: 45,
+                    ),
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
