@@ -404,3 +404,170 @@ abstract class _Quiz implements Quiz {
   @JsonKey(ignore: true)
   _$$_QuizCopyWith<_$_Quiz> get copyWith => throw _privateConstructorUsedError;
 }
+
+QuizAnswer _$QuizAnswerFromJson(Map<String, dynamic> json) {
+  return _QuizAnswer.fromJson(json);
+}
+
+/// @nodoc
+mixin _$QuizAnswer {
+  QuizUser get player => throw _privateConstructorUsedError;
+  DateTime get buzzed => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $QuizAnswerCopyWith<QuizAnswer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $QuizAnswerCopyWith<$Res> {
+  factory $QuizAnswerCopyWith(
+          QuizAnswer value, $Res Function(QuizAnswer) then) =
+      _$QuizAnswerCopyWithImpl<$Res, QuizAnswer>;
+  @useResult
+  $Res call({QuizUser player, DateTime buzzed});
+
+  $QuizUserCopyWith<$Res> get player;
+}
+
+/// @nodoc
+class _$QuizAnswerCopyWithImpl<$Res, $Val extends QuizAnswer>
+    implements $QuizAnswerCopyWith<$Res> {
+  _$QuizAnswerCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? player = null,
+    Object? buzzed = null,
+  }) {
+    return _then(_value.copyWith(
+      player: null == player
+          ? _value.player
+          : player // ignore: cast_nullable_to_non_nullable
+              as QuizUser,
+      buzzed: null == buzzed
+          ? _value.buzzed
+          : buzzed // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuizUserCopyWith<$Res> get player {
+    return $QuizUserCopyWith<$Res>(_value.player, (value) {
+      return _then(_value.copyWith(player: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_QuizAnswerCopyWith<$Res>
+    implements $QuizAnswerCopyWith<$Res> {
+  factory _$$_QuizAnswerCopyWith(
+          _$_QuizAnswer value, $Res Function(_$_QuizAnswer) then) =
+      __$$_QuizAnswerCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({QuizUser player, DateTime buzzed});
+
+  @override
+  $QuizUserCopyWith<$Res> get player;
+}
+
+/// @nodoc
+class __$$_QuizAnswerCopyWithImpl<$Res>
+    extends _$QuizAnswerCopyWithImpl<$Res, _$_QuizAnswer>
+    implements _$$_QuizAnswerCopyWith<$Res> {
+  __$$_QuizAnswerCopyWithImpl(
+      _$_QuizAnswer _value, $Res Function(_$_QuizAnswer) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? player = null,
+    Object? buzzed = null,
+  }) {
+    return _then(_$_QuizAnswer(
+      player: null == player
+          ? _value.player
+          : player // ignore: cast_nullable_to_non_nullable
+              as QuizUser,
+      buzzed: null == buzzed
+          ? _value.buzzed
+          : buzzed // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_QuizAnswer implements _QuizAnswer {
+  _$_QuizAnswer({required this.player, required this.buzzed});
+
+  factory _$_QuizAnswer.fromJson(Map<String, dynamic> json) =>
+      _$$_QuizAnswerFromJson(json);
+
+  @override
+  final QuizUser player;
+  @override
+  final DateTime buzzed;
+
+  @override
+  String toString() {
+    return 'QuizAnswer(player: $player, buzzed: $buzzed)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_QuizAnswer &&
+            (identical(other.player, player) || other.player == player) &&
+            (identical(other.buzzed, buzzed) || other.buzzed == buzzed));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, player, buzzed);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_QuizAnswerCopyWith<_$_QuizAnswer> get copyWith =>
+      __$$_QuizAnswerCopyWithImpl<_$_QuizAnswer>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_QuizAnswerToJson(
+      this,
+    );
+  }
+}
+
+abstract class _QuizAnswer implements QuizAnswer {
+  factory _QuizAnswer(
+      {required final QuizUser player,
+      required final DateTime buzzed}) = _$_QuizAnswer;
+
+  factory _QuizAnswer.fromJson(Map<String, dynamic> json) =
+      _$_QuizAnswer.fromJson;
+
+  @override
+  QuizUser get player;
+  @override
+  DateTime get buzzed;
+  @override
+  @JsonKey(ignore: true)
+  _$$_QuizAnswerCopyWith<_$_QuizAnswer> get copyWith =>
+      throw _privateConstructorUsedError;
+}

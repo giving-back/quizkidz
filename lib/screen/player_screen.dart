@@ -33,10 +33,12 @@ class PlayerScreen extends ConsumerWidget {
               child: QuizLeaderboard(quizId: quizId),
             ),
           ),
-          const Expanded(
+          Expanded(
             flex: 50,
             child: Center(
-              child: Buzzer(),
+              child: Buzzer(
+                quizId: quizId,
+              ),
             ),
           ),
           Expanded(
