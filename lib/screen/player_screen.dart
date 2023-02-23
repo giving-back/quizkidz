@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/buzzer.dart';
 import 'package:quizkidz/components/common_app_bar.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
 import 'package:quizkidz/util/util.dart';
@@ -32,8 +33,14 @@ class PlayerScreen extends ConsumerWidget {
               child: QuizLeaderboard(quizId: quizId),
             ),
           ),
+          const Expanded(
+            flex: 50,
+            child: Center(
+              child: Buzzer(),
+            ),
+          ),
           Expanded(
-            flex: 60,
+            flex: 10,
             child: Container(),
           ),
         ],
