@@ -1,6 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:quizkidz/components/buzzer.dart';
 import 'package:quizkidz/components/common_app_bar.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
