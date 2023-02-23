@@ -24,9 +24,15 @@ class QuizService {
     this._firebaseFirestore,
   );
 
-  Quiz? _quizFromFirebase(DocumentSnapshot? snapshot) => snapshot == null
-      ? null
-      : Quiz.fromJson(snapshot.data() as Map<String, dynamic>);
+  Quiz? _quizFromFirebase(DocumentSnapshot? snapshot) =>
+      snapshot == null || !snapshot.exists
+          ? null
+          : Quiz.fromJson(snapshot.data() as Map<String, dynamic>);
+
+  QuizAnswer? _quizAnswerFromFirebase(DocumentSnapshot? snapshot) =>
+      snapshot == null || !snapshot.exists
+          ? null
+          : QuizAnswer.fromJson(snapshot.data() as Map<String, dynamic>);
 
   List<Quiz> _quizzesFromFirebase(QuerySnapshot? snapshot) => snapshot == null
       ? []
@@ -89,6 +95,14 @@ class QuizService {
       .orderBy('player.appDisplayName')
       .snapshots()
       .map(_quizPlayersFromFirebase);
+
+  Stream<QuizAnswer?> myQuizAnswer(String quizId) => _firebaseFirestore
+      .collection(quizzesCollection)
+      .doc(quizId)
+      .collection(quizAnswersSubCollection)
+      .doc(_authService.currentUserId)
+      .snapshots()
+      .map(_quizAnswerFromFirebase);
 
   Future<Either<Exception, String>> startNewQuiz(
           {required Quiz quiz, required List<Connection> followers}) async =>

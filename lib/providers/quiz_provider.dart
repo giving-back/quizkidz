@@ -29,3 +29,7 @@ final unreadQuizAlertsProvider = StreamProvider.autoDispose<List<QuizAlert>>(
 final quizPlayersProvider = StreamProvider.autoDispose
     .family<List<QuizPlayer>, String>(
         (ref, id) => ref.watch(quizServiceProvider).quizPlayers(id));
+
+final myQuizAnswerProvider = StreamProvider.autoDispose
+    .family<QuizAnswer?, String>(
+        (ref, id) => ref.watch(quizServiceProvider).myQuizAnswer(id));
