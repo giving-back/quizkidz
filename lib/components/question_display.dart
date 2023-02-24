@@ -11,14 +11,18 @@ import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class QuestionDisplay extends ConsumerWidget {
+  final String quizId;
+
   const QuestionDisplay({
     super.key,
+    required this.quizId,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final questionIndex = ref.watch(questionIndexProvider);
     final questions = ref.watch(quizQuestionsProvider);
+    final quizService = ref.watch(quizServiceProvider);
 
     return questions.when(
       data: (questionsList) {
@@ -49,8 +53,15 @@ class QuestionDisplay extends ConsumerWidget {
                         ),
                       ),
                       trailing: InkWell(
-                        onTap: () =>
-                            ref.read(questionIndexProvider.notifier).state += 1,
+                        onTap: () async => await quizService
+                            .endQuestion(
+                              quizId: quizId,
+                            )
+                            .then(
+                              (value) => value.match(
+                                  (error) => print(error.toString()),
+                                  (r) => null),
+                            ),
                         child: const Text(
                           'skip',
                           style: TextStyle(

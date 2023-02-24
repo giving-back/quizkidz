@@ -41,7 +41,14 @@ class QuizAppBar extends ConsumerWidget implements PreferredSizeWidget {
           onSelected: (item) async {
             switch (item) {
               case 0:
-                Navigator.of(context).pop();
+                await quizService.leaveQuiz(quizId: quizId).then(
+                      (value) => value.match(
+                        (error) => print(error.toString()),
+                        (result) {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    );
                 break;
               case 1:
                 await quizService.endQuiz(quizId: quizId).then(

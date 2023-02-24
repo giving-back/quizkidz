@@ -7,9 +7,7 @@ import 'package:quizkidz/components/question_display.dart';
 
 // Project imports:
 import 'package:quizkidz/components/quiz_app_bar.dart';
-import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
-import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class QuizmasterScreen extends ConsumerWidget {
@@ -22,8 +20,6 @@ class QuizmasterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizService = ref.watch(quizServiceProvider);
-
     return Scaffold(
       appBar: QuizAppBar(
         quizId: quizId,
@@ -101,26 +97,8 @@ class QuizmasterScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const QuestionDisplay(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: QuizButton(
-                    text: 'Next',
-                    edgeInsets: const EdgeInsets.only(
-                      left: 50,
-                      right: 50,
-                      top: 30,
-                      bottom: 30,
-                    ),
-                    onPressed: () async => await quizService
-                        .endQuestion(
-                          quizId: quizId,
-                        )
-                        .then(
-                          (value) => value.match(
-                              (error) => print(error.toString()), (r) => null),
-                        ),
-                  ),
+                QuestionDisplay(
+                  quizId: quizId,
                 ),
               ],
             ),
