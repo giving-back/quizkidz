@@ -20,18 +20,16 @@ Map<String, dynamic> _$$_QuizTypeToJson(_$_QuizType instance) =>
 _$_Quiz _$$_QuizFromJson(Map<String, dynamic> json) => _$_Quiz(
       id: json['id'] as String? ?? '',
       quizmaster: QuizUser.fromJson(json['quizmaster'] as Map<String, dynamic>),
-      subject: json['subject'] as String,
-      questions: json['questions'] as int,
       created: DateTime.parse(json['created'] as String),
+      currentQuestionNumber: json['currentQuestionNumber'] as int? ?? 1,
       active: json['active'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$_QuizToJson(_$_Quiz instance) => <String, dynamic>{
       'id': instance.id,
       'quizmaster': instance.quizmaster.toJson(),
-      'subject': instance.subject,
-      'questions': instance.questions,
       'created': instance.created.toIso8601String(),
+      'currentQuestionNumber': instance.currentQuestionNumber,
       'active': instance.active,
     };
 
@@ -45,4 +43,16 @@ Map<String, dynamic> _$$_QuizAnswerToJson(_$_QuizAnswer instance) =>
     <String, dynamic>{
       'player': instance.player.toJson(),
       'buzzed': instance.buzzed.toIso8601String(),
+    };
+
+_$_QuizQuestion _$$_QuizQuestionFromJson(Map<String, dynamic> json) =>
+    _$_QuizQuestion(
+      q: json['q'] as String,
+      a: json['a'] as String,
+    );
+
+Map<String, dynamic> _$$_QuizQuestionToJson(_$_QuizQuestion instance) =>
+    <String, dynamic>{
+      'q': instance.q,
+      'a': instance.a,
     };

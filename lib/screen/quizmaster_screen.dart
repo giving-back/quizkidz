@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quizkidz/components/quiz_app_bar.dart';
+import 'package:quizkidz/components/question_display.dart';
 
 // Project imports:
+import 'package:quizkidz/components/quiz_app_bar.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
@@ -100,7 +101,7 @@ class QuizmasterScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(),
+                const QuestionDisplay(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: QuizButton(

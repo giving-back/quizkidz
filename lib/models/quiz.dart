@@ -23,9 +23,8 @@ class Quiz with _$Quiz {
   factory Quiz({
     @Default('') String id,
     required QuizUser quizmaster,
-    required String subject,
-    required int questions,
     required DateTime created,
+    @Default(1) int currentQuestionNumber,
     @Default(true) bool active,
   }) = _Quiz;
 
@@ -41,4 +40,15 @@ class QuizAnswer with _$QuizAnswer {
 
   factory QuizAnswer.fromJson(Map<String, Object?> json) =>
       _$QuizAnswerFromJson(json);
+}
+
+@Freezed()
+class QuizQuestion with _$QuizQuestion {
+  factory QuizQuestion({
+    required final String q,
+    required final String a,
+  }) = _QuizQuestion;
+
+  factory QuizQuestion.fromJson(Map<String, Object?> json) =>
+      _$QuizQuestionFromJson(json);
 }
