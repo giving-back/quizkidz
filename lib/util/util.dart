@@ -18,6 +18,7 @@ const kGoldColor = 0xFFFEB661;
 const kSilverColor = 0xFFB1B0B0;
 const kBronzeColor = 0xFFC39366;
 const kGreyBackgroundColor = 0xFFF1F6FF;
+const kPinkColor = 0xFFFF7299;
 
 const kAvatarBlue = 0xFF88B5FE;
 const kAvatarDarkBlue = 0xFF396FED;

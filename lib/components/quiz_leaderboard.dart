@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quizkidz/components/avatar_list_view%20copy.dart';
 
 // Project imports:
 import 'package:quizkidz/components/loading_spinner.dart';
@@ -40,28 +41,9 @@ class QuizLeaderboard extends ConsumerWidget {
           color: Color(kBronzeColor),
         );
       }
-      return Container(
-          decoration: const BoxDecoration(
-            color: Color(kGreyBackgroundColor),
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-              bottom: 8,
-              left: 10,
-              right: 10,
-            ),
-            child: Text(
-              (index + 1).toString(),
-              style: const TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ));
+      return NumberBox(
+        text: (index + 1).toString(),
+      );
     }
 
     return Column(

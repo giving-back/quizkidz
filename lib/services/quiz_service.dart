@@ -16,6 +16,7 @@ class QuizService {
 
   final quizzesCollection = 'quizzes';
   final quizAlertsCollection = 'alerts';
+  final quizQuestionsCollection = 'questions';
   final quizAnswersSubCollection = 'answers';
   final quizPlayersSubCollection = 'players';
 
@@ -66,7 +67,18 @@ class QuizService {
               },
             ).toList();
 
-  Stream<List<Quiz>> activeQuizzes() => _firebaseFirestore
+  List<QuizQuestion> _quizQuestionsFromFirebase(QuerySnapshot? snapshot) =>
+      snapshot == null
+          ? []
+          : snapshot.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return QuizQuestion.fromJson(data);
+              },
+            ).toList();
+
+  Stream<List<Quiz>> get activeQuizzes => _firebaseFirestore
       .collection(quizzesCollection)
       .where('active', isEqualTo: true)
       .orderBy('created', descending: true)
@@ -79,7 +91,7 @@ class QuizService {
       .snapshots()
       .map(_quizFromFirebase);
 
-  Stream<List<QuizAlert>> unreadQuizAlerts() => _firebaseFirestore
+  Stream<List<QuizAlert>> get unreadQuizAlerts => _firebaseFirestore
       .collection(quizAlertsCollection)
       .where('receiverId', isEqualTo: _authService.currentUserId)
       .where('read', isEqualTo: false)
@@ -95,6 +107,11 @@ class QuizService {
       .orderBy('player.appDisplayName')
       .snapshots()
       .map(_quizPlayersFromFirebase);
+
+  Stream<List<QuizQuestion>> get quizQuestions => _firebaseFirestore
+      .collection(quizQuestionsCollection)
+      .snapshots()
+      .map(_quizQuestionsFromFirebase);
 
   Stream<QuizAnswer?> myQuizAnswer(String quizId) => _firebaseFirestore
       .collection(quizzesCollection)

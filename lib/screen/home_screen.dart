@@ -5,14 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
+import 'package:quizkidz/components/custom_snack_alert.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
-import 'package:quizkidz/components/new_quiz_options.dart';
 import 'package:quizkidz/components/quiz_button.dart';
 import 'package:quizkidz/components/quiz_search_delegate.dart';
 import 'package:quizkidz/components/text_divider.dart';
 import 'package:quizkidz/components/user_score_summary.dart';
+import 'package:quizkidz/models/quiz.dart';
+import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
+import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
+import 'package:quizkidz/wrappers/quiz_wrapper.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,6 +24,9 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeAppUser = ref.watch(activeAppUserProvider);
+    final quizService = ref.watch(quizServiceProvider);
+    final currentUser = ref.watch(authStateProvider);
+    final followers = ref.watch(followersProvider);
 
     return activeAppUser.when(
       data: (data) => Column(
@@ -144,17 +151,72 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 QuizButton(
                   text: 'Start a Quiz',
-                  onPressed: () => showModalBottomSheet(
-                    backgroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                    ),
-                    context: context,
-                    builder: (_) => const NewQuizOptions(),
-                  ),
+                  onPressed: () async {
+                    currentUser.when(
+                      data: (user) {
+                        followers.when(
+                            data: (followers) => quizService
+                                .startNewQuiz(
+                                  quiz: Quiz(
+                                    quizmaster: QuizUser(
+                                      uid: user!.uid,
+                                      appDisplayName: user.appDisplayName,
+                                      appAvatar: user.appAvatar,
+                                      appAvatarColor: user.appAvatarColor,
+                                    ),
+                                    created: DateTime.now(),
+                                  ),
+                                  followers: followers,
+                                )
+                                .then(
+                                  (value) => value.match(
+                                    (error) {
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                        ..hideCurrentSnackBar()
+                                        ..showSnackBar(
+                                          CustomSnackAlert.showErrorSnackBar(
+                                            message: kUserError,
+                                          ),
+                                        );
+                                    },
+                                    (result) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => QuizWrapper(
+                                            quizid: result,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                            error: (_, __) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(
+                                  CustomSnackAlert.showErrorSnackBar(
+                                    message: kUserError,
+                                  ),
+                                );
+                            },
+                            loading: () => const LoadingSpinner());
+                      },
+                      error: (_, __) {
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context)
+                          ..hideCurrentSnackBar()
+                          ..showSnackBar(
+                            CustomSnackAlert.showErrorSnackBar(
+                              message: kUserError,
+                            ),
+                          );
+                      },
+                      loading: () => const LoadingSpinner(),
+                    );
+                  },
                   edgeInsets: const EdgeInsets.only(
                     left: 50,
                     right: 50,

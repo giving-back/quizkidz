@@ -174,12 +174,10 @@ mixin _$Quiz {
   set id(String value) => throw _privateConstructorUsedError;
   QuizUser get quizmaster => throw _privateConstructorUsedError;
   set quizmaster(QuizUser value) => throw _privateConstructorUsedError;
-  String get subject => throw _privateConstructorUsedError;
-  set subject(String value) => throw _privateConstructorUsedError;
-  int get questions => throw _privateConstructorUsedError;
-  set questions(int value) => throw _privateConstructorUsedError;
   DateTime get created => throw _privateConstructorUsedError;
   set created(DateTime value) => throw _privateConstructorUsedError;
+  int get currentQuestionNumber => throw _privateConstructorUsedError;
+  set currentQuestionNumber(int value) => throw _privateConstructorUsedError;
   bool get active => throw _privateConstructorUsedError;
   set active(bool value) => throw _privateConstructorUsedError;
 
@@ -196,9 +194,8 @@ abstract class $QuizCopyWith<$Res> {
   $Res call(
       {String id,
       QuizUser quizmaster,
-      String subject,
-      int questions,
       DateTime created,
+      int currentQuestionNumber,
       bool active});
 
   $QuizUserCopyWith<$Res> get quizmaster;
@@ -219,9 +216,8 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
   $Res call({
     Object? id = null,
     Object? quizmaster = null,
-    Object? subject = null,
-    Object? questions = null,
     Object? created = null,
+    Object? currentQuestionNumber = null,
     Object? active = null,
   }) {
     return _then(_value.copyWith(
@@ -233,18 +229,14 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
           ? _value.quizmaster
           : quizmaster // ignore: cast_nullable_to_non_nullable
               as QuizUser,
-      subject: null == subject
-          ? _value.subject
-          : subject // ignore: cast_nullable_to_non_nullable
-              as String,
-      questions: null == questions
-          ? _value.questions
-          : questions // ignore: cast_nullable_to_non_nullable
-              as int,
       created: null == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      currentQuestionNumber: null == currentQuestionNumber
+          ? _value.currentQuestionNumber
+          : currentQuestionNumber // ignore: cast_nullable_to_non_nullable
+              as int,
       active: null == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
@@ -270,9 +262,8 @@ abstract class _$$_QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
   $Res call(
       {String id,
       QuizUser quizmaster,
-      String subject,
-      int questions,
       DateTime created,
+      int currentQuestionNumber,
       bool active});
 
   @override
@@ -290,9 +281,8 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
   $Res call({
     Object? id = null,
     Object? quizmaster = null,
-    Object? subject = null,
-    Object? questions = null,
     Object? created = null,
+    Object? currentQuestionNumber = null,
     Object? active = null,
   }) {
     return _then(_$_Quiz(
@@ -304,18 +294,14 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
           ? _value.quizmaster
           : quizmaster // ignore: cast_nullable_to_non_nullable
               as QuizUser,
-      subject: null == subject
-          ? _value.subject
-          : subject // ignore: cast_nullable_to_non_nullable
-              as String,
-      questions: null == questions
-          ? _value.questions
-          : questions // ignore: cast_nullable_to_non_nullable
-              as int,
       created: null == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      currentQuestionNumber: null == currentQuestionNumber
+          ? _value.currentQuestionNumber
+          : currentQuestionNumber // ignore: cast_nullable_to_non_nullable
+              as int,
       active: null == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
@@ -330,9 +316,8 @@ class _$_Quiz implements _Quiz {
   _$_Quiz(
       {this.id = '',
       required this.quizmaster,
-      required this.subject,
-      required this.questions,
       required this.created,
+      this.currentQuestionNumber = 1,
       this.active = true});
 
   factory _$_Quiz.fromJson(Map<String, dynamic> json) => _$$_QuizFromJson(json);
@@ -343,18 +328,17 @@ class _$_Quiz implements _Quiz {
   @override
   QuizUser quizmaster;
   @override
-  String subject;
-  @override
-  int questions;
-  @override
   DateTime created;
+  @override
+  @JsonKey()
+  int currentQuestionNumber;
   @override
   @JsonKey()
   bool active;
 
   @override
   String toString() {
-    return 'Quiz(id: $id, quizmaster: $quizmaster, subject: $subject, questions: $questions, created: $created, active: $active)';
+    return 'Quiz(id: $id, quizmaster: $quizmaster, created: $created, currentQuestionNumber: $currentQuestionNumber, active: $active)';
   }
 
   @JsonKey(ignore: true)
@@ -375,9 +359,8 @@ abstract class _Quiz implements Quiz {
   factory _Quiz(
       {String id,
       required QuizUser quizmaster,
-      required String subject,
-      required int questions,
       required DateTime created,
+      int currentQuestionNumber,
       bool active}) = _$_Quiz;
 
   factory _Quiz.fromJson(Map<String, dynamic> json) = _$_Quiz.fromJson;
@@ -389,14 +372,11 @@ abstract class _Quiz implements Quiz {
   QuizUser get quizmaster;
   set quizmaster(QuizUser value);
   @override
-  String get subject;
-  set subject(String value);
-  @override
-  int get questions;
-  set questions(int value);
-  @override
   DateTime get created;
   set created(DateTime value);
+  @override
+  int get currentQuestionNumber;
+  set currentQuestionNumber(int value);
   @override
   bool get active;
   set active(bool value);
@@ -569,5 +549,158 @@ abstract class _QuizAnswer implements QuizAnswer {
   @override
   @JsonKey(ignore: true)
   _$$_QuizAnswerCopyWith<_$_QuizAnswer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+QuizQuestion _$QuizQuestionFromJson(Map<String, dynamic> json) {
+  return _QuizQuestion.fromJson(json);
+}
+
+/// @nodoc
+mixin _$QuizQuestion {
+  String get q => throw _privateConstructorUsedError;
+  String get a => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $QuizQuestionCopyWith<QuizQuestion> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $QuizQuestionCopyWith<$Res> {
+  factory $QuizQuestionCopyWith(
+          QuizQuestion value, $Res Function(QuizQuestion) then) =
+      _$QuizQuestionCopyWithImpl<$Res, QuizQuestion>;
+  @useResult
+  $Res call({String q, String a});
+}
+
+/// @nodoc
+class _$QuizQuestionCopyWithImpl<$Res, $Val extends QuizQuestion>
+    implements $QuizQuestionCopyWith<$Res> {
+  _$QuizQuestionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? q = null,
+    Object? a = null,
+  }) {
+    return _then(_value.copyWith(
+      q: null == q
+          ? _value.q
+          : q // ignore: cast_nullable_to_non_nullable
+              as String,
+      a: null == a
+          ? _value.a
+          : a // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_QuizQuestionCopyWith<$Res>
+    implements $QuizQuestionCopyWith<$Res> {
+  factory _$$_QuizQuestionCopyWith(
+          _$_QuizQuestion value, $Res Function(_$_QuizQuestion) then) =
+      __$$_QuizQuestionCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String q, String a});
+}
+
+/// @nodoc
+class __$$_QuizQuestionCopyWithImpl<$Res>
+    extends _$QuizQuestionCopyWithImpl<$Res, _$_QuizQuestion>
+    implements _$$_QuizQuestionCopyWith<$Res> {
+  __$$_QuizQuestionCopyWithImpl(
+      _$_QuizQuestion _value, $Res Function(_$_QuizQuestion) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? q = null,
+    Object? a = null,
+  }) {
+    return _then(_$_QuizQuestion(
+      q: null == q
+          ? _value.q
+          : q // ignore: cast_nullable_to_non_nullable
+              as String,
+      a: null == a
+          ? _value.a
+          : a // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_QuizQuestion implements _QuizQuestion {
+  _$_QuizQuestion({required this.q, required this.a});
+
+  factory _$_QuizQuestion.fromJson(Map<String, dynamic> json) =>
+      _$$_QuizQuestionFromJson(json);
+
+  @override
+  final String q;
+  @override
+  final String a;
+
+  @override
+  String toString() {
+    return 'QuizQuestion(q: $q, a: $a)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_QuizQuestion &&
+            (identical(other.q, q) || other.q == q) &&
+            (identical(other.a, a) || other.a == a));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, q, a);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_QuizQuestionCopyWith<_$_QuizQuestion> get copyWith =>
+      __$$_QuizQuestionCopyWithImpl<_$_QuizQuestion>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_QuizQuestionToJson(
+      this,
+    );
+  }
+}
+
+abstract class _QuizQuestion implements QuizQuestion {
+  factory _QuizQuestion({required final String q, required final String a}) =
+      _$_QuizQuestion;
+
+  factory _QuizQuestion.fromJson(Map<String, dynamic> json) =
+      _$_QuizQuestion.fromJson;
+
+  @override
+  String get q;
+  @override
+  String get a;
+  @override
+  @JsonKey(ignore: true)
+  _$$_QuizQuestionCopyWith<_$_QuizQuestion> get copyWith =>
       throw _privateConstructorUsedError;
 }

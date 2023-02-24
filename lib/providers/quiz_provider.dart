@@ -18,13 +18,13 @@ final quizServiceProvider = Provider<QuizService>((ref) => QuizService(
     ));
 
 final activeQuizzesProvider = StreamProvider.autoDispose<List<Quiz>>(
-    (ref) => ref.watch(quizServiceProvider).activeQuizzes());
+    (ref) => ref.watch(quizServiceProvider).activeQuizzes);
 
 final quizByIdProvider = StreamProvider.autoDispose.family<Quiz?, String>(
     (ref, id) => ref.watch(quizServiceProvider).quizById(id));
 
 final unreadQuizAlertsProvider = StreamProvider.autoDispose<List<QuizAlert>>(
-    (ref) => ref.watch(quizServiceProvider).unreadQuizAlerts());
+    (ref) => ref.watch(quizServiceProvider).unreadQuizAlerts);
 
 final quizPlayersProvider = StreamProvider.autoDispose
     .family<List<QuizPlayer>, String>(
@@ -33,3 +33,6 @@ final quizPlayersProvider = StreamProvider.autoDispose
 final myQuizAnswerProvider = StreamProvider.autoDispose
     .family<QuizAnswer?, String>(
         (ref, id) => ref.watch(quizServiceProvider).myQuizAnswer(id));
+
+final quizQuestionsProvider = StreamProvider.autoDispose<List<QuizQuestion>>(
+    (ref) => ref.watch(quizServiceProvider).quizQuestions);
