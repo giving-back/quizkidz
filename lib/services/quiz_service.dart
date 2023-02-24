@@ -69,6 +69,17 @@ class QuizService {
               },
             ).toList();
 
+  List<QuizAnswer> _quizAnswersFromFirebase(QuerySnapshot? snapshot) =>
+      snapshot == null
+          ? []
+          : snapshot.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return QuizAnswer.fromJson(data);
+              },
+            ).toList();
+
   List<QuizQuestion> _quizQuestionsFromFirebase(QuerySnapshot? snapshot) =>
       snapshot == null
           ? []
@@ -109,6 +120,14 @@ class QuizService {
       .orderBy('player.appDisplayName')
       .snapshots()
       .map(_quizPlayersFromFirebase);
+
+  Stream<List<QuizAnswer>> quizAnswers(String quizId) => _firebaseFirestore
+      .collection(quizzesCollection)
+      .doc(quizId)
+      .collection(quizAnswersSubCollection)
+      .orderBy('buzzed', descending: true)
+      .snapshots()
+      .map(_quizAnswersFromFirebase);
 
   Stream<List<QuizQuestion>> get quizQuestions => _firebaseFirestore
       .collection(quizQuestionsCollection)

@@ -61,7 +61,14 @@ class PlayerScreen extends ConsumerWidget {
                   bottomLeft: Radius.circular(150),
                 ),
               ),
-              child: QuizLeaderboard(quizId: quizId),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 40.0,
+                  right: 40,
+                  bottom: 60,
+                ),
+                child: QuizLeaderboard(quizId: quizId),
+              ),
             ),
           ),
           Expanded(

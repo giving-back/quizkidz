@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quizkidz/components/question_display.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:quizkidz/components/change_avatar.dart';
 
 // Project imports:
+import 'package:quizkidz/components/question_display.dart';
+import 'package:quizkidz/components/quiz_answer_leaderboard.dart';
 import 'package:quizkidz/components/quiz_app_bar.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
 import 'package:quizkidz/util/util.dart';
@@ -21,6 +24,7 @@ class QuizmasterScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: QuizAppBar(
         quizId: quizId,
         entries: [
@@ -77,6 +81,7 @@ class QuizmasterScreen extends ConsumerWidget {
         ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
             flex: 40,
@@ -89,19 +94,36 @@ class QuizmasterScreen extends ConsumerWidget {
                   bottomLeft: Radius.circular(150),
                 ),
               ),
-              child: QuizLeaderboard(quizId: quizId),
+              child: Column(
+                children: [
+                  QuestionDisplay(
+                    quizId: quizId,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(20),
+                  ),
+                  QuizAnswerLeaderboard(
+                    quizId: quizId,
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
-            flex: 60,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                QuestionDisplay(
-                  quizId: quizId,
+            flex: 40,
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
-              ],
+                child: QuizLeaderboard(quizId: quizId),
+              ),
             ),
+          ),
+          Expanded(
+            flex: 20,
+            child: Container(),
           ),
         ],
       ),
