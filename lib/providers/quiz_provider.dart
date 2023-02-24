@@ -7,6 +7,7 @@ import 'package:quizkidz/models/quiz.dart';
 import 'package:quizkidz/models/quiz_alert.dart';
 import 'package:quizkidz/models/user.dart';
 import 'package:quizkidz/providers/auth_provider.dart';
+import 'package:quizkidz/providers/state_provider.dart';
 import 'package:quizkidz/services/quiz_service.dart';
 
 final firestoreProvider =
@@ -15,6 +16,7 @@ final firestoreProvider =
 final quizServiceProvider = Provider<QuizService>((ref) => QuizService(
       ref.watch(authServicesProvider),
       ref.watch(firestoreProvider),
+      ref.read(questionIndexProvider.notifier),
     ));
 
 final activeQuizzesProvider = StreamProvider.autoDispose<List<Quiz>>(
@@ -29,6 +31,10 @@ final unreadQuizAlertsProvider = StreamProvider.autoDispose<List<QuizAlert>>(
 final quizPlayersProvider = StreamProvider.autoDispose
     .family<List<QuizPlayer>, String>(
         (ref, id) => ref.watch(quizServiceProvider).quizPlayers(id));
+
+final quizAnswersProvider = StreamProvider.autoDispose
+    .family<List<QuizAnswer>, String>(
+        (ref, id) => ref.watch(quizServiceProvider).quizAnswers(id));
 
 final myQuizAnswerProvider = StreamProvider.autoDispose
     .family<QuizAnswer?, String>(

@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/buzzer.dart';
-import 'package:quizkidz/components/common_app_bar.dart';
 import 'package:quizkidz/components/quiz_app_bar.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
 import 'package:quizkidz/util/util.dart';
@@ -62,7 +61,14 @@ class PlayerScreen extends ConsumerWidget {
                   bottomLeft: Radius.circular(150),
                 ),
               ),
-              child: QuizLeaderboard(quizId: quizId),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 40.0,
+                  right: 40,
+                  bottom: 60,
+                ),
+                child: QuizLeaderboard(quizId: quizId),
+              ),
             ),
           ),
           Expanded(

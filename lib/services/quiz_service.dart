@@ -13,6 +13,7 @@ import 'package:quizkidz/util/util.dart';
 class QuizService {
   final AuthService _authService;
   final FirebaseFirestore _firebaseFirestore;
+  final _questionIndexNotifier;
 
   final quizzesCollection = 'quizzes';
   final quizAlertsCollection = 'alerts';
@@ -23,6 +24,7 @@ class QuizService {
   QuizService(
     this._authService,
     this._firebaseFirestore,
+    this._questionIndexNotifier,
   );
 
   Quiz? _quizFromFirebase(DocumentSnapshot? snapshot) =>
@@ -67,6 +69,17 @@ class QuizService {
               },
             ).toList();
 
+  List<QuizAnswer> _quizAnswersFromFirebase(QuerySnapshot? snapshot) =>
+      snapshot == null
+          ? []
+          : snapshot.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return QuizAnswer.fromJson(data);
+              },
+            ).toList();
+
   List<QuizQuestion> _quizQuestionsFromFirebase(QuerySnapshot? snapshot) =>
       snapshot == null
           ? []
@@ -108,6 +121,14 @@ class QuizService {
       .snapshots()
       .map(_quizPlayersFromFirebase);
 
+  Stream<List<QuizAnswer>> quizAnswers(String quizId) => _firebaseFirestore
+      .collection(quizzesCollection)
+      .doc(quizId)
+      .collection(quizAnswersSubCollection)
+      .orderBy('buzzed', descending: true)
+      .snapshots()
+      .map(_quizAnswersFromFirebase);
+
   Stream<List<QuizQuestion>> get quizQuestions => _firebaseFirestore
       .collection(quizQuestionsCollection)
       .snapshots()
@@ -125,6 +146,8 @@ class QuizService {
           {required Quiz quiz, required List<Connection> followers}) async =>
       TaskEither.tryCatch(
         () async {
+          _questionIndexNotifier.state = 0;
+
           final ref = _firebaseFirestore
               .collection(quizzesCollection)
               .withConverter<Quiz>(
@@ -195,6 +218,7 @@ class QuizService {
           );
 
           if (quiz!.quizmaster.uid == _authService.currentUserId) {
+            _questionIndexNotifier.state = quiz.currentQuestionNumber;
             return;
           }
 
@@ -234,6 +258,28 @@ class QuizService {
           batch.set(playerRef, player);
 
           return batch.commit();
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> leaveQuiz({required String quizId}) async =>
+      TaskEither.tryCatch(
+        () async {
+          final quiz = _quizFromFirebase(
+            await _firebaseFirestore
+                .collection(quizzesCollection)
+                .doc(quizId)
+                .get(),
+          );
+
+          if (quiz!.quizmaster.uid != _authService.currentUserId) {
+            return;
+          }
+
+          return _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .update({'currentQuestionNumber': _questionIndexNotifier.state});
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();
@@ -339,6 +385,7 @@ class QuizService {
   Future<Either<Exception, void>> endQuestion({required String quizId}) async =>
       TaskEither.tryCatch(
         () async {
+          _questionIndexNotifier.state += 1;
           WriteBatch batch = _firebaseFirestore.batch();
 
           final quizAnswersRef = await _firebaseFirestore
