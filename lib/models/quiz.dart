@@ -21,11 +21,22 @@ class QuizType with _$QuizType {
 @unfreezed
 class Quiz with _$Quiz {
   factory Quiz({
-    @Default('') String id,
+    @Default('')
+        String id,
     required QuizUser quizmaster,
     required DateTime created,
-    @Default(1) int currentQuestionNumber,
-    @Default(true) bool active,
+    @Default(1)
+        int currentQuestionNumber,
+    @Default(true)
+        bool active,
+    @Default(QuizPlayer(
+        player: QuizUser(
+      uid: '',
+      appDisplayName: '',
+      appAvatar: '',
+      appAvatarColor: 0,
+    )))
+        QuizPlayer winner,
   }) = _Quiz;
 
   factory Quiz.fromJson(Map<String, dynamic> json) => _$QuizFromJson(json);

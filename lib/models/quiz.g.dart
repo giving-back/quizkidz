@@ -23,6 +23,14 @@ _$_Quiz _$$_QuizFromJson(Map<String, dynamic> json) => _$_Quiz(
       created: DateTime.parse(json['created'] as String),
       currentQuestionNumber: json['currentQuestionNumber'] as int? ?? 1,
       active: json['active'] as bool? ?? true,
+      winner: json['winner'] == null
+          ? const QuizPlayer(
+              player: QuizUser(
+                  uid: '',
+                  appDisplayName: '',
+                  appAvatar: '',
+                  appAvatarColor: 0))
+          : QuizPlayer.fromJson(json['winner'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_QuizToJson(_$_Quiz instance) => <String, dynamic>{
@@ -31,6 +39,7 @@ Map<String, dynamic> _$$_QuizToJson(_$_Quiz instance) => <String, dynamic>{
       'created': instance.created.toIso8601String(),
       'currentQuestionNumber': instance.currentQuestionNumber,
       'active': instance.active,
+      'winner': instance.winner.toJson(),
     };
 
 _$_QuizAnswer _$$_QuizAnswerFromJson(Map<String, dynamic> json) =>
