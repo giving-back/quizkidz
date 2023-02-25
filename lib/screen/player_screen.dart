@@ -6,8 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
 import 'package:quizkidz/components/buzzer.dart';
+import 'package:quizkidz/components/loading_spinner.dart';
 import 'package:quizkidz/components/quiz_app_bar.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
+import 'package:quizkidz/providers/auth_provider.dart';
+import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class PlayerScreen extends ConsumerWidget {
@@ -17,6 +20,9 @@ class PlayerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quiz = ref.watch(quizByIdProvider(quizId));
+    final authService = ref.watch(authServicesProvider);
+
     return Scaffold(
       appBar: QuizAppBar(
         quizId: quizId,
@@ -74,8 +80,42 @@ class PlayerScreen extends ConsumerWidget {
           Expanded(
             flex: 50,
             child: Center(
-              child: Buzzer(
-                quizId: quizId,
+              child: quiz.when(
+                data: (quizData) => quizData!.active
+                    ? Buzzer(
+                        quizId: quizId,
+                      )
+                    : ListTile(
+                        leading: CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Color(
+                            quizData.winner.player.appAvatarColor,
+                          ),
+                          backgroundImage: AssetImage(
+                            quizData.winner.player.appAvatar,
+                          ),
+                        ),
+                        title: authService.currentUserId ==
+                                quizData.winner.player.uid
+                            ? const Text(
+                                'Congrats you won!',
+                                style: TextStyle(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 30,
+                                ),
+                              )
+                            : Text(
+                                '${quizData.winner.player.appDisplayName} is the winner',
+                                style: const TextStyle(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 30,
+                                ),
+                              ),
+                      ),
+                error: (error, stackTrace) => Text(error.toString()),
+                loading: () => const LoadingSpinner(),
               ),
             ),
           ),
