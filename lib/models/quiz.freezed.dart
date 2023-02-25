@@ -180,6 +180,8 @@ mixin _$Quiz {
   set currentQuestionNumber(int value) => throw _privateConstructorUsedError;
   bool get active => throw _privateConstructorUsedError;
   set active(bool value) => throw _privateConstructorUsedError;
+  QuizPlayer get winner => throw _privateConstructorUsedError;
+  set winner(QuizPlayer value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -196,9 +198,11 @@ abstract class $QuizCopyWith<$Res> {
       QuizUser quizmaster,
       DateTime created,
       int currentQuestionNumber,
-      bool active});
+      bool active,
+      QuizPlayer winner});
 
   $QuizUserCopyWith<$Res> get quizmaster;
+  $QuizPlayerCopyWith<$Res> get winner;
 }
 
 /// @nodoc
@@ -219,6 +223,7 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
     Object? created = null,
     Object? currentQuestionNumber = null,
     Object? active = null,
+    Object? winner = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -241,6 +246,10 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool,
+      winner: null == winner
+          ? _value.winner
+          : winner // ignore: cast_nullable_to_non_nullable
+              as QuizPlayer,
     ) as $Val);
   }
 
@@ -249,6 +258,14 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
   $QuizUserCopyWith<$Res> get quizmaster {
     return $QuizUserCopyWith<$Res>(_value.quizmaster, (value) {
       return _then(_value.copyWith(quizmaster: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuizPlayerCopyWith<$Res> get winner {
+    return $QuizPlayerCopyWith<$Res>(_value.winner, (value) {
+      return _then(_value.copyWith(winner: value) as $Val);
     });
   }
 }
@@ -264,10 +281,13 @@ abstract class _$$_QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
       QuizUser quizmaster,
       DateTime created,
       int currentQuestionNumber,
-      bool active});
+      bool active,
+      QuizPlayer winner});
 
   @override
   $QuizUserCopyWith<$Res> get quizmaster;
+  @override
+  $QuizPlayerCopyWith<$Res> get winner;
 }
 
 /// @nodoc
@@ -284,6 +304,7 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
     Object? created = null,
     Object? currentQuestionNumber = null,
     Object? active = null,
+    Object? winner = null,
   }) {
     return _then(_$_Quiz(
       id: null == id
@@ -306,6 +327,10 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool,
+      winner: null == winner
+          ? _value.winner
+          : winner // ignore: cast_nullable_to_non_nullable
+              as QuizPlayer,
     ));
   }
 }
@@ -318,7 +343,10 @@ class _$_Quiz implements _Quiz {
       required this.quizmaster,
       required this.created,
       this.currentQuestionNumber = 1,
-      this.active = true});
+      this.active = true,
+      this.winner = const QuizPlayer(
+          player: QuizUser(
+              uid: '', appDisplayName: '', appAvatar: '', appAvatarColor: 0))});
 
   factory _$_Quiz.fromJson(Map<String, dynamic> json) => _$$_QuizFromJson(json);
 
@@ -335,10 +363,13 @@ class _$_Quiz implements _Quiz {
   @override
   @JsonKey()
   bool active;
+  @override
+  @JsonKey()
+  QuizPlayer winner;
 
   @override
   String toString() {
-    return 'Quiz(id: $id, quizmaster: $quizmaster, created: $created, currentQuestionNumber: $currentQuestionNumber, active: $active)';
+    return 'Quiz(id: $id, quizmaster: $quizmaster, created: $created, currentQuestionNumber: $currentQuestionNumber, active: $active, winner: $winner)';
   }
 
   @JsonKey(ignore: true)
@@ -361,7 +392,8 @@ abstract class _Quiz implements Quiz {
       required QuizUser quizmaster,
       required DateTime created,
       int currentQuestionNumber,
-      bool active}) = _$_Quiz;
+      bool active,
+      QuizPlayer winner}) = _$_Quiz;
 
   factory _Quiz.fromJson(Map<String, dynamic> json) = _$_Quiz.fromJson;
 
@@ -380,6 +412,9 @@ abstract class _Quiz implements Quiz {
   @override
   bool get active;
   set active(bool value);
+  @override
+  QuizPlayer get winner;
+  set winner(QuizPlayer value);
   @override
   @JsonKey(ignore: true)
   _$$_QuizCopyWith<_$_Quiz> get copyWith => throw _privateConstructorUsedError;

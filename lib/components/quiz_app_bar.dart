@@ -49,16 +49,6 @@ class QuizAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         },
                       ),
                     );
-                break;
-              case 1:
-                await quizService.endQuiz(quizId: quizId).then(
-                      (value) => value.match(
-                        (error) => print(error.toString()),
-                        (result) {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    );
             }
           },
           itemBuilder: (context) => entries,
