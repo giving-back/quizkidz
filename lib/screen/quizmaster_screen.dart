@@ -9,6 +9,7 @@ import 'package:quizkidz/components/question_display.dart';
 import 'package:quizkidz/components/quiz_answer_leaderboard.dart';
 import 'package:quizkidz/components/quiz_app_bar.dart';
 import 'package:quizkidz/components/quiz_leaderboard.dart';
+import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/util/util.dart';
 
 class QuizmasterScreen extends ConsumerWidget {
@@ -21,7 +22,26 @@ class QuizmasterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quizService = ref.watch(quizServiceProvider);
+
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: const Color(kBlueColor),
+        label: const Text(
+          'End Quiz',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        icon: const Icon(Icons.assignment_rounded),
+        onPressed: () => quizService.endQuiz(quizId: quizId).then(
+              (value) => value.match(
+                  (error) => print(
+                        error.toString(),
+                      ),
+                  (result) => null),
+            ),
+      ),
       backgroundColor: Colors.white,
       appBar: QuizAppBar(
         quizId: quizId,
@@ -45,31 +65,6 @@ class QuizmasterScreen extends ConsumerWidget {
                 ),
                 Icon(
                   Icons.emoji_people,
-                  color: Colors.black54,
-                  size: 22,
-                ),
-              ],
-            ),
-          ),
-          PopupMenuItem<int>(
-            value: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'End',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 8,
-                  ),
-                ),
-                Icon(
-                  Icons.checklist_rtl_sharp,
                   color: Colors.black54,
                   size: 22,
                 ),

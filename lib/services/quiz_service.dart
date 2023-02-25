@@ -1,4 +1,3 @@
-// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -20,6 +19,7 @@ class QuizService {
   final quizQuestionsCollection = 'questions';
   final quizAnswersSubCollection = 'answers';
   final quizPlayersSubCollection = 'players';
+  final usersCollection = 'users';
 
   QuizService(
     this._authService,
@@ -125,7 +125,7 @@ class QuizService {
       .collection(quizzesCollection)
       .doc(quizId)
       .collection(quizAnswersSubCollection)
-      .orderBy('buzzed', descending: true)
+      .orderBy('buzzed')
       .snapshots()
       .map(_quizAnswersFromFirebase);
 
@@ -289,6 +289,52 @@ class QuizService {
         () async {
           WriteBatch batch = _firebaseFirestore.batch();
 
+          final quizRef =
+              _firebaseFirestore.collection(quizzesCollection).doc(quizId);
+
+          List<QuizPlayer> players = _quizPlayersFromFirebase(
+            await _firebaseFirestore
+                .collection(quizzesCollection)
+                .doc(quizId)
+                .collection(quizPlayersSubCollection)
+                .orderBy('score', descending: true)
+                .get(),
+          );
+
+          if (players.isNotEmpty) {
+            batch.update(quizRef, {'winner': players.first.toJson()});
+
+            final userRef = _firebaseFirestore
+                .collection(usersCollection)
+                .doc(players.first.player.uid);
+
+            batch.update(
+              userRef,
+              {
+                'quizWins': FieldValue.increment(1),
+              },
+            );
+
+            final playerIds =
+                players.map((player) => player.player.uid).toList();
+
+            final users = await _firebaseFirestore
+                .collection(usersCollection)
+                .where('uid', whereIn: playerIds)
+                .get();
+
+            for (var user in users.docs) {
+              batch.update(
+                user.reference,
+                {
+                  'questionsAnswered': FieldValue.increment(players
+                      .firstWhere((element) => element.player.uid == user.id)
+                      .score),
+                },
+              );
+            }
+          }
+
           final quizAlertsRef = await _firebaseFirestore
               .collection(quizAlertsCollection)
               .where('quizId', isEqualTo: quizId)
@@ -298,16 +344,14 @@ class QuizService {
             batch.delete(doc.reference);
           }
 
-          final quizRef = await _firebaseFirestore
-              .collection(quizzesCollection)
-              .doc(quizId)
-              .get();
-
-          batch.update(quizRef.reference, {'active': false});
+          batch.update(quizRef, {'active': false});
 
           return batch.commit();
         },
-        (error, stackTrace) => Exception(kUserError),
+        (error, stackTrace) {
+          print(error.toString());
+          return Exception(kUserError);
+        },
       ).run();
 
   Future<Either<Exception, void>> deleteQuiz({required String quizId}) async =>
