@@ -352,6 +352,20 @@ class QuizService {
         (error, stackTrace) => Exception(kUserError),
       ).run();
 
+  Future<Either<Exception, void>> deleteQuizAnswer(
+          {required String quizId, required String answerId}) async =>
+      TaskEither.tryCatch(
+        () async {
+          return _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizAnswersSubCollection)
+              .doc(answerId)
+              .delete();
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
   Future<Either<Exception, void>> buzz({required String quizId}) async =>
       TaskEither.tryCatch(
         () async {
@@ -378,6 +392,42 @@ class QuizService {
                   buzzed: DateTime.now(),
                 ),
               );
+        },
+        (error, stackTrace) => Exception(kUserError),
+      ).run();
+
+  Future<Either<Exception, void>> correctAnswer(
+          {required String quizId, required String playerId}) async =>
+      TaskEither.tryCatch(
+        () async {
+          WriteBatch batch = _firebaseFirestore.batch();
+
+          final quizPlayerRef = _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizPlayersSubCollection)
+              .doc(playerId);
+
+          batch.update(
+            quizPlayerRef,
+            {
+              'score': FieldValue.increment(1),
+            },
+          );
+
+          final quizAnswersRef = await _firebaseFirestore
+              .collection(quizzesCollection)
+              .doc(quizId)
+              .collection(quizAnswersSubCollection)
+              .get();
+
+          for (var doc in quizAnswersRef.docs) {
+            batch.delete(doc.reference);
+          }
+
+          _questionIndexNotifier.state += 1;
+
+          return batch.commit();
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();

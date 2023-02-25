@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
-import 'package:quizkidz/components/change_avatar.dart';
 
 // Project imports:
 import 'package:quizkidz/components/question_display.dart';

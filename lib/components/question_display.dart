@@ -72,21 +72,28 @@ class QuestionDisplay extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () async => await quizService
-                              .endQuestion(
-                                quizId: quizId,
-                              )
-                              .then(
-                                (value) => value.match(
-                                    (error) => print(error.toString()),
-                                    (r) => null),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: () async => await quizService
+                                .endQuestion(
+                                  quizId: quizId,
+                                )
+                                .then(
+                                  (value) => value.match(
+                                      (error) => print(error.toString()),
+                                      (r) => null),
+                                ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'skip',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                          child: const Text(
-                            'skip',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         )

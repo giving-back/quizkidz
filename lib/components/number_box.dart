@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:quizkidz/util/util.dart';
-
 class NumberBox extends StatelessWidget {
   final String text;
 
@@ -15,24 +12,24 @@ class NumberBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Color(kGreyBackgroundColor),
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
+      width: 20.0,
+      height: 20.0,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.white,
+          width: 1.0,
+          style: BorderStyle.solid,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-          bottom: 8,
-          left: 10,
-          right: 10,
-        ),
+      child: Center(
         child: Text(
           text,
           style: const TextStyle(
-            color: Colors.black54,
-            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 15.0,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),

@@ -16,6 +16,7 @@ class QuizAnswerLeaderboard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizAnswers = ref.watch(quizAnswersProvider(quizId));
+    final quizService = ref.watch(quizServiceProvider);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -25,13 +26,32 @@ class QuizAnswerLeaderboard extends ConsumerWidget {
             return quizAnswersList.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.only(
-                      left: 90,
-                      right: 90,
+                      left: 70,
+                      right: 70,
                     ),
                     child: ListTile(
-                      leading: const Icon(
-                        Icons.thumb_down,
-                        color: Colors.white,
+                      leading: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () => quizService
+                              .deleteQuizAnswer(
+                                quizId: quizId,
+                                answerId: quizAnswersList[0].player.uid,
+                              )
+                              .then(
+                                (value) => value.match(
+                                    (error) => print(error.toString()),
+                                    (result) => null),
+                              ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.thumb_down,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -55,9 +75,28 @@ class QuizAnswerLeaderboard extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      trailing: const Icon(
-                        Icons.thumb_up,
-                        color: Colors.white,
+                      trailing: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () => quizService
+                              .correctAnswer(
+                                quizId: quizId,
+                                playerId: quizAnswersList[0].player.uid,
+                              )
+                              .then(
+                                (value) => value.match(
+                                    (error) => print(error.toString()),
+                                    (result) => null),
+                              ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.thumb_up,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   )
