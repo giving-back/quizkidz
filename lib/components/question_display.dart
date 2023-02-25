@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Project imports:
-import 'package:quizkidz/components/number_box.dart';
 import 'package:quizkidz/components/loading_spinner.dart';
+import 'package:quizkidz/components/number_box.dart';
 import 'package:quizkidz/providers/quiz_provider.dart';
 import 'package:quizkidz/providers/state_provider.dart';
 
