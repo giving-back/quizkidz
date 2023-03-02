@@ -12,8 +12,8 @@ class NumberBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 20.0,
-      height: 20.0,
+      width: 25.0,
+      height: 25.0,
       decoration: BoxDecoration(
         color: Colors.transparent,
         shape: BoxShape.circle,

@@ -12,7 +12,7 @@ import 'package:quizkidz/util/util.dart';
 class QuizService {
   final AuthService _authService;
   final FirebaseFirestore _firebaseFirestore;
-  final _questionIndexNotifier;
+  final _questionNumberNotifier;
 
   final quizzesCollection = 'quizzes';
   final quizAlertsCollection = 'alerts';
@@ -24,7 +24,7 @@ class QuizService {
   QuizService(
     this._authService,
     this._firebaseFirestore,
-    this._questionIndexNotifier,
+    this._questionNumberNotifier,
   );
 
   Quiz? _quizFromFirebase(DocumentSnapshot? snapshot) =>
@@ -146,7 +146,21 @@ class QuizService {
           {required Quiz quiz, required List<Connection> followers}) async =>
       TaskEither.tryCatch(
         () async {
-          _questionIndexNotifier.state = 0;
+          _questionNumberNotifier.state = 0;
+
+          /*final ref1 = _firebaseFirestore
+              .collection(quizQuestionsCollection)
+              .withConverter<QuizQuestion>(
+                fromFirestore: (snapshot, _) =>
+                    QuizQuestion.fromJson(snapshot.data()!),
+                toFirestore: (quizQuestion, _) => quizQuestion.toJson(),
+              );
+
+          int counter = 0;
+          for (var i in questions) {
+            ref1.doc(counter.toString()).set(QuizQuestion.fromJson(i));
+            counter++;
+          }*/
 
           final ref = _firebaseFirestore
               .collection(quizzesCollection)
@@ -218,7 +232,7 @@ class QuizService {
           );
 
           if (quiz!.quizmaster.uid == _authService.currentUserId) {
-            _questionIndexNotifier.state = quiz.currentQuestionNumber;
+            _questionNumberNotifier.state = quiz.currentQuestionNumber;
             return;
           }
 
@@ -279,7 +293,7 @@ class QuizService {
           return _firebaseFirestore
               .collection(quizzesCollection)
               .doc(quizId)
-              .update({'currentQuestionNumber': _questionIndexNotifier.state});
+              .update({'currentQuestionNumber': _questionNumberNotifier.state});
         },
         (error, stackTrace) => Exception(kUserError),
       ).run();
@@ -469,7 +483,7 @@ class QuizService {
             batch.delete(doc.reference);
           }
 
-          _questionIndexNotifier.state += 1;
+          _questionNumberNotifier.state += 1;
 
           return batch.commit();
         },
@@ -479,7 +493,7 @@ class QuizService {
   Future<Either<Exception, void>> endQuestion({required String quizId}) async =>
       TaskEither.tryCatch(
         () async {
-          _questionIndexNotifier.state += 1;
+          _questionNumberNotifier.state += 1;
           WriteBatch batch = _firebaseFirestore.batch();
 
           final quizAnswersRef = await _firebaseFirestore

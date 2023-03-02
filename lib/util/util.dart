@@ -155,3 +155,112 @@ BoxDecoration decoratedTopBox() {
     ),
   );
 }
+
+const numQuestionsPerQuiz = 20;
+
+final questions = [
+  {"q": "Which big cat is the largest?", "a": "Tiger"},
+  {"q": "Which is the largest planet in the solar system?", "a": "Jupiter"},
+  {
+    "q": "In which city did the Olympic games originate?",
+    "a": "Athens, Greece"
+  },
+  {"q": "How many Olympic rings are there?", "a": "Five"},
+  {"q": "What is the fastest aquatic animal?", "a": "The Sailfish"},
+  {"q": "Are worker bees male or female?", "a": "Female"},
+  {"q": "How many Earths can fit inside the sun?", "a": "1.3 Million"},
+  {"q": "Which color is an emerald?", "a": "Green"},
+  {"q": "Whose nose grew longer every time he lied?", "a": "Pinocchio"},
+  {"q": "Which US state is famous for Hollywood?", "a": "California"},
+  {"q": "Which type of fish is Nemo?", "a": "A Clownfish"},
+  {"q": "Where is the Great Pyramid of Giza located?", "a": "Egypt"},
+  {"q": "What do bees consume to make honey?", "a": "Nectar"},
+  {"q": "Which dinosaur had 15 horns?", "a": "Kosmoceratops"},
+  {"q": "How many legs does a lobster have?", "a": "Ten"},
+  {"q": "What colors are the spots on a common ladybug?", "a": "Black"},
+  {"q": "How many teeth does an adult human have?", "a": "Thirty-two"},
+  {"q": "How many animals are there in the periodic table?", "a": "118"},
+  {"q": "Which is the worlds largest ocean?", "a": "Pacific ocean"},
+  {
+    "q": "Which is the largest internal organ in the human body?",
+    "a": "The liver"
+  },
+  {
+    "q": "What is the group of stars called that form an imaginary picture?",
+    "a": "Constellation"
+  },
+  {"q": "How much is the diameter of a basketball hoop?", "a": "18 inches"},
+  {"q": "What serves as the base for guacamole?", "a": "Avocado"},
+  {
+    "q":
+        "Which company is the largest chocolate manufacturer in the United States?",
+    "a": "Hersheys"
+  },
+  {"q": "What do bees produce?", "a": "Honey"},
+  {"q": "Who wrote Romeo Juliet?", "a": "William Shakespeare"},
+  {"q": "What is the name of Harry Potters pet owl?", "a": "Hedwig"},
+  {"q": "How many colors are there in a rainbow?", "a": "Seven"},
+  {"q": "Name the largest state in America.", "a": "Alaska"},
+  {"q": "Which planet is known to have the most gravity?", "a": "Jupiter"},
+  {
+    "q": "Which is the chemical name for common salt?",
+    "a": "Sodium Chloride (NaCl)"
+  },
+  {"q": "Which was the first country to use paper money?", "a": "China"},
+  {
+    "q": "Which is the fastest flying bird in the world?",
+    "a": "Peregrine Falcon"
+  },
+  {"q": "What is the princess name in Princess and the Frog?", "a": "Tiana"},
+  {"q": "Who was the first Disney princess?", "a": "Snow White"},
+  {"q": "Which is the closest star to the Earth?", "a": "The Sun"},
+  {"q": "Who invented the telephone?", "a": "Alexander Graham Bell"},
+  {
+    "q": "From which country did the Statue of Liberty come from?",
+    "a": "France"
+  },
+  {"q": "Which is the largest continent?", "a": "Asia"},
+  {"q": "How many Great Lakes are there?", "a": "Five"},
+  {"q": "Which school did Harry Potter attend?", "a": "Hogwarts"},
+  {"q": "Which animal is Baloo in the Jungle Book?", "a": "A Bear"},
+  {
+    "q": "Which is the highest-grossing holiday movie of all time?",
+    "a": "Home Alone"
+  },
+  {"q": "What is the name of the longest river in the world?", "a": "The Nile"},
+  {"q": "What is a thermometer used for?", "a": "To measure temperature"},
+  {"q": "Where do you get sugar from?", "a": "Sugarcane"},
+  {"q": "What is the fastest animal?", "a": "Cheetah"},
+  {"q": "What will you get if you freeze water?", "a": "Ice"},
+  {
+    "q": "Where does the president of the United States reside?",
+    "a": "The White House"
+  },
+  {"q": "What is the color of the school bus?", "a": "Yellow"},
+  {"q": "What is the color of the stars in the US flag?", "a": "White"},
+  {"q": "Name any one of the characters in the movie Frozen.", "a": "Elsa"},
+  {"q": "How many days are there in a year?", "a": "365"},
+  {"q": "What do the panda’s eat?", "a": "Bamboo"},
+  {"q": "Name the painter who painted Mona Lisa.", "a": "Leonardo Da Vinci"},
+  {"q": "Raisins originated from which fruit?", "a": "Grapes"},
+  {"q": "Name the smallest breed of the dog.", "a": "Chihuahua"},
+  {"q": "How many chambers are there in the human heart?", "a": "Four"},
+  {"q": "What is the name of the ship that sank in 1912?", "a": "Titanic"},
+  {"q": "What is the name of the game played at Wimbledon?", "a": "Tennis"},
+  {"q": "Name the animal with the largest eyes?", "a": "Giant Squid"},
+  {"q": "How many sides are there in Octagon?", "a": "Eight"},
+  {"q": "In how many years Olympics are held?", "a": "Four"},
+  {"q": "How many players are there in a netball game?", "a": "Seven"},
+  {
+    "q": "Name the Disney character who flies sitting on a carpet.",
+    "a": "Aladdin"
+  },
+  {"q": "When is Valentine’s day celebrated?", "a": "14th of February"},
+  {
+    "q": "Why did Jack and Jill go up the hill?",
+    "a": "To fetch a pail of water."
+  },
+  {"q": "Name the coldest place in the world.", "a": "Antarctica"},
+  {"q": "Which is the largest bone on the human body?", "a": "Thigh Bone"},
+  {"q": "Name the bird which can mimic humans.", "a": "Parrot"}
+];
