@@ -1,4 +1,3 @@
-// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
@@ -25,6 +24,7 @@ class Quiz with _$Quiz {
         String id,
     required QuizUser quizmaster,
     required DateTime created,
+    required List<int> questions,
     @Default(1)
         int currentQuestionNumber,
     @Default(true)
