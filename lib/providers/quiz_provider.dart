@@ -16,7 +16,7 @@ final firestoreProvider =
 final quizServiceProvider = Provider<QuizService>((ref) => QuizService(
       ref.watch(authServicesProvider),
       ref.watch(firestoreProvider),
-      ref.read(questionIndexProvider.notifier),
+      ref.read(questionNumberProvider.notifier),
     ));
 
 final activeQuizzesProvider = StreamProvider.autoDispose<List<Quiz>>(

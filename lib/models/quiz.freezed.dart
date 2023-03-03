@@ -176,6 +176,8 @@ mixin _$Quiz {
   set quizmaster(QuizUser value) => throw _privateConstructorUsedError;
   DateTime get created => throw _privateConstructorUsedError;
   set created(DateTime value) => throw _privateConstructorUsedError;
+  List<int> get questions => throw _privateConstructorUsedError;
+  set questions(List<int> value) => throw _privateConstructorUsedError;
   int get currentQuestionNumber => throw _privateConstructorUsedError;
   set currentQuestionNumber(int value) => throw _privateConstructorUsedError;
   bool get active => throw _privateConstructorUsedError;
@@ -197,6 +199,7 @@ abstract class $QuizCopyWith<$Res> {
       {String id,
       QuizUser quizmaster,
       DateTime created,
+      List<int> questions,
       int currentQuestionNumber,
       bool active,
       QuizPlayer winner});
@@ -221,6 +224,7 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
     Object? id = null,
     Object? quizmaster = null,
     Object? created = null,
+    Object? questions = null,
     Object? currentQuestionNumber = null,
     Object? active = null,
     Object? winner = null,
@@ -238,6 +242,10 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      questions: null == questions
+          ? _value.questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       currentQuestionNumber: null == currentQuestionNumber
           ? _value.currentQuestionNumber
           : currentQuestionNumber // ignore: cast_nullable_to_non_nullable
@@ -280,6 +288,7 @@ abstract class _$$_QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
       {String id,
       QuizUser quizmaster,
       DateTime created,
+      List<int> questions,
       int currentQuestionNumber,
       bool active,
       QuizPlayer winner});
@@ -302,6 +311,7 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
     Object? id = null,
     Object? quizmaster = null,
     Object? created = null,
+    Object? questions = null,
     Object? currentQuestionNumber = null,
     Object? active = null,
     Object? winner = null,
@@ -319,6 +329,10 @@ class __$$_QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res, _$_Quiz>
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      questions: null == questions
+          ? _value.questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       currentQuestionNumber: null == currentQuestionNumber
           ? _value.currentQuestionNumber
           : currentQuestionNumber // ignore: cast_nullable_to_non_nullable
@@ -342,6 +356,7 @@ class _$_Quiz implements _Quiz {
       {this.id = '',
       required this.quizmaster,
       required this.created,
+      required this.questions,
       this.currentQuestionNumber = 1,
       this.active = true,
       this.winner = const QuizPlayer(
@@ -358,6 +373,8 @@ class _$_Quiz implements _Quiz {
   @override
   DateTime created;
   @override
+  List<int> questions;
+  @override
   @JsonKey()
   int currentQuestionNumber;
   @override
@@ -369,7 +386,7 @@ class _$_Quiz implements _Quiz {
 
   @override
   String toString() {
-    return 'Quiz(id: $id, quizmaster: $quizmaster, created: $created, currentQuestionNumber: $currentQuestionNumber, active: $active, winner: $winner)';
+    return 'Quiz(id: $id, quizmaster: $quizmaster, created: $created, questions: $questions, currentQuestionNumber: $currentQuestionNumber, active: $active, winner: $winner)';
   }
 
   @JsonKey(ignore: true)
@@ -391,6 +408,7 @@ abstract class _Quiz implements Quiz {
       {String id,
       required QuizUser quizmaster,
       required DateTime created,
+      required List<int> questions,
       int currentQuestionNumber,
       bool active,
       QuizPlayer winner}) = _$_Quiz;
@@ -406,6 +424,9 @@ abstract class _Quiz implements Quiz {
   @override
   DateTime get created;
   set created(DateTime value);
+  @override
+  List<int> get questions;
+  set questions(List<int> value);
   @override
   int get currentQuestionNumber;
   set currentQuestionNumber(int value);

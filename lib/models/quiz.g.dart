@@ -21,6 +21,8 @@ _$_Quiz _$$_QuizFromJson(Map<String, dynamic> json) => _$_Quiz(
       id: json['id'] as String? ?? '',
       quizmaster: QuizUser.fromJson(json['quizmaster'] as Map<String, dynamic>),
       created: DateTime.parse(json['created'] as String),
+      questions:
+          (json['questions'] as List<dynamic>).map((e) => e as int).toList(),
       currentQuestionNumber: json['currentQuestionNumber'] as int? ?? 1,
       active: json['active'] as bool? ?? true,
       winner: json['winner'] == null
@@ -37,6 +39,7 @@ Map<String, dynamic> _$$_QuizToJson(_$_Quiz instance) => <String, dynamic>{
       'id': instance.id,
       'quizmaster': instance.quizmaster.toJson(),
       'created': instance.created.toIso8601String(),
+      'questions': instance.questions,
       'currentQuestionNumber': instance.currentQuestionNumber,
       'active': instance.active,
       'winner': instance.winner.toJson(),

@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -165,6 +167,11 @@ class HomeScreen extends ConsumerWidget {
                                       appAvatarColor: user.appAvatarColor,
                                     ),
                                     created: DateTime.now(),
+                                    questions: List<int>.generate(
+                                      numQuestionsPerQuiz,
+                                      (int index) =>
+                                          Random().nextInt(questions.length),
+                                    ),
                                   ),
                                   followers: followers,
                                 )
